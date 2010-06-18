@@ -29,9 +29,9 @@ jobs:
         username: admin
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
-          script: |
-            whoami
-            ls -al
+        script: |
+          whoami
+          ls -al
 
     # Set private key for SSH connection
     - name: webfactory/ssh-agent
