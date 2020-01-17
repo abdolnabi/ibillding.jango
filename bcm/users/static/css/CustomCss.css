@@ -84,6 +84,7 @@ body {
 }
 .RoleSelect {
     line-height: 1.5;
+    background-image: none;
     border: 1px solid #ced4da;
     border-radius: 2rem;
     transition: all .1s ease-in-out;

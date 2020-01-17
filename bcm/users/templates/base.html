@@ -1,4 +1,4 @@
-{% load static %} {# in this Line, Folder of Static Files will Define! #}
+{% load static i18n define_action %} {# in this Line, Folder of Static Files will Define! #}
 {% block HeadOfFile %}
     {# Language or Meta tags will Define in this Block! #}
     <!doctype html>
@@ -15,7 +15,7 @@
 {% block cssFiles %}
     {# in child page, Child-specific CSS files will be here! #}
     {# Bootstrap core CSS #}
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static '@coreui/coreui/dist/css/coreui.min.css' %}" rel="stylesheet">
     {# Custom styles for this template #}
     <link href="{% static 'css/CustomCss.css' %}" rel="stylesheet">
 {% endblock cssFiles %}
