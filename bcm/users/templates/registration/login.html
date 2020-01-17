@@ -19,42 +19,51 @@
 
 {% extends 'base.html' %}{# in this Line, Parent of this Page will Define! #}
 {% load static %}
-    {% block title %}
+{% load i18n %}
+{% block title %}
     <title>BCM Application Sign In Page</title>
-    {% endblock title %}
-    {% block containerSize %}
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-    {% endblock containerSize %}
-    {% block content %}
-            <div class="card gradient-border card-signin my-5">
-                <div class="card-body">
-                    {#  Title Section  #}
-                    <h4 class="card-title text-center"><b>Welcome to BCM Application</b></h4>
-                    <h4 class="card-title text-center">Sign In</h4>
-                    {#  Start Sign in Form  #}
-                    <form class="form-signin" action="" method="post">
-                        <div class="form-label-group">
-                            <input type="tel" id="id_Mobile" name="mobile" class="form-control" pattern="^\d{4}-\d{3}-\d{4}$" placeholder="Phone Number" required>
-                            <label for="id_Mobile">Phone Number (XXXX-XXX-XXXX)</label>
-                        </div>
+{% endblock title %}
+{% block containerSize %}
+    <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+{% endblock containerSize %}
+{% block content %}
+        <div class="card gradient-border card-signin my-5">
+            <div class="card-body">
+                {#  Title Section  #}
+                <h4 class="card-title text-center"><b>Welcome to BCM Application</b></h4>
+                <h4 class="card-title text-center">Sign In</h4>
+                {#  Start Sign in Form  #}
+                <form class="form-signin" action="" method="post">{% csrf_token %}
+                    <div class="form-label-group">
+                        <input type="text" id="id_username" name="username" class="form-control"
+                               {# pattern="^\d{4}-\d{3}-\d{4}$" #} placeholder="{% trans 'Username' %}" required>
+                        <label for="id_username">{% trans 'Phone Number (XXXX-XXX-XXXX)' %}</label>
+                    </div>
 
-                        <div class="form-label-group">
-                            <input type="password" id="id_Password" name="password" class="form-control" placeholder="Password" required>
-                            <label for="id_Password">Password</label>
-                        </div>
+                    <div class="form-label-group">
+                        <input type="password" id="id_password" name="password" class="form-control"
+                               placeholder="{% trans 'Password' %}" required>
+                        <label for="id_Password">{% trans 'Password' %}</label>
+                    </div>
 
-                        <div class="custom-control custom-checkbox mb-3">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Remember password</label>
-                        </div>
-                        <input class="btn btn-signform btn-lg btn-primary btn-block text-uppercase" type="submit" value="Sign in">
-                        <div class="text-center"><a class="small" href="#">Forgot password?</a></div>
+                    <div class="custom-control custom-checkbox mb-3">
+                        <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        <label class="custom-control-label" for="customCheck1">Remember password</label>
+                    </div>
+                    <input class="btn btn-signform btn-lg btn-primary btn-block text-uppercase" type="submit"
+                           value="Sign in">
+                    <div class="text-center"><a class="small" href="#">Forgot password?</a></div>
 
-                    </form>
-                    <hr class="my-4">
-                        <a class="Remove-text-decoration" href="{% url 'users:register' %}"><button class="btn btn-signform btn-lg btn-block btn-signup text-uppercase" type="button"><i class="fab mr-2"></i> Sign Up</button></a>
-                    {#  End of Sign in Form  #}
+                </form>
+                <hr class="my-4">
+                <a class="Remove-text-decoration" href="{% url 'users:register' %}">
+                    <button class="btn btn-signform btn-lg btn-block btn-signup text-uppercase" type="button"><i
+                            class="fab mr-2"></i> Sign Up
+                    </button>
+                </a>
+                {#  End of Sign in Form  #}
 
             </div>
         </div>
-    {% endblock content %}
+{% endblock content %}
+</div>
