@@ -70,5 +70,5 @@ doc-*
 #static
 staticfiles/
 *.sqlite
-node_modules/
+# node_modules/
 tmp/
