@@ -40,7 +40,7 @@ nosetests.xml
 coverage.xml
 
 # Translations
-*.mo
+#*.mo
 
 # Mr Developer
 .mr.developer.cfg
@@ -68,5 +68,7 @@ readme.txt
 doc-*
 .idea/
 #static
+staticfiles/
 *.sqlite
+node_modules/
 tmp/

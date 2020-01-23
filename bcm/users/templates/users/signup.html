@@ -17,7 +17,7 @@
 {% load static %}
 {% load i18n %}
 {% block title %}
-    <title>BCM Application Sign Up Page</title>
+    <title>{% trans 'BCM Application Sign Up Page' %}</title>
 {% endblock title %}
 {% block containerSize %}
     <div class="col-md-10 mx-auto">
@@ -26,8 +26,8 @@
     <div class="card gradient-border card-signin">
         <div class="card-body">
             {# Title Section #}
-            <h4 class="card-title text-center"><b>Join BCM Application</b></h4>
-            <h5 class="card-title text-center">Create An Account</h5>
+            <h4 class="card-title text-center"><b>{% trans 'Join BCM Application' %}</b></h4>
+            <h5 class="card-title text-center">{% trans 'Create An Account' %}</h5>
             {# Start Sign up Form #}
             <form class="form-signin d-md-inline" action="" method="post">{% csrf_token %}
                 <div class="alert alert-danger notification_error" role="alert">{{ item.error }}</div>
@@ -60,7 +60,7 @@
                         </div>
                         <div class="form-label-group">
                             <select class="custom-select mr-sm-2 RoleSelect" name="{{ item.role }}" id="id_role">
-                                <option selected>&#45;&#45; Select Role &#45;&#45;</option>
+                                <option selected>&#45;&#45; {% trans 'Select Role' %} &#45;&#45;</option>
                                 <option value="BUILDING_MANAGER">{% trans 'Building manager' %}</option>
                                 <option value="BUILDING_RESIDENT">{% trans 'Building resident' %}</option>
                             </select>
@@ -90,8 +90,7 @@
 
                         <input name="register" class="btn btn-signform btn-lg btn-block btn-signup text-uppercase"
                                value="Sign Up" type="submit">
-                        <div class="text-center"><a class="small" href="{% url 'users:login' %}">Do you have an
-                            Account?Sign in</a></div>
+                        <div class="text-center"><a class="small" href="{% url 'users:login' %}">{% trans 'Do you have an Account?Sign in' %}</a></div>
 
                     </div>
                 </div>
