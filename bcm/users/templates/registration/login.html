@@ -34,16 +34,17 @@
                 <h4 class="card-title text-center">Sign In</h4>
                 {#  Start Sign in Form  #}
                 <form class="form-signin" action="" method="post">{% csrf_token %}
+                    <div class="notification_error alert alert-danger" role="alert">{{ item.error }}</div>
                     <div class="form-label-group">
-                        <input type="text" id="id_username" name="username" class="form-control"
+                        <input type="text" id="id_username" name="{{ item.username }}" class="form-control"
                                {# pattern="^\d{4}-\d{3}-\d{4}$" #} placeholder="{% trans 'Username' %}" required>
-                        <label for="id_username">{% trans 'Phone Number (XXXX-XXX-XXXX)' %}</label>
+                        <label for="id_username">{% trans 'Username' %}</label>
                     </div>
 
                     <div class="form-label-group">
-                        <input type="password" id="id_password" name="password" class="form-control"
+                        <input type="password" id="id_password" name="{{ item.password }}" class="form-control"
                                placeholder="{% trans 'Password' %}" required>
-                        <label for="id_Password">{% trans 'Password' %}</label>
+                        <label for="id_password">{% trans 'Password' %}</label>
                     </div>
 
                     <div class="custom-control custom-checkbox mb-3">
@@ -65,5 +66,5 @@
 
             </div>
         </div>
-{% endblock content %}
 </div>
+{% endblock content %}
