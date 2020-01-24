@@ -1,0 +1,2 @@
+django: cd bcm;gunicorn bcm.wsgi
+node: node server.js
