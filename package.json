@@ -1,0 +1,25 @@
+{
+  "name": "bcm_package",
+  "version": "1.0.0",
+  "description": "Apartment Managment System",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Renewablion/BCM.git"
+  },
+  "keywords": [
+    "BCM"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Renewablion/BCM/issues"
+  },
+  "homepage": "https://github.com/Renewablion/BCM#readme",
+  "dependencies": {
+    "@coreui/coreui": "^3.0.0-beta.4"
+  }
+}
