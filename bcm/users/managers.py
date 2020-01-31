@@ -2,7 +2,8 @@ from django.contrib.auth.base_user import BaseUserManager
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, first_name='', last_name='', password=None, role='', is_active=False):
+    def create_user(self, username, email, first_name='', last_name='', password=None, is_active=False,
+                    financial_credit=0.0):
         """
         Create and save user
         """
@@ -12,11 +13,8 @@ class UserManager(BaseUserManager):
             first_name=first_name,
             last_name=last_name,
             is_active=is_active,
-            role=role,
+            financial_credit=financial_credit,
         )
-
-        if role:
-            self.role = role
 
         user.set_password(password)
         user.save(using=self.db)

@@ -4,16 +4,10 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from core.models import BaseModel
-from users.enums import UserRole
 from users.managers import UserManager
 
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
-    ROLE_CHOICES = (
-        (UserRole.BUILDING_MANAGER, _('Building manager')),
-        (UserRole.BUILDING_RESIDENT, _('Building resident')),
-    )
-
     username = models.CharField(
         verbose_name=_('username'),
         help_text=_('username for this user'),
@@ -24,13 +18,13 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(
         verbose_name=_('first name'),
         help_text=_('first name for this user'),
-        max_length=128,
+        max_length=255,
     )
 
     last_name = models.CharField(
         verbose_name=_('last name'),
         help_text=_('last name for this user'),
-        max_length=128,
+        max_length=255,
 
     )
 
@@ -46,11 +40,11 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         max_length=128,
     )
 
-    role = models.CharField(
-        verbose_name=_('role'),
-        help_text=_('role for this user'),
-        max_length=32,
-        choices=ROLE_CHOICES,
+    financial_credit = models.DecimalField(
+        verbose_name=_('financial credit'),
+        help_text=_('financial credit for this user'),
+        max_digits=10,
+        decimal_places=2,
     )
 
     is_admin = models.BooleanField(
