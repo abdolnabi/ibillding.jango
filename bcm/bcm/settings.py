@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'core.apps.CoreConfig',
     'building.apps.BuildingConfig',
     # 'django.contrib.gis',
-    'django_extensions',
 ]
 
 MIDDLEWARE = [
