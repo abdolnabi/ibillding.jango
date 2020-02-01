@@ -7,7 +7,7 @@ from django.utils.translation import ugettext as _
 class SignUpForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'iban', 'role', 'password1', 'password2']
+        fields = ['username', 'email', 'first_name', 'last_name', 'iban', 'password1', 'password2']
 
 
 class LoginForm(forms.Form):
