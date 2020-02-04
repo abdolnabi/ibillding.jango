@@ -1,0 +1,212 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-01-23 10:02+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: bcm/bcm/settings.py:141
+msgid "English"
+msgstr "انگلیسی"
+
+#: bcm/bcm/settings.py:142
+msgid "Persian"
+msgstr "فارسی"
+
+#: bcm/core/models.py:9
+msgid "created"
+msgstr ""
+
+#: bcm/core/models.py:10
+msgid "object creation time"
+msgstr ""
+
+#: bcm/core/models.py:15
+msgid "modified"
+msgstr ""
+
+#: bcm/core/models.py:16
+msgid "object modification time"
+msgstr ""
+
+#: bcm/users/forms.py:14 bcm/users/templates/registration/login.html:40
+#: bcm/users/templates/registration/login.html:41
+#: bcm/users/templates/users/signup.html:39
+msgid "Username"
+msgstr "نام کاربری"
+
+#: bcm/users/forms.py:15 bcm/users/templates/registration/login.html:46
+#: bcm/users/templates/registration/login.html:47
+#: bcm/users/templates/users/signup.html:81
+#: bcm/users/templates/users/signup.html:82
+msgid "Password"
+msgstr "گذرواژه"
+
+#: bcm/users/templates/registration/login.html:61
+#: bcm/users/templates/users/signup.html:91
+msgid "Sign Up"
+msgstr "ثبت نام"
+
+#: bcm/users/templates/registration/login.html:54
+msgid "Sign in"
+msgstr "ورود"
+
+#: bcm/users/models.py:13 bcm/users/templates/users/signup.html:64
+msgid "Building manager"
+msgstr "مدیر ساختمان"
+
+#: bcm/users/models.py:14 bcm/users/templates/users/signup.html:65
+msgid "Building resident"
+msgstr "مستاجر"
+
+#: bcm/users/models.py:18
+msgid "username"
+msgstr "نام کاربری"
+
+#: bcm/users/models.py:19
+msgid "username for this user"
+msgstr ""
+
+#: bcm/users/models.py:25
+msgid "first name"
+msgstr "نام"
+
+#: bcm/users/models.py:26
+msgid "first name for this user"
+msgstr ""
+
+#: bcm/users/models.py:31
+msgid "last name"
+msgstr ""
+
+#: bcm/users/models.py:32
+msgid "last name for this user"
+msgstr ""
+
+#: bcm/users/models.py:38
+msgid "email"
+msgstr "ایمیل"
+
+#: bcm/users/models.py:39
+msgid "email for this user"
+msgstr ""
+
+#: bcm/users/models.py:44
+msgid "iban"
+msgstr ""
+
+#: bcm/users/models.py:45
+msgid "iban for this user"
+msgstr ""
+
+#: bcm/users/models.py:50
+msgid "role"
+msgstr ""
+
+#: bcm/users/models.py:51
+msgid "role for this user"
+msgstr ""
+
+#: bcm/users/models.py:57
+msgid "is admin"
+msgstr ""
+
+#: bcm/users/models.py:58
+msgid "is this user admin?"
+msgstr "آیا این کاربر ادمین است"
+
+#: bcm/users/models.py:63
+msgid "is active"
+msgstr "فعال است؟"
+
+#: bcm/users/models.py:64
+msgid "is this user active?"
+msgstr "آیا این کاربر فعال است؟"
+
+#: bcm/users/models.py:73
+msgid "user"
+msgstr "کاربر"
+
+#: bcm/users/models.py:74
+msgid "users"
+msgstr "کاربران"
+
+#: bcm/users/templates/registration/login.html:24
+msgid "BCM Application Sign In Page"
+msgstr "صفحه ورود به برنامه BCM"
+
+#: bcm/users/templates/registration/login.html:33
+msgid "Welcome to BCM Application"
+msgstr "به برنامه BCM خوش آمدید"
+
+#: bcm/users/templates/registration/login.html:34
+msgid "Sign In"
+msgstr "عضویت"
+
+#: bcm/users/templates/registration/login.html:52
+#, fuzzy
+#| msgid "Repeat Password"
+msgid "Remember password"
+msgstr "تکرار گذرواژه"
+
+#: bcm/users/templates/registration/login.html:56
+msgid "Forgot password?"
+msgstr "فراموشی گذرواژه"
+
+#: bcm/users/templates/users/signup.html:20
+msgid "BCM Application Sign Up Page"
+msgstr "صفحه عضویت برنامه"
+
+#: bcm/users/templates/users/signup.html:29
+msgid "Join BCM Application"
+msgstr "عضویت در برنامه BCM"
+
+#: bcm/users/templates/users/signup.html:30
+msgid "Create An Account"
+msgstr "ساخت اکانت جدید"
+
+#: bcm/users/templates/users/signup.html:47
+#: bcm/users/templates/users/signup.html:48
+msgid "Iban"
+msgstr "شماره شبا"
+
+#: bcm/users/templates/users/signup.html:53
+#: bcm/users/templates/users/signup.html:54
+msgid "First name"
+msgstr "نام"
+
+#: bcm/users/templates/users/signup.html:58
+#: bcm/users/templates/users/signup.html:59
+msgid "Last name"
+msgstr "نام خوانوادگی"
+
+#: bcm/users/templates/users/signup.html:63
+msgid "Select Role"
+msgstr "انتخاب نقش"
+
+#: bcm/users/templates/users/signup.html:72
+#: bcm/users/templates/users/signup.html:73
+msgid "Email address"
+msgstr "آدرس ایمیل"
+
+#: bcm/users/templates/users/signup.html:87
+#: bcm/users/templates/users/signup.html:88
+msgid "Repeat Password"
+msgstr "تکرار گذرواژه"
+
+#: bcm/users/templates/users/signup.html:93
+msgid "Do you have an Account?Sign in"
+msgstr "آیا اکانتی دارید؟ ورود"

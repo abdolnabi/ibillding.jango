@@ -18,10 +18,9 @@
 {#</html>#}
 
 {% extends 'base.html' %}{# in this Line, Parent of this Page will Define! #}
-{% load static %}
-{% load i18n %}
+{% load static i18n %}
 {% block title %}
-    <title>BCM Application Sign In Page</title>
+    <title>{% trans 'BCM Application Sign In Page' %}</title>
 {% endblock title %}
 {% block containerSize %}
     <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
@@ -30,8 +29,8 @@
         <div class="card gradient-border card-signin my-5">
             <div class="card-body">
                 {#  Title Section  #}
-                <h4 class="card-title text-center"><b>Welcome to BCM Application</b></h4>
-                <h4 class="card-title text-center">Sign In</h4>
+                <h4 class="card-title text-center"><b>{% trans 'Welcome to BCM Application' %}</b></h4>
+                <h4 class="card-title text-center">{% trans 'Sign In' %}</h4>
                 {#  Start Sign in Form  #}
                 <form class="form-signin" action="" method="post">{% csrf_token %}
                     <div class="notification_error alert alert-danger" role="alert">{{ item.error }}</div>
@@ -49,17 +48,17 @@
 
                     <div class="custom-control custom-checkbox mb-3">
                         <input type="checkbox" class="custom-control-input" id="customCheck1">
-                        <label class="custom-control-label" for="customCheck1">Remember password</label>
+                        <label class="custom-control-label" for="customCheck1">{% trans 'Remember password' %}</label>
                     </div>
                     <input class="btn btn-signform btn-lg btn-primary btn-block text-uppercase" type="submit"
-                           value="Sign in">
-                    <div class="text-center"><a class="small" href="#">Forgot password?</a></div>
+                           value="{% trans 'Sign in' %}">
+                    <div class="text-center"><a class="small" href="#">{% trans 'Forgot password?' %}</a></div>
 
                 </form>
                 <hr class="my-4">
                 <a class="Remove-text-decoration" href="{% url 'users:register' %}">
                     <button class="btn btn-signform btn-lg btn-block btn-signup text-uppercase" type="button"><i
-                            class="fab mr-2"></i> Sign Up
+                            class="fab mr-2"></i>{% trans 'Sign Up' %}
                     </button>
                 </a>
                 {#  End of Sign in Form  #}
