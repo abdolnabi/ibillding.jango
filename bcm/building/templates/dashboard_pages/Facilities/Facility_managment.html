@@ -1,0 +1,171 @@
+{% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div class="row">
+        <div class="card container">
+            <div class="card-header"><h3>All Facilities</h3></div>
+            <div class="card-body">
+                <form action="" method="">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-md-5 mb-3 form-group">
+                            <label for="id_residence_type">Residence Type</label>
+                            <select class="form-control" id="id_residence_type" name="residence_type">
+                                <option>name 1</option>
+                                <option>name 2</option>
+                                <option>name 3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-5 mb-3 form-group">
+                            <label for="id_title">Title</label>
+                            <input type="text" class="form-control" id="id_title" name="title">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Filter</button>
+                </form>
+
+                {#   ADD new Block section  #}
+                <p>
+                    <button class="btn btn-primary collapsed btn-block-add" type="button" data-toggle="collapse"
+                            data-target="#new_facility" aria-expanded="false" aria-controls="new_facility">Add New
+                        Facility
+                    </button>
+                    <br/>
+                </p>
+                <div class="collapse" id="new_facility" style="">
+                    <div class="card card-body">
+                        <form method="" action="">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="col-md-4 mb-3 form-group">
+                                    <label for="id_residence_type">Residence Type</label>
+                                    <select class="form-control" id="id_residence_type" name="residence_type">
+                                        <option>name 1</option>
+                                        <option>name 2</option>
+                                        <option>name 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3 form-group">
+                                    <label for="id_title">Title</label>
+                                    <input type="text" class="form-control" id="id_title" name="title">
+                                </div>
+                                <div class="col-md-4 mb-3 form-group">
+                                    <label for="id_description">Description</label>
+                                    <textarea class="form-control" id="id_description" name="description" rows="1"
+                                              placeholder="Description..." spellcheck="false"></textarea>
+                                </div>
+                            </div>
+
+                            <button class="btn btn-primary" type="submit">Insert</button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <hr/>
+                <!-- start table part -->
+                <table class="table table-responsive-sm table-hover table-outline mb-0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Residence Type</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>Yas</td>
+                        <td>pool</td>
+                        <td>great and big pool :)</td>
+                        <td><a class="btn btn-success" href="#" alt="show">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
+                            </svg>
+                        </a>&nbsp;<a class="btn btn-info" alt="edit" href="#">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+                            </svg>
+                        </a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
+                            </svg>
+                        </a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>Fredows</td>
+                        <td>Garden</td>
+                        <td>Garden</td>
+                        <td><a class="btn btn-success" href="#" alt="show">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
+                            </svg>
+                        </a>&nbsp;<a class="btn btn-info" alt="edit" href="#">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+                            </svg>
+                        </a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
+                            </svg>
+                        </a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>Fredows3</td>
+                        <td>park</td>
+                        <td>park</td>
+                        <td><a class="btn btn-success" href="#" title="show">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
+                            </svg>
+                        </a>&nbsp;<a class="btn btn-info" title="edit" href="#">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+                            </svg>
+                        </a>&nbsp;<a class="btn btn-danger" title="delete" href="#">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
+                            </svg>
+                        </a></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>Fredows2</td>
+                        <td>Pool</td>
+                        <td>Pool</td>
+                        <td><a class="btn btn-success" href="#" title="show">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
+                            </svg>
+                        </a>&nbsp;<a class="btn btn-info" title="edit" href="#">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+                            </svg>
+                        </a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
+                            </svg>
+                        </a></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock bodycontent %}
