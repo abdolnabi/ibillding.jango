@@ -1,8 +1,15 @@
 {% load static i18n define_action %} {# in this Line, Folder of Static Files will Define! #}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+  {# Language will recognize with this condition! #}
+{% if LANGUAGE_BIDI %}
+    {% define "rtl" as dir %}
+{% else %}
+    {% define "ltr" as dir %}
+{% endif %}
 {% block HeadOfFile %}
     {# Language or Meta tags will Define in this Block! #}
     <!doctype html>
-    <html lang="en">
+    <html dir="{{ dir }}">
     <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
