@@ -3,25 +3,38 @@
 {% block bodycontent %}
     <div class="row">
     <div class="card container">
-        <div class="card-header"><h3>All Residence</h3></div>
+        <div class="card-header"><h3>{% trans 'All Residence' %}</h3></div>
   <div class="card-body">
-<form>
+<form id="search_residence">{% csrf_token %}
+    {% for message in messages %}
+        {% if message.title == 'errors' %}
+        <div class="alert alert-danger">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+                        {{ message.errors }}
+                    </div>
+        {% else %}
+        <div class="alert alert-success">
+                        <a class="close" href="#" data-dismiss="alert">×</a>
+                        {{ message.success }}
+                    </div>
+        {% endif %}
+            {% endfor %}
   <div class="form-row">
     <div class="col-md-4 mb-3 form-group">
-      <label for="id_Name">Name</label>
-      <input type="text" class="form-control" id="id_Name" name="Name">
+      <label for="id_name">{% trans 'name' %}</label>
+      <input type="text" class="form-control" id="id_name" name="name">
     </div>
     <div class="col-md-4 mb-3 form-group">
-    <label for="id_Type">Select Type</label>
-    <select class="form-control" id="id_Type" name="Type">
+    <label for="id_type">{% trans 'Select Type' %}</label>
+    <select class="form-control" id="id_type" name="type">
       <option>Apartment</option>
       <option>Complex</option>
       <option>Local Store</option>
     </select>
     </div>
     <div class="col-md-4 mb-3 form-group">
-      <label for="id_Adress">Address</label>
-      <input type="text" class="form-control" id="id_Adress" name="Adress">
+      <label for="id_address">{% trans 'Address' %}</label>
+      <input type="text" class="form-control" id="id_address" name="address">
     </div>
   </div>
 
@@ -29,11 +42,11 @@
 </form>
       <hr/>
       <!-- start table part -->
-      <table class="table table-responsive-sm table-hover table-outline mb-0">
+      <table id="residence_table"class="table table-responsive-sm table-hover table-outline mb-0">
   <thead class="thead-light">
     <tr>
       <th scope="col">id</th>
-      <th scope="col">Name</th>
+      <th scope="col">name</th>
       <th scope="col">Type</th>
       <th scope="col">Address</th>
       <th scope="col">CoordinatePoint</th>
@@ -41,74 +54,48 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Yas</td>
-      <td>Apartment</td>
-      <td>SattarKhan</td>
-      <td>0.05987,0.07659</td>
-      <td><a class="btn btn-success" href="#" alt="show">
+{#    <tr>#}
+{#      <th scope="row">1</th>#}
+{#      <td>Yas</td>#}
+{#      <td>Apartment</td>#}
+{#      <td>SattarKhan</td>#}
+{#      <td>0.05987,0.07659</td>#}
+{#      <td><button class="btn btn-success" href="#" alt="show">#}
+{#        <svg class="c-icon">#}
+{#        <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>#}
+{#        </svg></button>&nbsp;<button class="btn btn-info" alt="edit" href="#">#}
+{#        <svg class="c-icon">#}
+{#        <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>#}
+{#        </svg></button>&nbsp;<button class="btn btn-danger" alt="delete" href="#">#}
+{#        <svg class="c-icon">#}
+{#        <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>#}
+{#        </svg></button></td>#}
+{#    </tr>#}
+    {% if residences %}
+   {% for residence in residences %}
+    <tr id="residence_{{ residence.residence_id }}">
+      <th scope="row">{{ residence.residence_id }}</th>
+      <td>{{ residence.name }}</td>
+      <td>{{ residence.type }}</td>
+      <td>{{ residence.address }}</td>
+      <td>{{ residence.latitude }}</td>
+         <td><button class="btn btn-success" onclick="show_residence({{ residence.residence_id }})" title="show">
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
-        </svg></a>&nbsp;<a class="btn btn-info" alt="edit" href="#">
+        </svg></button>&nbsp;<button class="btn btn-info" title="edit" onclick="edit_residence({{ residence.residence_id }}">
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
-        </svg></a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">
+        </svg></button>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_residence({{ residence.residence_id }})">
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
-        </svg></a></td>
+        </svg></button></td>
     </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Fredows</td>
-      <td>Apartment</td>
-      <td>Towhid</td>
-      <td>0.05987,0.07659</td>
-        <td><a class="btn btn-success" href="#" alt="show">
-        <svg class="c-icon">
-        <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
-        </svg></a>&nbsp;<a class="btn btn-info" alt="edit" href="#">
-        <svg class="c-icon">
-        <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
-        </svg></a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">
-        <svg class="c-icon">
-        <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
-        </svg></a></td>
-    </tr>
-   <tr>
-      <th scope="row">3</th>
-      <td>Fredows3</td>
-      <td>Apartment</td>
-      <td>Enghelab</td>
-      <td>0.05987,0.07610</td>
-         <td><a class="btn btn-success" href="#" title="show">
-        <svg class="c-icon">
-        <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
-        </svg></a>&nbsp;<a class="btn btn-info" title="edit" href="#">
-        <svg class="c-icon">
-        <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
-        </svg></a>&nbsp;<a class="btn btn-danger" title="delete" href="#">
-        <svg class="c-icon">
-        <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
-        </svg></a></td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>Fredows2</td>
-      <td>Apartment</td>
-      <td>Towhid</td>
-      <td>0.08487,0.07659</td>
-         <td><a class="btn btn-success" href="#" title="show">
-        <svg class="c-icon">
-        <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
-        </svg></a>&nbsp;<a class="btn btn-info" title="edit" href="#">
-        <svg class="c-icon">
-        <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
-        </svg></a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">
-        <svg class="c-icon">
-        <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
-        </svg></a></td>
-    </tr>
+  {% endfor %}
+    {% else %}
+        <tr><td class="text-center" colspan="100%">
+            No Residence ...
+        </td></tr>
+            {% endif %}
   </tbody>
 </table><hr/>
       <!-- Pagination -->
@@ -125,3 +112,43 @@
     </div>
     </div>
 {% endblock bodycontent %}
+{% block c-script %}
+    <script type="text/javascript">
+        {#    send search form items with json#}
+    $(document).on('submit','#search_residence',function (e) {
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url: '/dashboard/residence/',
+{#            dataType: 'json',#}
+{#            contentType: 'application/json; charset=utf-8',#}
+            data:{
+                name:$('#id_name').val(),
+                type: $('#id_type').val(),
+                address:$('#id_address').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function () {
+            }
+        });
+    });
+         {#     function for delete items#}
+  function delete_residence(residence_id) {
+  var action = confirm("Are you sure you want to delete this residence?");
+  if (action != false) {
+    $.ajax({
+        url: '{% url "building:delete_residence_page" %}',
+        data: {
+            'residence_id': residence_id,
+        },
+{#        dataType: 'json',#}
+        success: function (data) {
+            if (data.deleted) {
+              $("#residence_table #residence_" + residence_id).remove();
+            }
+        }
+    });
+  }
+}
+    </script>
+{% endblock c-script %}
