@@ -1,33 +1,34 @@
 # from django.contrib.gis.db import models as gis_models
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django_mysql.models import EnumField
 
-from building.enums import ResidencesType, FacilitiesType, UnitUserType, FacilityResidenceAccessibilitiesType
+from building.enums import ResidenceType, FacilityType, UnitUserType, FacilityResidenceAccessibilitiesType
 from core.models import BaseModel
 from users.models import User
 
 
-class Residences(BaseModel):
-    RESIDENCES_TYPE_CHOICES = (
-        (ResidencesType.BUILDING, _('Building')),
-        (ResidencesType.COMPLEX, _('Complex')),
-        (ResidencesType.LOCAL_SHOP, _('Local shop')),
-        (ResidencesType.TOWN, _('Town')),
+class Residence(BaseModel):
+    RESIDENCE_TYPE_CHOICES = (
+        (ResidenceType.BUILDING, _('Building')),
+        (ResidenceType.COMPLEX, _('Complex')),
+        (ResidenceType.LOCAL_SHOP, _('Local shop')),
+        (ResidenceType.TOWN, _('Town')),
     )
 
-    parent_residences = models.ForeignKey(
-        verbose_name=_('parent residences'),
-        help_text=_('parent residences for this residences'),
+    parent_residence = models.ForeignKey(
+        verbose_name=_('parent residence'),
+        help_text=_('parent residence for this residence'),
         to='self',
         on_delete=models.PROTECT,
-        related_name='residences_parent',
+        related_name='residence_parent',
         blank=True,
         null=True,
     )
 
     manager = models.ForeignKey(
         verbose_name=_('manager'),
-        help_text=_('manager for this residences'),
+        help_text=_('manager for this residence'),
         to=User,
         on_delete=models.PROTECT,
         related_name='managers'
@@ -35,55 +36,54 @@ class Residences(BaseModel):
 
     name = models.CharField(
         verbose_name=_('name'),
-        help_text=_('residences name'),
+        help_text=_('residence name'),
         max_length=255
     )
 
-    type = models.CharField(
+    type = EnumField(
         verbose_name=_('type'),
-        help_text=_('type of this residences'),
-        max_length=32,
-        choices=RESIDENCES_TYPE_CHOICES,
-        default=ResidencesType.BUILDING,
+        help_text=_('type of this residence'),
+        choices=RESIDENCE_TYPE_CHOICES,
+        default=ResidenceType.BUILDING,
     )
 
     address = models.TextField(
         verbose_name=_('Address'),
-        help_text=_('Address of residences'),
+        help_text=_('Address of residence'),
     )
 
     # coordinate = gis_models.PointField(
     #     verbose_name=_('coordinate'),
-    #     help_text=_('coordinate for this residences'),
+    #     help_text=_('coordinate for this residence'),
     # )
 
     rules = models.TextField(
         verbose_name=_('rules'),
-        help_text=_('rules for this residences'),
+        help_text=_('rules for this residence'),
     )
 
     appendix_to_statute = models.TextField(
         verbose_name=_('appendix to statute'),
-        help_text=_('appendix to statute for this residences'),
+        help_text=_('appendix to statute for this residence'),
     )
 
     users_board = models.ManyToManyField(
         verbose_name=_('users board'),
         help_text=_('users board'),
         to=User,
-        through='BoardOfDirectors',
+        through='BoardOfDirector',
     )
 
     def __str__(self):
         return self.name
 
 
-class Facilities(BaseModel):
+class Facility(BaseModel):
     FACILITIES_TYPE_CHOICES = (
-        (FacilitiesType.RESIDENCE, _('Residence')),
-        (FacilitiesType.ALL, _('All')),
-        (FacilitiesType.BLOCK, _('Block')),
-        (FacilitiesType.UNIT, _('Unit')),
+        (FacilityType.RESIDENCE, _('Residence')),
+        (FacilityType.ALL, _('All')),
+        (FacilityType.BLOCK, _('Block')),
+        (FacilityType.UNIT, _('Unit')),
     )
 
     title = models.CharField(
@@ -97,17 +97,16 @@ class Facilities(BaseModel):
         help_text=_('description for this facility'),
     )
 
-    type = models.CharField(
+    type = EnumField(
         verbose_name=_('Type'),
-        help_text=_('type of Facilities'),
-        max_length=32,
+        help_text=_('type of Facility'),
         choices=FACILITIES_TYPE_CHOICES,
-        default=FacilitiesType.BLOCK,
+        default=FacilityType.BLOCK,
     )
 
     units = models.ManyToManyField(
         verbose_name=_('Units'),
-        help_text=_('Units for this Facilities'),
+        help_text=_('Units for this Facility'),
         to='Unit',
         through='FacilityUnit',
     )
@@ -117,10 +116,10 @@ class Facilities(BaseModel):
 
 
 class Unit(BaseModel):
-    residences = models.ForeignKey(
-        verbose_name=_('residences'),
-        help_text=_('residences of this unit'),
-        to=Residences,
+    residence = models.ForeignKey(
+        verbose_name=_('residence'),
+        help_text=_('residence of this unit'),
+        to=Residence,
         on_delete=models.CASCADE,
     )
 
@@ -137,11 +136,11 @@ class Unit(BaseModel):
     )
 
     # def __str__(self):
-    #     return self.residences
+    #     return self.residence
 
     users = models.ManyToManyField(
         verbose_name=_('users'),
-        help_text=_('users for Units'),
+        help_text=_('users for Unit'),
         to=User,
         through='UnitUser',
     )
@@ -159,7 +158,7 @@ class FacilityUnit(BaseModel):
     facility = models.ForeignKey(
         verbose_name=_('facility'),
         help_text=_('facility for this facility unit'),
-        to=Facilities,
+        to=Facility,
         on_delete=models.CASCADE
     )
 
@@ -177,9 +176,9 @@ class FacilityUnit(BaseModel):
 
 class Block(BaseModel):
     residence = models.ForeignKey(
-        verbose_name=_('residences'),
+        verbose_name=_('residence'),
         help_text=_('residence for this block'),
-        to=Residences,
+        to=Residence,
         on_delete=models.PROTECT,
     )
 
@@ -225,12 +224,11 @@ class UnitUser(BaseModel):
         on_delete=models.CASCADE,
     )
 
-    type = models.CharField(
+    type = EnumField(
         verbose_name=_('type'),
         help_text=_('type of user'),
         choices=UNIT_USER_TYPE_CHOICES,
         default=UnitUserType.RESIDENT,
-        max_length=32,
     )
 
     confirmed = models.BooleanField(
@@ -240,11 +238,11 @@ class UnitUser(BaseModel):
     )
 
 
-class BoardOfDirectors(BaseModel):
+class BoardOfDirector(BaseModel):
     residence = models.ForeignKey(
         verbose_name=_('residence'),
         help_text=_('residence of board'),
-        to=Residences,
+        to=Residence,
         on_delete=models.CASCADE
     )
 
@@ -253,7 +251,7 @@ class BoardOfDirectors(BaseModel):
         help_text=_('user of board'),
         to=User,
         on_delete=models.CASCADE,
-        related_name='residences_board'
+        related_name='residence_board'
     )
 
     role = models.CharField(
@@ -267,14 +265,14 @@ class FacilityResidence(BaseModel):
     residence = models.ForeignKey(
         verbose_name=_('residence'),
         help_text=_('residence for this facility residence'),
-        to=Residences,
+        to=Residence,
         on_delete=models.CASCADE,
     )
 
     facility = models.ForeignKey(
         verbose_name=_('facility'),
         help_text=_('facility for this facility residence'),
-        to=Facilities,
+        to=Facility,
         on_delete=models.CASCADE,
     )
 
@@ -306,12 +304,12 @@ class FacilityResidence(BaseModel):
         verbose_name=_('blocks'),
         help_text=_('blocks for this this facility residence'),
         to=Block,
-        related_name='facility_residences',
+        related_name='facility_residence',
     )
 
 
-class FacilityResidenceAccessabilities(BaseModel):
-    FACILITY_RESIDENCE_ACCESSIBLILITY_CHOICES = (
+class FacilityResidenceAccessibility(BaseModel):
+    FACILITY_RESIDENCE_ACCESSIBILITY_CHOICES = (
         (FacilityResidenceAccessibilitiesType.PUBLIC, _('Public')),
         (FacilityResidenceAccessibilitiesType.BLOCK, _('Block')),
         (FacilityResidenceAccessibilitiesType.UNIT, _('Unit')),
@@ -325,11 +323,10 @@ class FacilityResidenceAccessabilities(BaseModel):
         on_delete=models.CASCADE,
     )
 
-    type = models.CharField(
+    type = EnumField(
         verbose_name=_('type'),
         help_text=_('choose type for this accessibility'),
-        choices=FACILITY_RESIDENCE_ACCESSIBLILITY_CHOICES,
-        max_length=32,
+        choices=FACILITY_RESIDENCE_ACCESSIBILITY_CHOICES,
     )
 
     accessible = models.BigIntegerField(

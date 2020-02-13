@@ -1,11 +1,11 @@
-class ResidencesType:
+class ResidenceType:
     BUILDING = 'BUILDING'
     TOWN = 'TOWN'
     COMPLEX = 'COMPLEX'
     LOCAL_SHOP = 'LOCAL_SHOP'
 
 
-class FacilitiesType:
+class FacilityType:
     RESIDENCE = 'RESIDENCE'
     BLOCK = 'BLOCK'
     UNIT = 'UNIT'

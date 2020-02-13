@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
-from core.managers import BaseManager
+from django_mysql.models import QuerySet
 
 
 class BaseModel(models.Model):
@@ -17,7 +16,7 @@ class BaseModel(models.Model):
         auto_now=True,
     )
 
-    objects = BaseManager()
+    objects = QuerySet.as_manager()
 
     class Meta:
         abstract = True
