@@ -8,54 +8,54 @@ from core.serializers import CoreModelSerializer
 class ResidenceSerializer(CoreModelSerializer):
     class Meta:
         model = Residence
-        fields = ['parent_residence', 'manager', 'name', 'type', 'address', 'rules',
+        fields = ['id', 'parent_residence', 'manager', 'name', 'type', 'address', 'rules',
                   'appendix_to_statute', 'users_board']
 
 
 class FacilitySerializer(CoreModelSerializer):
     class Meta:
         model = Facility
-        fields = ['title', 'description', 'type', 'units']
+        fields = ['id', 'title', 'description', 'type', 'units']
 
 
 class UnitSerializer(CoreModelSerializer):
     class Meta:
         model = Unit
-        fields = ['residence', 'area', 'population', 'users']
+        fields = ['id', 'residence', 'area', 'population', 'users']
 
 
 class FacilityUnitSerializer(CoreModelSerializer):
     class Meta:
         model = FacilityUnit
-        fields = ['unit', 'facility', 'second_title', 'description']
+        fields = ['id', 'unit', 'facility', 'second_title', 'description']
 
 
 class BlockSerializer(CoreModelSerializer):
     class Meta:
         model = Block
-        fields = ['residence', 'name', 'number_of_floors', 'number_of_units']
+        fields = ['id', 'residence', 'name', 'number_of_floors', 'number_of_units']
 
 
 class UnitUserSerializer(CoreModelSerializer):
     class Meta:
         model = UnitUser
-        fields = ['user', 'unit', 'type', 'confirmed']
+        fields = ['id', 'user', 'unit', 'type', 'confirmed']
 
 
 class BoardOfDirectorSerializer(CoreModelSerializer):
     class Meta:
         model = BoardOfDirector
-        fields = ['residence', 'user', 'role']
+        fields = ['id', 'residence', 'user', 'role']
 
 
 class FacilityResidenceSerializer(CoreModelSerializer):
     class Meta:
         model = FacilityResidence
-        fields = ['residence', 'facility', 'second_title', 'description', 'requestable',
+        fields = ['id', 'residence', 'facility', 'second_title', 'description', 'requestable',
                   'price', 'blocks']
 
 
 class FacilityResidenceAccessibilitySerializer(CoreModelSerializer):
     class Meta:
         model = FacilityResidenceAccessibility
-        fields = ['facility_residence', 'type', 'accessible']
+        fields = ['id', 'facility_residence', 'type', 'accessible']
