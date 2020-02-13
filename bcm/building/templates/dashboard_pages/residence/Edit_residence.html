@@ -1,0 +1,63 @@
+{% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static %}
+{% block bodycontent %}
+    <form class="form-horizontal">
+    {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="c-card-header">
+                        <strong>Residence info</strong></div>
+                    <div class="c-card-body">
+                        <div class="form-group">
+                            <label for="id_name">name</label>
+                            <input type="text" class="form-control" id="id_name" name="{{ residence.name }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_coordinate">Coordinate points</label>
+                            <input type="text" class="form-control" name="{{ residence.latitude }}" id="id_latitude" placeholder="Coordinate points"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_type">Select Type</label>
+                            <select class="form-control" id="id_type" name="{{ residence.type }}">
+                                <option>Apartment</option>
+                                <option>Complex</option>
+                                <option>Local Store</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="id_address">Address</label>
+                            <textarea class="form-control" id="id_address" name="{{ residence.address }}" rows="1"
+                                      placeholder="Address..." spellcheck="false"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="id_rules">Rules</label>
+                            <textarea class="form-control" id="id_rules" name="{{ residence.rules }}" rows="1"
+                                      placeholder="Rules.." spellcheck="false"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  Second Part  -->
+            <div class="col-sm-6">
+
+                <div class="card">
+                    <div class="c-card-header">
+                        <strong>Set Coordinate Points</strong></div>
+                    <div class="c-card-body">
+                        <br/>
+                        <div id="map" class="map"></div>
+                        <br/>
+                        </div>
+
+                    </div>
+                </div>
+        </div>
+    </form>
+
+{% endblock bodycontent %}
+{% block c-script %}
+{#    <script src="https://maps.googleapis.com/maps/js?key=AIzaSyCYCDv3Xc3H2HVpNdvps3tYmky2HWxeT_E&callback=myMap"></script>#}
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+{% endblock c-script %}

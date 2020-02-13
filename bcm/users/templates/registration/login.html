@@ -18,8 +18,7 @@
 {#</html>#}
 
 {% extends 'base.html' %}{# in this Line, Parent of this Page will Define! #}
-{% load static %}
-{% load i18n %}
+{% load static i18n %}
 {% block title %}
     <title>{% trans 'BCM Application Sign In Page' %}</title>
 {% endblock title %}
@@ -52,14 +51,14 @@
                         <label class="custom-control-label" for="customCheck1">{% trans 'Remember password' %}</label>
                     </div>
                     <input class="btn btn-signform btn-lg btn-primary btn-block text-uppercase" type="submit"
-                           value="Sign in">
+                           value="{% trans 'Sign in' %}">
                     <div class="text-center"><a class="small" href="#">{% trans 'Forgot password?' %}</a></div>
 
                 </form>
                 <hr class="my-4">
                 <a class="Remove-text-decoration" href="{% url 'users:register' %}">
                     <button class="btn btn-signform btn-lg btn-block btn-signup text-uppercase" type="button"><i
-                            class="fab mr-2"></i> Sign Up
+                            class="fab mr-2"></i>{% trans 'Sign Up' %}
                     </button>
                 </a>
                 {#  End of Sign in Form  #}

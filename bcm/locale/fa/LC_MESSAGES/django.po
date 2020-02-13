@@ -55,6 +55,15 @@ msgstr "نام کاربری"
 msgid "Password"
 msgstr "گذرواژه"
 
+#: bcm/users/templates/registration/login.html:61
+#: bcm/users/templates/users/signup.html:91
+msgid "Sign Up"
+msgstr "ثبت نام"
+
+#: bcm/users/templates/registration/login.html:54
+msgid "Sign in"
+msgstr "ورود"
+
 #: bcm/users/models.py:13 bcm/users/templates/users/signup.html:64
 msgid "Building manager"
 msgstr "مدیر ساختمان"

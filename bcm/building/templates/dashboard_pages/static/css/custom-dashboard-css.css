@@ -1,0 +1,21 @@
+.map {
+    height: 400px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+.c-wrapper .c-header-fullwidth {
+  margin: auto;
+}
+.c-subheader-pos {
+  margin: inherit;
+}
+html:not([dir="rtl"]) .c-sidebar.c-sidebar-lg-show:not(.c-sidebar-right).c-sidebar-fixed ~ .c-wrapper, html:not([dir="rtl"]) .c-sidebar.c-sidebar-show:not(.c-sidebar-right).c-sidebar-fixed ~ .c-wrapper-margin {
+  margin-left: 200px;
+}
+.btn-block-add:not([dir="rtl"]) {
+    float: right;
+}
+*[dir="rtl"] .btn-block-add {
+    float: left;
+}

@@ -99,15 +99,15 @@ class Facilities(BaseModel):
 
     type = models.CharField(
         verbose_name=_('Type'),
-        help_text=_('type of facilities'),
+        help_text=_('type of Facilities'),
         max_length=32,
         choices=FACILITIES_TYPE_CHOICES,
         default=FacilitiesType.BLOCK,
     )
 
     units = models.ManyToManyField(
-        verbose_name=_('units'),
-        help_text=_('units for this facilities'),
+        verbose_name=_('Units'),
+        help_text=_('Units for this Facilities'),
         to='Unit',
         through='FacilityUnit',
     )
@@ -141,7 +141,7 @@ class Unit(BaseModel):
 
     users = models.ManyToManyField(
         verbose_name=_('users'),
-        help_text=_('users for units'),
+        help_text=_('users for Units'),
         to=User,
         through='UnitUser',
     )
@@ -195,8 +195,8 @@ class Block(BaseModel):
     )
 
     number_of_units = models.PositiveIntegerField(
-        verbose_name=_('number of units'),
-        help_text=_('number of block units'),
+        verbose_name=_('number of Units'),
+        help_text=_('number of block Units'),
     )
 
     def __str__(self):
@@ -215,7 +215,7 @@ class UnitUser(BaseModel):
         help_text=_('user for this user unit'),
         to=User,
         on_delete=models.CASCADE,
-        related_name='units',
+        related_name='Units',
     )
 
     unit = models.ForeignKey(

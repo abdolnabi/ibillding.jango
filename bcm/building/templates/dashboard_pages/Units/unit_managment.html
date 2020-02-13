@@ -1,0 +1,187 @@
+{% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div class="row">
+        <div class="card container">
+            <div class="card-header"><h3>All Units</h3></div>
+            <div class="card-body">
+                <form id="search_unit">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3 form-group">
+                            <label for="id_residence_search">Residence Name</label>
+                            <select class="form-control" id="id_residence_search" name="residence_search">
+                                <option defualt></option>
+                                <option>name 1</option>
+                                <option>name 2</option>
+                                <option>name 3</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3 form-group">
+                            <label for="id_area_search">Area</label>
+                            <input type="number" step="0.01" class="form-control" id="id_area_search" name="area_search">
+                        </div>
+                        <div class="col-md-4 mb-3 form-group">
+                            <label for="id_population_search">Population</label>
+                            <input type="text" class="form-control" id="id_population_search" name="population_search">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Filter</button>
+                </form>
+
+                {#   ADD new Block section  #}
+                <p>
+                    <button class="btn btn-primary collapsed btn-block-add" type="button" data-toggle="collapse"
+                            data-target="#new_unit" aria-expanded="false" aria-controls="new_unit">Add New Unit
+                    </button>
+                    <br/>
+                </p>
+                <div class="collapse" id="new_unit" style="">
+                    <div class="card card-body">
+                    {% include "../../dashboard_pages/Units/form/unit_new_form.html" %}
+                    </div>
+                </div>
+
+
+                <hr/>
+                <!-- start table part -->
+                <table id="unit_table" class="table table-responsive-sm table-hover table-outline mb-0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">Residence Name</th>
+                        <th scope="col">Area</th>
+                        <th scope="col">Population</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+{#                    <tr>#}
+{#                        <th scope="row">1</th>#}
+{#                        <td>Yas</td>#}
+{#                        <td>110</td>#}
+{#                        <td>3</td>#}
+{#                        <td><a class="btn btn-success" href="#" alt="show">#}
+{#                            <svg class="c-icon">#}
+{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>#}
+{#                            </svg>#}
+{#                        </a>&nbsp;<a class="btn btn-info" alt="edit" href="#">#}
+{#                            <svg class="c-icon">#}
+{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>#}
+{#                            </svg>#}
+{#                        </a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">#}
+{#                            <svg class="c-icon">#}
+{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>#}
+{#                            </svg>#}
+{#                        </a></td>#}
+{#                    </tr>#}
+    {% if units %}
+            {% for unit in units %}
+                    <tr id="unit_{{ unit.unit_id }}">
+                        <th scope="row">{{ unit.unit_id }}</th>
+                        <td>{{ unit.residence }}</td>
+                        <td>{{ unit.area }}</td>
+                        <td>{{ unit.population }}</td>
+                        <td><button class="btn btn-success" onclick="" title="show">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
+                            </svg>
+                        </button>&nbsp;<button class="btn btn-info" title="edit" onclick="">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+                            </svg>
+                        </button>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_unit({{ unit.unit_id }}">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
+                            </svg>
+                        </button></td>
+                    </tr>
+            {% endfor %}
+                    {% else %}
+        <tr><td class="text-center" colspan="100%">
+        No Unit ...
+        </td></tr>
+            {% endif %}
+                    </tbody>
+                </table>
+                <hr/>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock bodycontent %}
+{% block c-script %}
+    <script type="text/javascript">
+        {#    send search form items with json#}
+    $(document).on('submit','#search_block',function (e) {
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url: '{% url "building:unit_manage_page" %}',
+{#            dataType: 'json',#}
+{#            contentType: 'application/json; charset=utf-8',#}
+            data:{
+                residence:$('#id_residence_search').val(),
+                area: $('#id_area_search').val(),
+                population:$('#id_population_search').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+
+
+            },
+            success:function () {
+
+            }
+        });
+    });
+        {#    function for add new item by quick form#}
+     $(document).on('submit','#add_new_unit',function (e) {
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url: '{% url "building:unit_manage_page" %}',
+{#            dataType: 'json',#}
+{#            contentType: 'application/json; charset=utf-8',#}
+            data:{
+                residence:$('#id_residence').val(),
+                area: $('#id_area').val(),
+                population:$('#id_population').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+            },
+            success:function(data) {
+                $("#new_unit_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>Item added successfully!</div>");
+            },
+            error: function(data) {
+                $("#new_unit_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>something is Wrong!</div>");
+            }
+        });
+    });
+        {#     function for delete items#}
+       function delete_unit(unit_id) {
+  var action = confirm("Are you sure you want to delete this unit?");
+  if (action != false) {
+    $.ajax({
+        url: '{% url "building:delete_unit_page" %}',
+        data: {
+            'unit_id': unit_id,
+        },
+{#        dataType: 'json',#}
+        success: function (data) {
+            if (data.deleted) {
+              $("#unit_table #unit_" + unit_id).remove();
+            }
+        }
+    });
+  }
+}
+    </script>
+{% endblock c-script %}

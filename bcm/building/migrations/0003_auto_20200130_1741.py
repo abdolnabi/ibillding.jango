@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                 ('modified', models.DateTimeField(auto_now=True, help_text='object modification time', verbose_name='modified')),
                 ('title', models.CharField(help_text='title for this facility', max_length=255, verbose_name='title')),
                 ('description', models.TextField(help_text='description for this facility', verbose_name='description')),
-                ('type', models.CharField(choices=[('RESIDENCE', 'Residence'), ('ALL', 'All'), ('BLOCK', 'Block'), ('UNIT', 'Unit')], default='BLOCK', help_text='type of facilities', max_length=32, verbose_name='Type')),
+                ('type', models.CharField(choices=[('RESIDENCE', 'Residence'), ('ALL', 'All'), ('BLOCK', 'Block'), ('UNIT', 'Unit')], default='BLOCK', help_text='type of Facilities', max_length=32, verbose_name='Type')),
             ],
             options={
                 'abstract': False,
@@ -55,8 +55,8 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.AddField(
-            model_name='facilities',
-            name='units',
-            field=models.ManyToManyField(help_text='units for this facilities', through='building.FacilityUnit', to='building.Unit', verbose_name='units'),
+            model_name='Facilities',
+            name='Units',
+            field=models.ManyToManyField(help_text='Units for this Facilities', through='building.FacilityUnit', to='building.Unit', verbose_name='Units'),
         ),
     ]

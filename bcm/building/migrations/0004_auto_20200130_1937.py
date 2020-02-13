@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('type', models.CharField(choices=[('RESIDENT', 'Resident'), ('BOTH', 'Both'), ('OWNER', 'Owner')], default='RESIDENT', help_text='type of user', max_length=32, verbose_name='type')),
                 ('confirmed', models.BooleanField(default=True, help_text='confirmation for user', verbose_name='confirmed')),
                 ('unit', models.ForeignKey(help_text='unit for this user unit', on_delete=django.db.models.deletion.CASCADE, to='building.Unit', verbose_name='unit')),
-                ('user', models.ForeignKey(help_text='user for this user unit', on_delete=django.db.models.deletion.CASCADE, related_name='units', to=settings.AUTH_USER_MODEL, verbose_name='user')),
+                ('user', models.ForeignKey(help_text='user for this user unit', on_delete=django.db.models.deletion.CASCADE, related_name='Units', to=settings.AUTH_USER_MODEL, verbose_name='user')),
             ],
             options={
                 'abstract': False,
@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('modified', models.DateTimeField(auto_now=True, help_text='object modification time', verbose_name='modified')),
                 ('name', models.CharField(help_text='name of block', max_length=255, verbose_name='name')),
                 ('number_of_floors', models.PositiveIntegerField(help_text='number of block floors', verbose_name='number of floors')),
-                ('number_of_units', models.PositiveIntegerField(help_text='number of block units', verbose_name='number of units')),
+                ('number_of_units', models.PositiveIntegerField(help_text='number of block Units', verbose_name='number of Units')),
                 ('residence', models.ForeignKey(help_text='residence for this block', on_delete=django.db.models.deletion.PROTECT, to='building.Residences', verbose_name='residences')),
             ],
             options={
@@ -46,6 +46,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='unit',
             name='users',
-            field=models.ManyToManyField(help_text='users for units', through='building.UnitUser', to=settings.AUTH_USER_MODEL, verbose_name='users'),
+            field=models.ManyToManyField(help_text='users for Units', through='building.UnitUser', to=settings.AUTH_USER_MODEL, verbose_name='users'),
         ),
     ]
