@@ -1,67 +1,8 @@
 {
-  "name": "bcm_package",
-  "version": "1.0.0",
-  "description": "Apartment Managment System",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Renewablion/BCM.git"
-  },
-  "keywords": [
-    "BCM"
-  ],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Renewablion/BCM/issues"
-  },
-  "homepage": "https://github.com/Renewablion/BCM#readme",
-  "dependencies": {
-    "@coreui/coreui": "^3.0.0-beta.4"
-  },
   "name": "@coreui/coreui-free-bootstrap-admin-template",
   "version": "3.0.0-alpha.2",
   "description": "Free Bootstrap Admin Template",
-  "keywords": [
-    "admin",
-    "admin panel",
-    "admin template",
-    "bootstrap",
-    "css",
-    "dashboard",
-    "framework",
-    "front-end",
-    "responsive",
-    "sass",
-    "ui kit",
-    "webapp"
-  ],
-  "homepage": "https://coreui.io",
-  "bugs": {
-    "url": "https://github.com/coreui/coreui-free-bootstrap-admin-template/issues",
-    "email": "support@coreui.io"
-  },
-  "license": "MIT",
-  "author": {
-    "name": "Łukasz Holeczek",
-    "url": "http://holeczek.pl",
-    "github": "https://github.com/mrholek",
-    "twitter": "https://twitter.com/lukaszholeczek"
-  },
-  "contributors": [
-    {
-      "name": "Andrzej Kopański",
-      "url": "https://github.com/xidedix"
-    }
-  ],
   "main": "src/index.html",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/coreui/coreui-free-bootstrap-admin-template.git"
-  },
   "scripts": {
     "build": "npm-run-all build-clean --parallel css js copy --sequential build-vendors",
     "build-clean": "rimraf dist",
@@ -98,6 +39,36 @@
     "watch-pug": "node build/watch-pug.js",
     "watch-views": "nodemon -e html -x \"npm-run-all --sequential copy-views build-vendors svg localhost-reload\""
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coreui/coreui-free-bootstrap-admin-template.git"
+  },
+  "keywords": [
+    "admin",
+    "admin panel",
+    "admin template",
+    "bootstrap",
+    "css",
+    "dashboard",
+    "framework",
+    "front-end",
+    "responsive",
+    "sass",
+    "ui kit",
+    "webapp"
+  ],
+  "author": {
+    "name": "Łukasz Holeczek",
+    "url": "http://holeczek.pl",
+    "github": "https://github.com/mrholek",
+    "twitter": "https://twitter.com/lukaszholeczek"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coreui/coreui-free-bootstrap-admin-template/issues",
+    "email": "support@coreui.io"
+  },
+  "homepage": "https://coreui.io",
   "dependencies": {
     "@coreui/coreui": "^3.0.0-beta.2",
     "@coreui/coreui-chartjs": "^2.0.0-alpha.2",
@@ -107,6 +78,12 @@
     "pace-progress": "1.0.2",
     "perfect-scrollbar": "1.4.0"
   },
+  "contributors": [
+    {
+      "name": "Andrzej Kopański",
+      "url": "https://github.com/xidedix"
+    }
+  ],
   "devDependencies": {
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
@@ -162,4 +139,3 @@
     "Opera >= 30"
   ]
 }
-

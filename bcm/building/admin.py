@@ -1,20 +1,22 @@
 from django.contrib import admin
-from building.models import (Residences, Facilities, Unit, FacilityUnit, Block, UnitUser, BoardOfDirectors,
-                             FacilityResidence, FacilityResidenceAccessabilities)
+from building.models import (
+    Residence, Facility, Unit, FacilityUnit, Block, UnitUser, BoardOfDirector,
+    FacilityResidence, FacilityResidenceAccessibility
+)
 
 
-class ResidencesAdmin(admin.ModelAdmin):
+class ResidenceAdmin(admin.ModelAdmin):
     list_display = ('manager', 'name', 'type',)
     list_filter = ('created',)
 
 
-class FacilitiesAdmin(admin.ModelAdmin):
+class FacilityAdmin(admin.ModelAdmin):
     list_display = ('title', 'type')
     list_filter = ('type',)
 
 
 class UnitAdmin(admin.ModelAdmin):
-    list_display = ('residences', 'population')
+    list_display = ('residence', 'population')
     list_filter = ('created',)
 
 
@@ -32,7 +34,7 @@ class UnitUserAdmin(admin.ModelAdmin):
     list_filter = ('type', 'confirmed')
 
 
-class BoardOfDirectorsAdmin(admin.ModelAdmin):
+class BoardOfDirectorAdmin(admin.ModelAdmin):
     list_display = ('residence', 'user', 'role')
     list_filter = ('role',)
 
@@ -42,17 +44,17 @@ class FacilityResidenceAdmin(admin.ModelAdmin):
     list_filter = ('requestable',)
 
 
-class FacilityResidenceAccessabilitiesAdmin(admin.ModelAdmin):
+class FacilityResidenceAccessibilityAdmin(admin.ModelAdmin):
     list_display = ('facility_residence', 'type', 'accessible',)
     list_filter = ('type', 'accessible',)
 
 
-admin.site.register(FacilityResidenceAccessabilities, FacilityResidenceAccessabilitiesAdmin)
+admin.site.register(FacilityResidenceAccessibility, FacilityResidenceAccessibilityAdmin)
 admin.site.register(FacilityResidence, FacilityResidenceAdmin)
-admin.site.register(BoardOfDirectors, BoardOfDirectorsAdmin)
+admin.site.register(BoardOfDirector, BoardOfDirectorAdmin)
 admin.site.register(UnitUser, UnitUserAdmin)
 admin.site.register(Block, BlockAdmin)
 admin.site.register(FacilityUnit, FacilityUnitAdmin)
 admin.site.register(Unit, UnitAdmin)
-admin.site.register(Facilities, FacilitiesAdmin)
-admin.site.register(Residences, ResidencesAdmin)
+admin.site.register(Facility, FacilityAdmin)
+admin.site.register(Residence, ResidenceAdmin)

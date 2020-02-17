@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from django.utils.translation import gettext
-from django.utils import translation
+
 from users.forms import SignUpForm
 
 
