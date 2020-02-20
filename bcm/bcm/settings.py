@@ -162,3 +162,4 @@ LOCALE_PATHS = (
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
