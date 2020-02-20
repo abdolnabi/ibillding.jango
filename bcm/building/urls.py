@@ -3,10 +3,11 @@ from rest_framework.routers import DefaultRouter
 
 from building.views import (
     dashboard, residence_manage_page, new_residence_page, new_block_page, block_manage_page,
-    unit_manage_page, new_unit_page, facility_manage_page, new_facility_page, delete_residence_page, delete_block_page,
+    unit_manage_page, new_unit_page, facility_manage_page, new_facility_page, delete_residence_page,
     delete_unit_page, delete_facility_page, ResidenceViewSet, FacilityViewSet, UnitViewSet, FacilityUnitViewSet,
     BlockViewSet, UnitUserViewSet, BoardOfDirectorViewSet, FacilityResidenceViewSet,
-    FacilityResidenceAccessibilityViewSet
+    FacilityResidenceAccessibilityViewSet,edit_residence_page,show_residence_page,show_block_page,
+    edit_block_page,edit_unit_page,show_unit_page,edit_facility_page,show_facility_page
 )
 
 app_name = 'building'
@@ -31,21 +32,27 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
     path('dashboard/residence/', residence_manage_page, name='residence_manage_page'),
     path('dashboard/residence/new/', new_residence_page, name='new_residence_page'),
-    path('dashboard/residence/delete/', delete_residence_page, name='delete_residence_page'),
+    path('dashboard/residence/edit/<int:id>', edit_residence_page, name='edit_residence_page'),
+    path('dashboard/residence/show/<int:id>', show_residence_page, name='show_residence_page'),
+    # path('dashboard/residence/<int:id>', residence_page, name='residence_page'),
     # ####### Block Path ############
     path('dashboard/block/', block_manage_page, name='block_manage_page'),
     path('dashboard/block/new/', new_block_page, name='new_block_page'),
-    path('dashboard/block/delete/', delete_block_page, name='delete_block_page'),
+    path('dashboard/block/edit/<int:id>', edit_block_page, name='edit_block_page'),
+    # path('dashboard/block/update/<int:id>', update_block_page, name='update_block_page'),
+    path('dashboard/block/show/<int:id>', show_block_page, name='show_block_page'),
 
     # ####### Unit Path ############
     path('dashboard/unit/', unit_manage_page, name='unit_manage_page'),
     path('dashboard/unit/new/', new_unit_page, name='new_unit_page'),
-    path('dashboard/unit/delete/', delete_unit_page, name='delete_unit_page'),
+    path('dashboard/unit/edit/<int:id>', edit_unit_page, name='edit_unit_page'),
+    path('dashboard/unit/show/<int:id>', show_unit_page, name='show_unit_page'),
 
     # ####### Unit Path ############
     path('dashboard/facility/', facility_manage_page, name='facility_manage_page'),
     path('dashboard/facility/new/', new_facility_page, name='new_facility_page'),
-    path('dashboard/facility/delete/', delete_facility_page, name='delete_facility_page'),
+    path('dashboard/facility/edit/<int:id>', edit_facility_page, name='edit_facility_page'),
+    path('dashboard/facility/show/<int:id>', show_facility_page, name='show_facility_page'),
 
     # path('dashboard/facility/delete/', delete_facility_page, name='new_facility_page'),
     # path('dashboard/facility/edit/', edit_facility_page, name='new_facility_page'),

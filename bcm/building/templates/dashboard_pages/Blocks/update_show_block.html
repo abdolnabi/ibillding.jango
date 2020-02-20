@@ -1,0 +1,67 @@
+{% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div id="new_block_message"></div>
+    {#    {{ request_type }}#}
+    {% if request_type == 'edit' %}
+        <form class="form-horizontal" id='edit_block'>
+        {#    {% elif request_type == 'new' %}#}
+        {#        <form class="form-horizontal" id='new_block'>#}
+    {% else %}
+        <form class="form-horizontal" id='show_block'>
+    {% endif %}
+
+{% csrf_token %}
+
+{% include "../../dashboard_pages/blocks/form/block_form.html" %}
+</form>
+
+{% endblock bodycontent %}
+{% block c-script %}
+    {% if request_type == 'show' %}
+        <script type="text/javascript">
+            $('#show_block input').attr('disabled', true);
+            $('#show_block textarea').attr('disabled', true);
+            $('#show_block select').attr('disabled', true);
+            $('#show_block #block_btn').attr('type', 'submit').remove();
+
+        </script>
+    {% endif %}
+
+    <script type="text/javascript">
+
+        {#    if (request_type == 'edit'){#}
+        $(document).on('submit', '#edit_block', function (e) {
+            e.preventDefault();
+            // or display message in form, etc...
+            $.ajax({
+                type: 'PUT',
+                url: '{% url "building:block-detail" block_content.id %}',
+                dataType: 'json',
+                {#            contentType: 'application/json; charset=utf-8',#}
+                data: {
+                    'id': $('#id').val(),
+                    'residence': $('#id_residence').val(),
+                    'name': $('#id_name').val(),
+                    'number_of_floors': $('#id_number_of_floors').val(),
+                    'number_of_units': $('#id_number_of_units').val(),
+                    {#                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()#}
+
+                },
+                success: function () {
+                    $("#new_block_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item Edited successfully!' %}</div>");
+                },
+                error: function () {
+                    $("#new_block_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrongs!' %}</div>");
+                }
+            });
+
+        });
+        {#    }#}
+    </script>
+    {#    <script type="text/javascript">#}
+    {#     $(document).on('submit','#add_new_block',function (e) {#}
+    {#    #}
+    {#         });#}
+    {#    </script>#}
+{% endblock c-script %}

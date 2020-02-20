@@ -3,55 +3,55 @@
 {% block bodycontent %}
     <div class="row">
         <div class="card container">
-            <div class="card-header"><h3>All Facilities</h3></div>
+            <div class="card-header"><h3>{% trans 'All Facilities' %}</h3></div>
             <div class="card-body">
-                <form id="search_facility">
+                <form id="search_facility" enctype='application/json'>
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-md-5 mb-3 form-group">
-                            <label for="id_type_search">Residence Type</label>
+                            <label for="id_type_search">{% trans 'Residence Type' %}</label>
                             <select class="form-control" id="id_type_search" name="residence_type_search">
                                 <option defualt></option>
-                                  <option value="Residence">Residence</option>
-                                <option value="Block">Block</option>
-                                <option value="Unit">Unit</option>
-                                <option value="ALL">ALL</option>
+                                <option value="Residence">{% trans 'Residence' %}</option>
+                                <option value="Block">{% trans 'Block' %}</option>
+                                <option value="Unit">{% trans 'Unit' %}</option>
+                                <option value="ALL">{% trans 'ALL' %}</option>
                             </select>
                         </div>
                         <div class="col-md-5 mb-3 form-group">
-                            <label for="id_title_search">Title</label>
+                            <label for="id_title_search">{% trans 'Title' %}</label>
                             <input type="text" class="form-control" id="id_title_search" name="title_search">
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" type="submit">Filter</button>
+                    <button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
                 </form>
 
                 {#   ADD new Block section  #}
-                <p>
-                    <button class="btn btn-primary collapsed btn-block-add" type="button" data-toggle="collapse"
-                            data-target="#new_facility" aria-expanded="false" aria-controls="new_facility">Add New
-                        Facility
-                    </button>
-                    <br/>
-                </p>
-                <div class="collapse" id="new_facility" style="">
-                    <div class="card card-body">
-                    {% include "../../dashboard_pages/facilities/form/facility_new_form.html" %}
-                    </div>
-                </div>
-
+                {#                <p>#}
+                {#                    <button class="btn btn-primary collapsed btn-block-add" type="button" data-toggle="collapse"#}
+                {#                            data-target="#new_facility" aria-expanded="false"#}
+                {#                            aria-controls="new_facility">{% trans 'Add New Facilitys' %}#}
+                {#                    </button>#}
+                {#                    <br/>#}
+                {#                </p>#}
+                {#                <div class="collapse" id="new_facility" style="">#}
+                {#                    <div class="card card-body">#}
+                {#                    {% include "../../dashboard_pages/facilities/form/facility_new_form.html" %}#}
+                {#                    </div>#}
+                {#                </div>#}
+                {##}
 
                 <hr/>
                 <!-- start table part -->
                 <table id="facility_table" class="table table-responsive-sm table-hover table-outline mb-0">
                     <thead class="thead-light">
                     <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">Residence</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">{% trans 'id' %}</th>
+                        <th scope="col">{% trans 'Type' %}</th>
+                        <th scope="col">{% trans 'Title' %}</th>
+                        <th scope="col">{% trans 'Description' %}</th>
+                        <th scope="col">{% trans 'Actions' %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -74,22 +74,26 @@
 {#                            </svg>#}
 {#                        </a></td>#}
 {#                    </tr>#}
-                {% if facilities %}
-                    {% for facility in facilities %}
-                    <tr id="facility_{{ facility.facility_id }}">
-                        <th scope="row">{{ facility.facility_id }}</th>
-                        <td>{{ facility.residence }}</td>
+{% if data %}
+    {% for facility in data %}
+        <tr id="facility_{{ facility.id }}">
+            <th scope="row">{{ facility.id }}</th>
+            <td>{{ facility.type }}</td>
                         <td>{{ facility.title }}</td>
                         <td>{{ facility.description }}</td>
-                        <td><button class="btn btn-success" onclick="" title="show">
+            <td>
+                <a class="btn btn-success" href="{% url "building:show_facility_page" id=facility.id %}"
+                   title="{% trans 'show' %}">
                             <svg class="c-icon">
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
                             </svg>
-                        </button>&nbsp;<button class="btn btn-info" title="edit" onclick="">
+                </a>&nbsp;<a class="btn btn-info" title="{% trans 'edit' %}"
+                             href='{% url "building:edit_facility_page" id=facility.id %}'>
                             <svg class="c-icon">
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
                             </svg>
-                        </button>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_facility({{ facility.facility_id }})">
+            </a>&nbsp;<button class="btn btn-danger" title="{% trans 'delete' %}"
+                              onclick="delete_item('{% url "building:facility-detail" facility.id %}',{{ facility.id }})">
                             <svg class="c-icon">
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
                             </svg>
@@ -98,7 +102,7 @@
              {% endfor %}
          {% else %}
         <tr><td class="text-center" colspan="100%">
-                    No Facility ...
+            {% trans 'No Facility ...' %}
         </td></tr>
             {% endif %}
                     </tbody>
@@ -107,11 +111,12 @@
                 <!-- Pagination -->
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#"
+                                                          tabindex="-1">{% trans 'Previous' %}</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                         <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="#">{% trans 'Next' %}</a></li>
                     </ul>
                 </nav>
             </div>
@@ -138,45 +143,26 @@
             }
         });
     });
-    {#    function for add new item by quick form#}
-     $(document).on('submit','#add_new_facility',function (e) {
-        e.preventDefault();
-        $.ajax({
-            type:'POST',
-            url: '{% url "building:facility_manage_page" %}',
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
-            data:{
-                type:$('#id_type').val(),
-                title: $('#id_title').val(),
-                description:$('#id_description').val(),
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-            },
-            success:function(data) {
-                $("#new_facility_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>Item added successfully!</div>");
-            },
-            error: function(data) {
-                $("#new_facility_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>something is Wrong!</div>");
-            }
-        });
-    });
-     {#     function for delete items#}
-       function delete_facility(facility_id) {
-  var action = confirm("Are you sure you want to delete this facility?");
-  if (action != false) {
+    </script>
+    <script type="text/javascript">
+        function delete_item(url, id) {
+
+            var action = confirm("{% trans 'Are you sure you want to delete this facility?' %}");
+            if (action != false) {
     $.ajax({
-        url: '{% url "building:delete_facility_page" %}',
+        url: url,
+        type: 'DELETE',
         data: {
-            'facility_id': facility_id,
+            'id': id,
         },
-{#        dataType: 'json',#}
-        success: function (data) {
-            if (data.deleted) {
-              $("#facility_table #facility_" + facility_id).remove();
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            if (jqXHR.status == "204") {
+                $("#facility_table #facility" + id).remove();
             }
         }
     });
   }
-}
+        };
     </script>
 {% endblock c-script %}

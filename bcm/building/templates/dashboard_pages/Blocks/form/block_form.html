@@ -1,0 +1,52 @@
+{% load static i18n %}
+
+<div class="row">
+    {#            <div class="col-sm-2"></div>#}
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="c-card-header">
+                <strong>{% trans 'Block info' %}</strong></div>
+            <div class="c-card-body">
+                <div class="form-row">
+                    <div class="col-md-3 mb-3 form-group">
+                        <label for="id_name">{% trans 'Name' %}</label>
+                        <input type="text" class="form-control" id="id_name" name="name"
+                               value="{{ block_content.name }}">
+                    </div>
+                    <div class="col-md-3 mb-3 form-group">
+                        <label for="id_residence">{% trans 'Residence Name' %}</label>
+                        <select class="form-control" id="id_residence" name="residence">
+                            {% for item in residences %}
+                                <option name="{{ item.id }}"
+                                        value="{{ item.id }}"{% if item.id == block_content.residence %} defualt
+                                        selected{% endif %}>{{ item.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3 form-group">
+                        <label for="id_number_of_floors">{% trans 'Number of floors' %}</label>
+                        <input type="number" class="form-control" value="{{ block_content.number_of_floors }}"
+                               id="id_number_of_floors" step="0.01"
+                               name="number_of_floors">
+                    </div>
+                    <div class="col-md-3 mb-3 form-group">
+                        <label for="id_number_of_units">{% trans 'Number of units' %}</label>
+                        <input type="number" value="{{ block_content.number_of_units }}" class="form-control"
+                               id="id_number_of_units"
+                               name="number_of_units">
+                    </div>
+                    <input id="id" value="{{ block_content.id }}" type="hidden" name="id">
+                </div>
+            </div>
+            <div class="c-card-footer">
+                {#     {% if request_type == 'edit' %}#}
+                <button class="btn btn-primary" id="block_btn" type="submit">{% trans 'Save' %}</button>
+                {#       <button class="btn btn-primary" id="insert_block_btn" type="submit">{% trans 'Save' %}</button>#}
+                {#    {% else %}#}
+                {#         <br/>#}
+                {#     {% endif %}#}
+            </div>
+        </div>
+    </div>
+    {#            <div class="col-sm-2"></div>#}
+</div>

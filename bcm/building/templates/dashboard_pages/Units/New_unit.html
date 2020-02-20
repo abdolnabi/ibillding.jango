@@ -1,28 +1,32 @@
 {% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
-{% load static %}
+{% load static i18n %}
 {% block bodycontent %}
-  {% include "../../dashboard_pages/units/form/unit_new_form.html" %}
+    <div id="new_unit_message"></div>
+    <form class="form-horizontal" id='new_unit'>
+
+        {% csrf_token %}
+        {% include "../../dashboard_pages/units/form/unit_form.html" %}
+    </form>
 {% endblock bodycontent %}
 {% block c-script %}
     <script type="text/javascript">
-     $(document).on('submit','#add_new_unit',function (e) {
+        $(document).on('submit', '#new_unit', function (e) {
         e.preventDefault();
         $.ajax({
-            type:'POST',
-            url: '{% url "building:new_unit_page" %}',
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
+            method: 'POST',
+            url: '{% url "building:unit-list" %}',
+            dataType: 'json',
             data:{
-                residence:$('#id_residence').val(),
-                area: $('#id_area').val(),
-                population:$('#id_population').val(),
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                'residence': $('#id_residence').val(),
+                'area': $('#id_area').val(),
+                'population': $('#id_population').val(),
+                {#                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()#}
             },
             success:function(data) {
-                $("#new_unit_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>Item added successfully!</div>");
+                $("#new_unit_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
             },
             error: function(data) {
-                $("#new_unit_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>something is Wrong!</div>");
+                $("#new_unit_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");
             }
         });
     });

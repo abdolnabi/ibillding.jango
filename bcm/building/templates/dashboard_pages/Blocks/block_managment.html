@@ -3,18 +3,18 @@
 {% block bodycontent %}
     <div class="row">
         <div class="card container">
-            <div class="card-header"><h3>All Blocks</h3></div>
+            <div class="card-header"><h3>{% trans 'All Blocks' %}</h3></div>
             <div class="card-body">
             {#   start search Block section  #}
-                <form id="search_block">
+                <form id="search_block" enctype='application/json'>
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-md-3 mb-3 form-group">
-                            <label for="id_name_search">Name</label>
+                            <label for="id_name_search">{% trans 'Name' %}</label>
                             <input type="text" class="form-control" id="id_name_search" name="name_search">
                         </div>
                         <div class="col-md-3 mb-3 form-group">
-                            <label for="id_residence_search">Residence Name</label>
+                            <label for="id_residence_search">{% trans 'Residence Name' %}</label>
                             <select class="form-control" id="id_residence_search" name="residence_search">
                                 {% for residence in residences %}
                                     <option name="{{ residence.id }}"
@@ -23,90 +23,64 @@
                             </select>
                         </div>
                         <div class="col-md-3 mb-3 form-group">
-                            <label for="id_number_of_floors_search">Number of floors</label>
+                            <label for="id_number_of_floors_search">{% trans 'Number of floors' %}</label>
                             <input type="number" class="form-control" id="id_number_of_floors_search" step="0.01"
                                    name="number_of_floors_search">
                         </div>
                         <div class="col-md-3 mb-3 form-group">
-                            <label for="id_number_of_units_search">Number of units</label>
+                            <label for="id_number_of_units_search">{% trans 'Number of units' %}</label>
                             <input type="number" class="form-control" id="id_number_of_units_search" name="number_of_units_search">
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" type="submit">Filter</button>
+                    <button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
                 </form>
-
-                {#   End search Block section  #}
-                {#   ADD new Block section  #}
-                <p>
-                    <button class="btn btn-primary collapsed btn-block-add" type="button" data-toggle="collapse"
-                            data-target="#new_block" aria-expanded="false" aria-controls="new_block">Add New Block
-                    </button>
-                    <br/>
-                </p>
-                <div class="collapse" id="new_block" style="">
-                    <div class="card card-body">
-                        {% include "../../dashboard_pages/blocks/form/block_new_form.html" %}
-                    </div>
-                </div>
-
-
                 <hr/>
                 <!-- start table part -->
                 <table id="block_table" class="table table-responsive-sm table-hover table-outline mb-0">
                     <thead class="thead-light">
                     <tr>
-                        <th scope="col">id</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Residence Name</th>
-                        <th scope="col">Number of floors</th>
-                        <th scope="col">Number of units</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">{% trans 'id' %}</th>
+                        <th scope="col">{% trans 'Name' %}</th>
+                        <th scope="col">{% trans 'Residence Name' %}</th>
+                        <th scope="col">{% trans 'Number of floors' %}</th>
+                        <th scope="col">{% trans 'Number of units' %}</th>
+                        <th scope="col">{% trans 'Actions' %}</th>
                     </tr>
                     </thead>
                     <tbody>
-{#                    <tr>#}
-{#                        <th scope="row">1</th>#}
-{#                        <td>Yas</td>#}
-{#                        <td>Apartment</td>#}
-{#                        <td>SattarKhan</td>#}
-{#                        <td>name 3</td>#}
-{#                        <td><a class="btn btn-success" href="#" alt="show">#}
-{#                            <svg class="c-icon">#}
-{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>#}
-{#                            </svg>#}
-{#                        </a>&nbsp;<a class="btn btn-info" alt="edit" href="#">#}
-{#                            <svg class="c-icon">#}
-{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>#}
-{#                            </svg>#}
-{#                        </a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">#}
-{#                            <svg class="c-icon">#}
-{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>#}
-{#                            </svg>#}
-{#                        </a></td>#}
-{#                    </tr>#}
 
-{#    {% if blocks %}#}
-            {% for block in blocks %}
-                    <tr id="block_{{ block.block_id }}">
-                        <th scope="row">{{ block.block_id }}</th>
-                        <td>{{ block.name }}</td>
-                        <td>{{ block.Residence }}</td>
-                        <td>{{ block.number_of_floors }}</td>
-                        <td>{{ block.number_of_units }}</td>
-                        <td><button class="btn btn-success" onclick="" title="show">
+                    {% for block in data %}
+                        <tr id="block_{{ block.id }}">
+                            <td scope="row">{{ block.id }}</td>
+                            <td class="block_name block_data">{{ block.name }}</td>
+                            <td class="block_residence block_data">{{ block.residence }}</td>
+                            <td class="block_number_of_floors block_data">{{ block.number_of_floors }}</td>
+                            <td class="block_number_of_units block_data">{{ block.number_of_units }}</td>
+                            <td class="block_data"><a class="btn btn-success"
+                                                      href="{% url "building:show_block_page" id=block.id %}"
+                                                      title="{% trans 'show' %}">
                             <svg class="c-icon">
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
                             </svg>
-                        </button>&nbsp;<button class="btn btn-info" title="edit" onclick="">
+                                {#                        </a>&nbsp;<a class="btn btn-info" title="{% trans 'edit' %}" href="{% url "building:edit_block_page" id=block.id %}">#}
+                            </a>&nbsp;
+                                <a class="btn btn-info" title="{% trans 'edit' %}"
+                                   href='{% url "building:edit_block_page" id=block.id %}'>
                             <svg class="c-icon">
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
                             </svg>
-                        </button>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_block({{ block.block_id }})">
+
+                                </a>
+                                {#                                <form id="delete_form">#}
+                                <button onclick="delete_item('{% url "building:block-detail" block.id %}',{{ block.id }})"
+                                        class="btn btn-danger" title="{% trans 'delete' %}">
                             <svg class="c-icon">
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
                             </svg>
-                        </button></td>
+                                </button>
+                                {#                                </form>#}
+                            </td>
                     </tr>
             {% endfor %}
 {#        {% else %}#}
@@ -120,88 +94,83 @@
                 <!-- Pagination -->
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#"
+                                                          tabindex="-1">{% trans 'Previous' %}</a></li>
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                         <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="#">{% trans 'Next' %}</a></li>
                     </ul>
                 </nav>
             </div>
         </div>
     </div>
+
+
 {% endblock bodycontent %}
 {% block c-script %}
     <script type="text/javascript">
-{#    send search form items with json#}
-    $(document).on('submit','#search_block',function (e) {
-        e.preventDefault();
-        $.ajax({
-            type:'POST',
-            url: '{% url "building:block_manage_page" %}',
-            dataType: 'json',
-{#            contentType: 'application/json; charset=utf-8',#}
-            data:{
-                name:$('#id_name_search').val(),
-                residence: $('#id_residence_search').val(),
-                number_of_floors:$('#id_number_of_floors_search').val(),
-                number_of_units:$('#id_number_of_units_search').val(),
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-            },
-            success:function () {
-
-            }
-        });
-    });
-{#    function for add new item by quick form#}
-     $(document).on('submit','#add_new_block',function (e) {
-        e.preventDefault();
-        $.ajax({
-            type:'POST',
-            url: '{% url "building:block_manage_page" %}',
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
-            data:{
-                name: $('#id_name').val(),
-                residence: $('#id_residence').val(),
-                number_of_floors: $('#id_number_of_floors').val(),
-                number_of_units: $('#id_number_of_units').val(),
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-            },
-            success:function(data) {
-{#                if(data.block) {#}
-                    $("#new_block_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>Item added successfully!</div>");
-{#                    appendToblockTable(data.block);#}
-{#                }#}
+        {#    function for add new item by quick form#}
+        {#     $(document).on('submit','#add_new_block',function (e) {#}
+        {#        e.preventDefault();#}
+        {#        $.ajax({#}
+        {#            type:'POST',#}
+        {#            url: '{% url "building:block_manage_page" %}',#}
+        {#            data:{#}
+        {#                name: $('#id_name').val(),#}
+        {#                residence: $('#id_residence').val(),#}
+        {#                number_of_floors: $('#id_number_of_floors').val(),#}
+        {#                number_of_units: $('#id_number_of_units').val(),#}
+        {#                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
+        {#            },#}
+        {#            success:function(data) {#}
+        {#                $("#new_block_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");#}
+        {#                },#}
+        {#            error: function(data) {#}
+        {#                $("#new_block_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");#}
+        {#            }#}
+        {#        });#}
+        {#    });#}
+        // {#    send search form items with json#}
+        $(document).on('submit', '#search_block', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "building:block_manage_page" %}',
+                dataType: 'json',
+                data: {
+                    name: $('#id_name_search').val(),
+                    residence: $('#id_residence_search').val(),
+                    number_of_floors: $('#id_number_of_floors_search').val(),
+                    number_of_units: $('#id_number_of_units_search').val(),
+                    {#            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
                 },
-            error: function(data) {
-                $("#new_block_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>something is Wrong!</div>");
-            }
-        });
-    });
+                success: function () {
 
-{#     function for delete items#}
-</script>
-    <script type="text/javascript">
-     function delete_block(block_id) {
-  var action = confirm("Are you sure you want to delete this block?");
-  if (action != false) {
+                }
+            });
+        });
+
+        function delete_item(url, id) {
+
+            var action = confirm("{% trans 'Are you sure you want to delete this block?' %}");
+            if (action != false) {
     $.ajax({
-        url: '{% url "building:delete_block_page" %}',
+        url: url,
+        type: 'DELETE',
         data: {
-            'block_id': block_id,
+            'id': id,
         },
-{#        dataType: 'json',#}
-        success: function (data) {
-            if (data.deleted) {
-              $("#block_table #block_" + block_id).remove();
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            if (jqXHR.status == "204") {
+                $("#block_table #block_" + id).remove();
             }
         }
     });
   }
-}
-{#function appendToblockTable(block) {#}
-{#  $("#block_table > tbody:last-child").append('<tr id="block_${ block.block_id }"><th scope="row">${block.block_id}</th> <td>${ block.name}</td> <td>${ block.Residence }</td> <td>${block.number_of_floors}</td> <td>${ block.number_of_units}</td> <td><button class="btn btn-success" title="show"> <svg class="c-icon"> <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use> </svg> </button>&nbsp;<button class="btn btn-info" title="edit"> <svg class="c-icon"> <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use> </svg> </button>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_block(${block_id})"> <svg class="c-icon"> <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use> </svg> </button></td>');#}
-{#}#}
+        };
     </script>
+
+    <script src="{% static 'js/block/custom_js.js' %}"></script>
 {% endblock c-script %}

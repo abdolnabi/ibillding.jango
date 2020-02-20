@@ -1,28 +1,31 @@
 {% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
-{% load static %}
+{% load static i18n %}
 {% block bodycontent %}
-{% include "../../dashboard_pages/facilities/form/facility_new_form.html" %}
+    <div id="new_facility_message"></div>
+    <form class="form-horizontal" id='new_facility'>
+
+        {% csrf_token %}
+        {% include "../../dashboard_pages/facilities/form/facility_form.html" %}
+    </form>
 {% endblock bodycontent %}
 {% block c-script %}
-<script type="text/javascript">
-    $(document).on('submit','#add_new_facility',function (e) {
+    <script type="text/javascript">
+        $(document).on('submit', '#new_facility', function (e) {
         e.preventDefault();
         $.ajax({
-            type:'POST',
-            url: '{% url "building:new_facility_page" %}',
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
+            method: 'POST',
+            url: '{% url "building:facility-list" %}',
+            dataType: 'json',
             data:{
-                type:$('#id_type').val(),
-                title: $('#id_title').val(),
-                description:$('#id_description').val(),
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                'title': $('#id_title').val(),
+                'description': $('#id_description').val(),
+                'type': $('#id_type').val(),
             },
             success:function(data) {
-                $("#new_facility_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>Item added successfully!</div>");
+                $("#new_facility_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
             },
             error: function(data) {
-                $("#new_facility_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>something is Wrong!</div>");
+                $("#new_facility_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");
             }
         });
     });
