@@ -1,12 +1,12 @@
 from django.contrib import admin
 from building.models import (
     Residence, Facility, Unit, FacilityUnit, Block, UnitUser, BoardOfDirector,
-    FacilityResidence, FacilityResidenceAccessibility
-)
+    FacilityResidence, FacilityResidenceAccessibility,
+    Location)
 
 
 class ResidenceAdmin(admin.ModelAdmin):
-    list_display = ('manager', 'name', 'type',)
+    list_display = ('manager', 'name', 'type', 'coordinate')
     list_filter = ('created',)
 
 
@@ -49,6 +49,10 @@ class FacilityResidenceAccessibilityAdmin(admin.ModelAdmin):
     list_filter = ('type', 'accessible',)
 
 
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ('latitude', 'longitude')
+
+
 admin.site.register(FacilityResidenceAccessibility, FacilityResidenceAccessibilityAdmin)
 admin.site.register(FacilityResidence, FacilityResidenceAdmin)
 admin.site.register(BoardOfDirector, BoardOfDirectorAdmin)
@@ -58,3 +62,4 @@ admin.site.register(FacilityUnit, FacilityUnitAdmin)
 admin.site.register(Unit, UnitAdmin)
 admin.site.register(Facility, FacilityAdmin)
 admin.site.register(Residence, ResidenceAdmin)
+admin.site.register(Location, LocationAdmin)

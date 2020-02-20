@@ -1,4 +1,3 @@
-# from django.contrib.gis.db import models as gis_models
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django_mysql.models import EnumField
@@ -6,6 +5,24 @@ from django_mysql.models import EnumField
 from building.enums import ResidenceType, FacilityType, UnitUserType, FacilityResidenceAccessibilitiesType
 from core.models import BaseModel
 from users.models import User
+
+
+class Location(models.Model):
+    latitude = models.FloatField(
+        verbose_name=_('latitude'),
+        help_text=_('latitude for this location'),
+        blank=True,
+        null=True,
+    )
+    longitude = models.FloatField(
+        verbose_name=_('longitude'),
+        help_text=_('longitude for this location'),
+        blank=True,
+        null=True,
+    )
+
+    def __str__(self):
+        return f'{self.latitude}-{self.longitude}'
 
 
 class Residence(BaseModel):
@@ -52,10 +69,13 @@ class Residence(BaseModel):
         help_text=_('Address of residence'),
     )
 
-    # coordinate = gis_models.PointField(
-    #     verbose_name=_('coordinate'),
-    #     help_text=_('coordinate for this residence'),
-    # )
+    coordinate = models.ForeignKey(
+        verbose_name=_('coordinate'),
+        help_text=_('coordinate for this residence'),
+        to=Location,
+        on_delete=models.CASCADE,
+        related_name='coordinates'
+    )
 
     rules = models.TextField(
         verbose_name=_('rules'),
@@ -267,6 +287,7 @@ class FacilityResidence(BaseModel):
         help_text=_('residence for this facility residence'),
         to=Residence,
         on_delete=models.CASCADE,
+        related_name='facility_residences'
     )
 
     facility = models.ForeignKey(
@@ -305,6 +326,7 @@ class FacilityResidence(BaseModel):
         help_text=_('blocks for this this facility residence'),
         to=Block,
         related_name='facility_residence',
+        blank=True,
     )
 
 
