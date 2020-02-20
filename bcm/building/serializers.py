@@ -1,15 +1,14 @@
 from building.models import (
     Residence, Facility, Unit, FacilityUnit, Block, UnitUser, BoardOfDirector,
-    FacilityResidence, FacilityResidenceAccessibility
-)
+    FacilityResidence, FacilityResidenceAccessibility,
+    Location)
 from core.serializers import CoreModelSerializer
 
 
-class ResidenceSerializer(CoreModelSerializer):
+class LocationSerializer(CoreModelSerializer):
     class Meta:
-        model = Residence
-        fields = ['id', 'parent_residence', 'manager', 'name', 'type', 'address', 'rules',
-                  'appendix_to_statute', 'users_board']
+        model = Location
+        fields = ('latitude', 'longitude')
 
 
 class FacilitySerializer(CoreModelSerializer):
@@ -59,3 +58,13 @@ class FacilityResidenceAccessibilitySerializer(CoreModelSerializer):
     class Meta:
         model = FacilityResidenceAccessibility
         fields = ['id', 'facility_residence', 'type', 'accessible']
+
+
+class ResidenceSerializer(CoreModelSerializer):
+    facility_residence = FacilityResidenceSerializer(source='facility_residences', many=True)
+    coordinate = LocationSerializer()
+
+    class Meta:
+        model = Residence
+        fields = ['id', 'parent_residence', 'manager', 'name', 'type', 'address', 'rules',
+                  'appendix_to_statute', 'users_board', 'coordinate', 'facility_residence']
