@@ -180,7 +180,7 @@ msgstr ""
 #: .\building\models.py:121
 #: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:51
 msgid "Type"
-msgstr ""
+msgstr "نوع"
 
 #: .\building\models.py:122
 msgid "type of Facility"
@@ -188,11 +188,11 @@ msgstr ""
 
 #: .\building\models.py:128
 #: .\building\templates\dashboard_pages\dashboard_base.html:103
-msgid "Units"
-msgstr ""
+msgid "units"
+msgstr "واحدها"
 
 #: .\building\models.py:129
-msgid "Units for this Facility"
+msgid "units for this Facility"
 msgstr ""
 
 #: .\building\models.py:140 .\building\models.py:199 .\building\models.py:263
@@ -273,11 +273,11 @@ msgid "number of block floors"
 msgstr ""
 
 #: .\building\models.py:217
-msgid "number of Units"
+msgid "number of units"
 msgstr ""
 
 #: .\building\models.py:218
-msgid "number of block Units"
+msgid "number of block units"
 msgstr ""
 
 #: .\building\models.py:227
@@ -415,7 +415,7 @@ msgid "something is Wrongs!"
 msgstr "مشکلی در ثبت اطلاعات وجود دارد"
 
 #: .\building\templates\dashboard_pages\Blocks\block_managment.html:6
-msgid "All Blocks"
+msgid "All blocks"
 msgstr "همه بلوک ها"
 
 #: .\building\templates\dashboard_pages\Blocks\block_managment.html:13
@@ -512,7 +512,7 @@ msgstr "آیتم با موفقیت ثبت شد"
 
 #: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:6
 #: .\building\templates\dashboard_pages\dashboard_base.html:115
-msgid "All Facilities"
+msgid "All facilities"
 msgstr "همه امکانات"
 
 #: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:12
@@ -581,7 +581,7 @@ msgstr "تعداد"
 
 #: .\building\templates\dashboard_pages\Units\unit_managment.html:6
 #: .\building\templates\dashboard_pages\dashboard_base.html:105
-msgid "All Units"
+msgid "All units"
 msgstr "همه واحدها"
 
 #: .\building\templates\dashboard_pages\Units\unit_managment.html:107
