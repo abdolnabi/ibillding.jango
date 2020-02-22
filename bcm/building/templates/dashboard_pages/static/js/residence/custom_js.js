@@ -16,8 +16,8 @@ window.onload = function() {
     });
     google.maps.event.addListener(marker, 'dragend', function (a) {
         console.log(a);
-        var latitudes = document.getElementById('id_latitude');
-        latitudes.value = a.latLng.lat().toFixed(4) + ', ' + a.latLng.lng().toFixed(4);
+        var latitudes = document.getElementById('id_coordinate');
+        latitudes.value = a.latLng.lat().toFixed(4) + '-' + a.latLng.lng().toFixed(4);
     });
 };
 
@@ -32,7 +32,7 @@ jQuery(document).ready(function () {
             cols += '<td><label for="id_price' + counter + '"></label><input class="form-control" type="text" id="id_price' + counter + '" name="price' + counter + '"></td>';
             cols += '<td><label for="id_requestable' + counter + '" class="c-switch c-switch-label c-switch-pill c-switch-primary"><input class="c-switch-input" id="id_requestable' + counter + '" name="requestable' + counter + '" type="checkbox" checked=""><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span></label></td>';
             // cols += '<input type="hidden" name="counter" id="counter" value="'+ counter +'" />';
-            cols += '<td><button class="ibtnDel c-btn c-btn-danger cil-trash"></button></td>';
+            cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
             newRow.append(cols);
             jQuery("table.dataTable").append(newRow);
             counter++;

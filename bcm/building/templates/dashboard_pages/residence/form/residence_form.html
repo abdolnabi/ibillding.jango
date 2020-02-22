@@ -1,10 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static i18n %}
+<div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="c-card-header">
+                        <strong>{% trans 'Residence info' %}</strong></div>
+                    <div class="c-card-body">
+                        <div class="form-group">
+                            <label for="id_name">{% trans 'Name' %}</label>
+                            <input type="text" class="form-control" id="id_name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_parent_name">{% trans 'Parent Name' %}</label>
+                            <select class="form-control" id="id_parent_name" name="parent_name">
+                                {% for residence in residences %}
+                                    <option name="{{ residence.id }}"
+                                            value="{{ residence.id }}">{{ residence.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_type">{% trans 'Select Type' %}</label>
+                            <select class="form-control" id="id_type" name="type" required>
+                                <option value="BUILDING">{% trans 'BUILDING' %}</option>
+                                <option value="COMPLEX">{% trans 'COMPLEX' %}</option>
+                                <option value="LOCAL_SHOP">{% trans 'LOCAL SHOP' %}</option>
+                                <option value="TOWN">{% trans 'TOWN' %}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="id_address">{% trans 'Address' %}</label>
+                            <textarea class="form-control" id="id_address" name="address" rows="1"
+                                      placeholder="{% trans 'Address...' %}" spellcheck="false">{{ residence.address }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="id_rules">{% trans 'Rules' %}</label>
+                            <textarea class="form-control" id="id_rules" name="rules" rows="1"
+                                      placeholder="{% trans 'Rules...' %}" spellcheck="false">{{ residence.rules }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label" for="id_appendix_to_statute">{% trans 'appendix to statute' %}</label>
+                            <textarea class="form-control" id="id_appendix_to_statute" name="appendix_to_statute" rows="1"
+                                      placeholder="{% trans 'appendix to statute...' %}" spellcheck="false">{{ residence.rules }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  Second Part  -->
+            <div class="col-sm-6">
 
-</body>
-</html>
+                <div class="card">
+                    <div class="c-card-header">
+                        <strong>Set Coordinate Points</strong></div>
+                    <div class="c-card-body">
+                        <br/>
+
+                        <div id="map" class="map"></div>
+                        <br/>
+                        <div class="form-group">
+                            <label for="id_coordinate">Coordinate Points</label>
+                            <input type="text" class="form-control" name="coordinate" id="id_coordinate"
+                                   value="{{ residence.coordinate }}" placeholder="Coordinate points"/>
+                        </div>
+                        <br/>
+                    </div>
+
+                </div>
+            </div>
+        </div>
