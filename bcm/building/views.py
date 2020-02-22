@@ -9,7 +9,6 @@ from building.serializers import ResidenceSerializer, FacilitySerializer, UnitSe
     BlockSerializer, UnitUserSerializer, BoardOfDirectorSerializer, FacilityResidenceSerializer, \
     FacilityResidenceAccessibilitySerializer
 
-
 def dashboard(request):
     return render(request, 'dashboard_pages/dashboard_base.html')
 
@@ -17,52 +16,192 @@ def dashboard(request):
 # ########### Residence section #######################
 
 def residence_manage_page(request):
-    return render(request, 'dashboard_pages/residence/residence_managment.html')
+    response = {
+        'data': Residence.objects.all(),
+    }
+    return render(request, 'dashboard_pages/residence/residence_managment.html', response)
 
 
 def new_residence_page(request):
-    return render(request, 'dashboard_pages/residence/new_residence.html')
+    request_type = 'new'
+    residences = Residence.objects.all()
+
+    data = {
+        'residences': residences,
+        'request_type': request_type
+    }
+    return render(request, 'dashboard_pages/residence/new_residence.html', data)
+
+
+def edit_residence_page(request, id):
+    request_type = 'edit'
+    # if request.method == 'GET':
+    residence = Residence.objects.filter(id=id).get()
+    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
+    data = {
+        'residences': Residence.objects.all(),
+        'residence': Residence.objects.filter(id=id).get(),
+        'facility': Residence.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    if request.method == 'PUT':
+        serializer = ResidenceSerializer(residence, data=request.data)
+        data = {}
+        serializer.save()
+        return JsonResponse(serializer.data)
+
+    return render(request, 'dashboard_pages/residence/new_residence.html', data)
+
+
+def show_residence_page(request, id):
+    request_type = 'show'
+    data = {
+        'residences': Residence.objects.all(),
+        'residence': Residence.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+    }
+    return render(request, 'dashboard_pages/residence/new_residence.html', data)
 
 
 def delete_residence_page(request):
-    def get(self, request):
         # id1 = request.GET.get('residence_id', None)
         # residence.objects.get(id=id1).delete()
-        data = {
+    data = {
             'deleted': True
         }
-        return JsonResponse(data)
+
+    return JsonResponse(data)
 
 
-# ########### Block section #######################
+############ Block section #######################
 
 def block_manage_page(request):
-    return render(request, 'dashboard_pages/blocks/block_managment.html')
+    response = {
+        'data': Block.objects.all(),
+        'residences': Residence.objects.all(),
+        'request_type': 'new'
+    }
+    return render(request, 'dashboard_pages/blocks/block_managment.html', response)
 
 
 def new_block_page(request):
-    return render(request, 'dashboard_pages/blocks/new_block.html')
+    request_type = 'new'
+    data = {
+        'residences': Residence.objects.all(),
+        'request_type': request_type
+    }
+    return render(request, 'dashboard_pages/blocks/new_block.html', data)
 
 
-def delete_block_page(request):
-    def get(self, request):
-        # id1 = request.GET.get('block_id', None)
-        # residence.objects.get(id=id1).delete()
-        data = {
-            'deleted': True
-        }
-        return JsonResponse(data)
+def edit_block_page(request, id):
+    request_type = 'edit'
+    block = Block.objects.get(id=id)
+    # if request.method == 'PUT':
+    #     serializer = BlockSerializer(block, data=request.data)
+    #     data = {}
+    #     serializer.save()
+    #     return JsonResponse(serializer.data)
+    # return JsonResponse(serializer.data)
+    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
+
+    data = {
+        'residences': Residence.objects.all(),
+        'block_content': Block.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/blocks/update_show_block.html', data)
+
+
+# def update_block_page(request, id):
+#     request_type = 'edit'
+#     block = Block.objects.get(id=id)
+#     if request.method == 'PUT':
+#         serializer = BlockSerializer(block, data=request.content_params)
+#         data = {}
+#         if serializer.is_valid():
+#             serializer.save()
+#             data = "successful"
+#             return JsonResponse(data=serializer.data)
+#         else:
+#             return JsonResponse(serializer.errors)
+#         # return JsonResponse(serializer.data)
+#     # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
+
+
+def show_block_page(request, id):
+    request_type = 'show'
+    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
+    data = {
+        'residences': Residence.objects.all(),
+        'block_content': Block.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/blocks/update_show_block.html', data)
+
+
+# def delete_block_page(request,id):
+#     id = request.GET.get('id')
+#     # Block.objects.get(id=id1).delete()
+#     data = {
+#         'deleted': True,
+#
+#         }
+#     return JsonResponse(data)
 
 
 # ########### Unit section #######################
 
 def unit_manage_page(request):
-    return render(request, 'dashboard_pages/units/unit_managment.html')
+    response = {
+        'data': Unit.objects.all(),
+        'residences': Residence.objects.all(),
+        'blocks': Block.objects.all(),
+        'request_type': 'new'
+    }
+    return render(request, 'dashboard_pages/units/unit_managment.html', response)
 
 
 def new_unit_page(request):
-    return render(request, 'dashboard_pages/units/new_unit.html')
+    request_type = 'new'
+    data = {
+        'residences': Residence.objects.all(),
+        'blocks': Block.objects.all(),
+        'request_type': request_type
+    }
+    return render(request, 'dashboard_pages/units/new_unit.html', data)
 
+
+def edit_unit_page(request, id):
+    request_type = 'edit'
+
+    data = {
+        'residences': Residence.objects.all(),
+        'unit': Unit.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/units/update_show_unit.html', data)
+
+
+def show_unit_page(request, id):
+    request_type = 'show'
+    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
+    data = {
+        'residences': Residence.objects.all(),
+        'unit': Unit.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/units/update_show_unit.html', data)
 
 def delete_unit_page(request):
     def get(self, request):
@@ -77,12 +216,45 @@ def delete_unit_page(request):
 # ########### Facility section #######################
 
 def facility_manage_page(request):
-    return render(request, 'dashboard_pages/facilities/facility_managment.html')
+    response = {
+        'data': Facility.objects.all(),
+        # 'residences': Residence.objects.all(),
+        # 'blocks': Block.objects.all(),
+        'request_type': 'new'
+    }
+    return render(request, 'dashboard_pages/facilities/facility_managment.html', response)
 
 
 def new_facility_page(request):
-    return render(request, 'dashboard_pages/facilities/new_facility.html')
+    request_type = 'new'
+    data = {
+        'request_type': request_type
+    }
+    return render(request, 'dashboard_pages/facilities/new_facility.html', data)
 
+
+def edit_facility_page(request, id):
+    request_type = 'edit'
+
+    data = {
+        'facility': Facility.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/facilities/update_show_facility.html', data)
+
+
+def show_facility_page(request, id):
+    request_type = 'show'
+    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
+    data = {
+        'facility': Facility.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/facilities/update_show_facility.html', data)
 
 def delete_facility_page(request):
     def get(self, request):
@@ -92,6 +264,7 @@ def delete_facility_page(request):
             'deleted': True
         }
         return JsonResponse(data)
+
 
 
 # rest view section

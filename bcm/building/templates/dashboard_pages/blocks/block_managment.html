@@ -1,0 +1,176 @@
+{% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div class="row">
+        <div class="card container">
+            <div class="card-header"><h3>{% trans 'All blocks' %}</h3></div>
+            <div class="card-body">
+            {#   start search Block section  #}
+                <form id="search_block" enctype='application/json'>
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-md-3 mb-3 form-group">
+                            <label for="id_name_search">{% trans 'Name' %}</label>
+                            <input type="text" class="form-control" id="id_name_search" name="name_search">
+                        </div>
+                        <div class="col-md-3 mb-3 form-group">
+                            <label for="id_residence_search">{% trans 'Residence Name' %}</label>
+                            <select class="form-control" id="id_residence_search" name="residence_search">
+                                {% for residence in residences %}
+                                    <option name="{{ residence.id }}"
+                                            value="{{ residence.id }}">{{ residence.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3 form-group">
+                            <label for="id_number_of_floors_search">{% trans 'Number of floors' %}</label>
+                            <input type="number" class="form-control" id="id_number_of_floors_search" step="0.01"
+                                   name="number_of_floors_search">
+                        </div>
+                        <div class="col-md-3 mb-3 form-group">
+                            <label for="id_number_of_units_search">{% trans 'Number of units' %}</label>
+                            <input type="number" class="form-control" id="id_number_of_units_search" name="number_of_units_search">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
+                </form>
+                <hr/>
+                <!-- start table part -->
+                <table id="block_table" class="table table-responsive-sm table-hover table-outline mb-0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">{% trans 'id' %}</th>
+                        <th scope="col">{% trans 'Name' %}</th>
+                        <th scope="col">{% trans 'Residence Name' %}</th>
+                        <th scope="col">{% trans 'Number of floors' %}</th>
+                        <th scope="col">{% trans 'Number of units' %}</th>
+                        <th scope="col">{% trans 'Actions' %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for block in data %}
+                        <tr id="block_{{ block.id }}">
+                            <td scope="row">{{ block.id }}</td>
+                            <td class="block_name block_data">{{ block.name }}</td>
+                            <td class="block_residence block_data">{{ block.residence }}</td>
+                            <td class="block_number_of_floors block_data">{{ block.number_of_floors }}</td>
+                            <td class="block_number_of_units block_data">{{ block.number_of_units }}</td>
+                            <td class="block_data"><a class="btn btn-success"
+                                                      href="{% url "building:show_block_page" id=block.id %}"
+                                                      title="{% trans 'show' %}">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
+                            </svg>
+                                {#                        </a>&nbsp;<a class="btn btn-info" title="{% trans 'edit' %}" href="{% url "building:edit_block_page" id=block.id %}">#}
+                            </a>&nbsp;
+                                <a class="btn btn-info" title="{% trans 'edit' %}"
+                                   href='{% url "building:edit_block_page" id=block.id %}'>
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+                            </svg>
+
+                                </a>
+                                {#                                <form id="delete_form">#}
+                                <button onclick="delete_item('{% url "building:block-detail" block.id %}',{{ block.id }})"
+                                        class="btn btn-danger" title="{% trans 'delete' %}">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
+                            </svg>
+                                </button>
+                                {#                                </form>#}
+                            </td>
+                    </tr>
+            {% endfor %}
+{#        {% else %}#}
+{#        <tr><td class="text-center" colspan="100%">#}
+{#            No Block ...#}
+{#        </td></tr>#}
+{#            {% endif %}#}
+                    </tbody>
+                </table>
+                <hr/>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled"><a class="page-link" href="#"
+                                                          tabindex="-1">{% trans 'Previous' %}</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">{% trans 'Next' %}</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock bodycontent %}
+{% block c-script %}
+    <script type="text/javascript">
+        {#    function for add new item by quick form#}
+        {#     $(document).on('submit','#add_new_block',function (e) {#}
+        {#        e.preventDefault();#}
+        {#        $.ajax({#}
+        {#            type:'POST',#}
+        {#            url: '{% url "building:block_manage_page" %}',#}
+        {#            data:{#}
+        {#                name: $('#id_name').val(),#}
+        {#                residence: $('#id_residence').val(),#}
+        {#                number_of_floors: $('#id_number_of_floors').val(),#}
+        {#                number_of_units: $('#id_number_of_units').val(),#}
+        {#                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
+        {#            },#}
+        {#            success:function(data) {#}
+        {#                $("#new_block_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");#}
+        {#                },#}
+        {#            error: function(data) {#}
+        {#                $("#new_block_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");#}
+        {#            }#}
+        {#        });#}
+        {#    });#}
+        // {#    send search form items with json#}
+        $(document).on('submit', '#search_block', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "building:block_manage_page" %}',
+                dataType: 'json',
+                data: {
+                    name: $('#id_name_search').val(),
+                    residence: $('#id_residence_search').val(),
+                    number_of_floors: $('#id_number_of_floors_search').val(),
+                    number_of_units: $('#id_number_of_units_search').val(),
+                    {#            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
+                },
+                success: function () {
+
+                }
+            });
+        });
+
+        function delete_item(url, id) {
+
+            var action = confirm("{% trans 'Are you sure you want to delete this block?' %}");
+            if (action != false) {
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            if (jqXHR.status == "204") {
+                $("#block_table #block_" + id).remove();
+            }
+        }
+    });
+  }
+        };
+    </script>
+
+    <script src="{% static 'js/block/custom_js.js' %}"></script>
+{% endblock c-script %}

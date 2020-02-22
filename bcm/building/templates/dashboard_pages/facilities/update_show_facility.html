@@ -1,0 +1,59 @@
+{% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div id="new_facility_message"></div>
+    {#    {{ request_type }}#}
+    {% if request_type == 'edit' %}
+        <form class="form-horizontal" id='edit_facility'>
+        {#    {% elif request_type == 'new' %}#}
+        {#        <form class="form-horizontal" id='new_block'>#}
+    {% else %}
+        <form class="form-horizontal" id='show_facility'>
+    {% endif %}
+
+{% csrf_token %}
+{% include "../../dashboard_pages/facilities/form/facility_form.html" %}
+</form>
+
+{% endblock bodycontent %}
+{% block c-script %}
+    {% if request_type == 'show' %}
+        <script type="text/javascript">
+            $('#show_facility input').attr('disabled', true);
+            $('#show_facility textarea').attr('disabled', true);
+            $('#show_facility select').attr('disabled', true);
+            $('#show_facility #facility_btn').attr('type', 'submit').remove();
+
+        </script>
+    {% endif %}
+    <script type="text/javascript">
+
+        {#    if (request_type == 'edit'){#}
+        $(document).on('submit', '#edit_facility', function (e) {
+            e.preventDefault();
+            // or display message in form, etc...
+            $.ajax({
+                type: 'PUT',
+                url: '{% url "building:facility-detail" facility.id %}',
+                dataType: 'json',
+                {#            contentType: 'application/json; charset=utf-8',#}
+                data: {
+                    'type': $('#id_type').val(),
+                    'title': $('#id_title').val(),
+                    'description': $('#id_description').val(),
+                    {#                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()#}
+
+                },
+                success: function () {
+                    $("#new_facility_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item Edited successfully!' %}</div>");
+                },
+                error: function () {
+                    $("#new_facility_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrongs!' %}</div>");
+                }
+            });
+
+        });
+        {#    }#}
+    </script>
+
+{% endblock c-script %}

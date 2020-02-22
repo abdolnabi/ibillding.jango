@@ -85,7 +85,7 @@
         </svg></button>&nbsp;<button class="btn btn-info" title="edit" onclick="edit_residence({{ residence.residence_id }}">
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
-        </svg></button>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_residence({{ residence.residence_id }})">
+        </svg></button>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_item('{% url "building:residence-detail" residence.id %}',{{ residence.id }})">
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
         </svg></button></td>
@@ -133,22 +133,24 @@
         });
     });
          {#     function for delete items#}
-  function delete_residence(residence_id) {
-  var action = confirm("Are you sure you want to delete this residence?");
-  if (action != false) {
-    $.ajax({
-        url: '{% url "building:delete_residence_page" %}',
-        data: {
-            'residence_id': residence_id,
-        },
-{#        dataType: 'json',#}
-        success: function (data) {
-            if (data.deleted) {
-              $("#residence_table #residence_" + residence_id).remove();
+  function delete_item(url, id) {
+
+            var action = confirm("{% trans 'Are you sure you want to delete this residence?' %}");
+            if (action != false) {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        'id': id,
+                    },
+                    dataType: 'json',
+                    success: function (data, textStatus, jqXHR) {
+                        if (jqXHR.status == "204") {
+                            $("#residence_table #residence_" + id).remove();
+                        }
+                    }
+                });
             }
-        }
-    });
-  }
-}
+        };
     </script>
 {% endblock c-script %}

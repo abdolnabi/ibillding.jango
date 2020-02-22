@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-13 08:56+0000\n"
+"POT-Creation-Date: 2020-02-20 23:51+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,550 +18,762 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: bcm/settings.py:155
+#: .\bcm\settings.py:155
 msgid "English"
 msgstr ""
 
-#: bcm/settings.py:156
+#: .\bcm\settings.py:156
 msgid "Persian"
 msgstr ""
 
-#: building/models.py:13
+#: .\building\models.py:12
+msgid "latitude"
+msgstr ""
+
+#: .\building\models.py:13
+msgid "latitude for this location"
+msgstr ""
+
+#: .\building\models.py:18
+msgid "longitude"
+msgstr ""
+
+#: .\building\models.py:19
+msgid "longitude for this location"
+msgstr ""
+
+#: .\building\models.py:30
 msgid "Building"
 msgstr ""
 
-#: building/models.py:14
+#: .\building\models.py:31
 msgid "Complex"
 msgstr ""
 
-#: building/models.py:15
+#: .\building\models.py:32
 msgid "Local shop"
 msgstr ""
 
-#: building/models.py:16
+#: .\building\models.py:33
 msgid "Town"
 msgstr ""
 
-#: building/models.py:20
+#: .\building\models.py:37
 msgid "parent residence"
 msgstr ""
 
-#: building/models.py:21
+#: .\building\models.py:38
 msgid "parent residence for this residence"
 msgstr ""
 
-#: building/models.py:30
+#: .\building\models.py:47
 msgid "manager"
 msgstr ""
 
-#: building/models.py:31
+#: .\building\models.py:48
 msgid "manager for this residence"
 msgstr ""
 
-#: building/models.py:38 building/models.py:186
-#: building/templates/dashboard_pages/residence/residence_managment.html:24
+#: .\building\models.py:55 .\building\models.py:206
+#: .\building\templates\dashboard_pages\residence\residence_managment.html:24
 msgid "name"
 msgstr ""
 
-#: building/models.py:39
+#: .\building\models.py:56
 msgid "residence name"
 msgstr ""
 
-#: building/models.py:44 building/models.py:228 building/models.py:327
+#: .\building\models.py:61 .\building\models.py:248 .\building\models.py:349
 msgid "type"
 msgstr ""
 
-#: building/models.py:45
+#: .\building\models.py:62
 msgid "type of this residence"
 msgstr ""
 
-#: building/models.py:51
-#: building/templates/dashboard_pages/residence/residence_managment.html:36
+#: .\building\models.py:68
+#: .\building\templates\dashboard_pages\residence\residence_managment.html:36
 msgid "Address"
 msgstr ""
 
-#: building/models.py:52
+#: .\building\models.py:69
 msgid "Address of residence"
 msgstr ""
 
-#: building/models.py:61
+#: .\building\models.py:73
+msgid "coordinate"
+msgstr ""
+
+#: .\building\models.py:74
+msgid "coordinate for this residence"
+msgstr ""
+
+#: .\building\models.py:81
 msgid "rules"
 msgstr ""
 
-#: building/models.py:62
+#: .\building\models.py:82
 msgid "rules for this residence"
 msgstr ""
 
-#: building/models.py:66
+#: .\building\models.py:86
 msgid "appendix to statute"
 msgstr ""
 
-#: building/models.py:67
+#: .\building\models.py:87
 msgid "appendix to statute for this residence"
 msgstr ""
 
-#: building/models.py:71 building/models.py:72
+#: .\building\models.py:91 .\building\models.py:92
 msgid "users board"
 msgstr ""
 
-#: building/models.py:83 building/models.py:316
-#: building/templates/dashboard_pages/dashboard_base.html:83
+#: .\building\models.py:103 .\building\models.py:338
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:15
+#: .\building\templates\dashboard_pages\Facilities\form\facility_form.html:22
+#: .\building\templates\dashboard_pages\dashboard_base.html:83
 msgid "Residence"
 msgstr ""
 
-#: building/models.py:84
+#: .\building\models.py:104
 msgid "All"
 msgstr ""
 
-#: building/models.py:85 building/models.py:314
+#: .\building\models.py:105 .\building\models.py:336
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:16
+#: .\building\templates\dashboard_pages\Facilities\form\facility_form.html:23
 msgid "Block"
 msgstr ""
 
-#: building/models.py:86 building/models.py:315
+#: .\building\models.py:106 .\building\models.py:337
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:17
+#: .\building\templates\dashboard_pages\Facilities\form\facility_form.html:24
 msgid "Unit"
 msgstr ""
 
-#: building/models.py:90
+#: .\building\models.py:110
 msgid "title"
 msgstr ""
 
-#: building/models.py:91
+#: .\building\models.py:111
 msgid "title for this facility"
 msgstr ""
 
-#: building/models.py:96 building/models.py:172 building/models.py:286
+#: .\building\models.py:116 .\building\models.py:192 .\building\models.py:307
 msgid "description"
 msgstr ""
 
-#: building/models.py:97
+#: .\building\models.py:117
 msgid "description for this facility"
 msgstr ""
 
-#: building/models.py:101
+#: .\building\models.py:121
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:51
 msgid "Type"
 msgstr ""
 
-#: building/models.py:102
+#: .\building\models.py:122
 msgid "type of Facility"
 msgstr ""
 
-#: building/models.py:108
-#: building/templates/dashboard_pages/dashboard_base.html:103
-msgid "Units"
+#: .\building\models.py:128
+#: .\building\templates\dashboard_pages\dashboard_base.html:103
+msgid "units"
 msgstr ""
 
-#: building/models.py:109
-msgid "Units for this Facility"
+#: .\building\models.py:129
+msgid "units for this Facility"
 msgstr ""
 
-#: building/models.py:120 building/models.py:179 building/models.py:243
-#: building/models.py:266
+#: .\building\models.py:140 .\building\models.py:199 .\building\models.py:263
+#: .\building\models.py:286
 msgid "residence"
 msgstr ""
 
-#: building/models.py:121
+#: .\building\models.py:141
 msgid "residence of this unit"
 msgstr ""
 
-#: building/models.py:127
+#: .\building\models.py:147
 msgid "area"
 msgstr ""
 
-#: building/models.py:128
+#: .\building\models.py:148
 msgid "area for this unit"
 msgstr ""
 
-#: building/models.py:134
+#: .\building\models.py:154
 msgid "population"
 msgstr ""
 
-#: building/models.py:135
+#: .\building\models.py:155
 msgid "population of this unit"
 msgstr ""
 
-#: building/models.py:142 users/models.py:68
+#: .\building\models.py:162 .\users\models.py:68
 msgid "users"
 msgstr ""
 
-#: building/models.py:143
+#: .\building\models.py:163
 msgid "users for Unit"
 msgstr ""
 
-#: building/models.py:151 building/models.py:221
+#: .\building\models.py:171 .\building\models.py:241
 msgid "unit"
 msgstr ""
 
-#: building/models.py:152
+#: .\building\models.py:172
 msgid "unit for this facility unit"
 msgstr ""
 
-#: building/models.py:159 building/models.py:273
+#: .\building\models.py:179 .\building\models.py:294
 msgid "facility"
 msgstr ""
 
-#: building/models.py:160
+#: .\building\models.py:180
 msgid "facility for this facility unit"
 msgstr ""
 
-#: building/models.py:166 building/models.py:280
+#: .\building\models.py:186 .\building\models.py:301
 msgid "second title"
 msgstr ""
 
-#: building/models.py:167
+#: .\building\models.py:187
 msgid "second title for this facility unit"
 msgstr ""
 
-#: building/models.py:173
+#: .\building\models.py:193
 msgid "description for this facility unit"
 msgstr ""
 
-#: building/models.py:180
+#: .\building\models.py:200
 msgid "residence for this block"
 msgstr ""
 
-#: building/models.py:187
+#: .\building\models.py:207
 msgid "name of block"
 msgstr ""
 
-#: building/models.py:192
+#: .\building\models.py:212
 msgid "number of floors"
 msgstr ""
 
-#: building/models.py:193
+#: .\building\models.py:213
 msgid "number of block floors"
 msgstr ""
 
-#: building/models.py:197
-msgid "number of Units"
+#: .\building\models.py:217
+msgid "number of units"
 msgstr ""
 
-#: building/models.py:198
-msgid "number of block Units"
+#: .\building\models.py:218
+msgid "number of block units"
 msgstr ""
 
-#: building/models.py:207
+#: .\building\models.py:227
 msgid "Resident"
 msgstr ""
 
-#: building/models.py:208
+#: .\building\models.py:228
 msgid "Both"
 msgstr ""
 
-#: building/models.py:209
+#: .\building\models.py:229
 msgid "Owner"
 msgstr ""
 
-#: building/models.py:213 building/models.py:250 users/models.py:67
+#: .\building\models.py:233 .\building\models.py:270 .\users\models.py:67
 msgid "user"
 msgstr ""
 
-#: building/models.py:214
+#: .\building\models.py:234
 msgid "user for this user unit"
 msgstr ""
 
-#: building/models.py:222
+#: .\building\models.py:242
 msgid "unit for this user unit"
 msgstr ""
 
-#: building/models.py:229
+#: .\building\models.py:249
 msgid "type of user"
 msgstr ""
 
-#: building/models.py:235
+#: .\building\models.py:255
 msgid "confirmed"
 msgstr ""
 
-#: building/models.py:236
+#: .\building\models.py:256
 msgid "confirmation for user"
 msgstr ""
 
-#: building/models.py:244
+#: .\building\models.py:264
 msgid "residence of board"
 msgstr ""
 
-#: building/models.py:251
+#: .\building\models.py:271
 msgid "user of board"
 msgstr ""
 
-#: building/models.py:258
+#: .\building\models.py:278
 msgid "role"
 msgstr ""
 
-#: building/models.py:259
+#: .\building\models.py:279
 msgid "role of board"
 msgstr ""
 
-#: building/models.py:267
+#: .\building\models.py:287
 msgid "residence for this facility residence"
 msgstr ""
 
-#: building/models.py:274
+#: .\building\models.py:295
 msgid "facility for this facility residence"
 msgstr ""
 
-#: building/models.py:281
+#: .\building\models.py:302
 msgid "second title for this facility residence"
 msgstr ""
 
-#: building/models.py:287
+#: .\building\models.py:308
 msgid "description for this facility residence"
 msgstr ""
 
-#: building/models.py:291
+#: .\building\models.py:312
 msgid "requestable"
 msgstr ""
 
-#: building/models.py:292
+#: .\building\models.py:313
 msgid "requestable for this facility residence"
 msgstr ""
 
-#: building/models.py:297
+#: .\building\models.py:318
 msgid "price"
 msgstr ""
 
-#: building/models.py:298
+#: .\building\models.py:319
 msgid "price for this facility residence"
 msgstr ""
 
-#: building/models.py:304
-#: building/templates/dashboard_pages/dashboard_base.html:93
+#: .\building\models.py:325
+#: .\building\templates\dashboard_pages\dashboard_base.html:93
 msgid "blocks"
 msgstr ""
 
-#: building/models.py:305
+#: .\building\models.py:326
 msgid "blocks for this this facility residence"
 msgstr ""
 
-#: building/models.py:313
+#: .\building\models.py:335
 msgid "Public"
 msgstr ""
 
-#: building/models.py:320
+#: .\building\models.py:342
 msgid "facility residence"
 msgstr ""
 
-#: building/models.py:321
+#: .\building\models.py:343
 msgid "facility residence for this object"
 msgstr ""
 
-#: building/models.py:328
+#: .\building\models.py:350
 msgid "choose type for this accessibility"
 msgstr ""
 
-#: building/models.py:333
+#: .\building\models.py:355
 msgid "accessible"
 msgstr ""
 
-#: building/models.py:334
+#: .\building\models.py:356
 msgid "accessible for this accessibility"
 msgstr ""
 
-#: building/templates/dashboard_pages/dashboard_base.html:33
-msgid "BCM Admin Panel"
+#: .\building\templates\dashboard_pages\Blocks\New_block.html:33
+#: .\building\templates\dashboard_pages\Facilities\New_Facility.html:25
+#: .\building\templates\dashboard_pages\Units\New_unit.html:26
+msgid "Item added successfully!"
 msgstr ""
 
-#: building/templates/dashboard_pages/dashboard_base.html:71
-msgid "Dashboard"
+#: .\building\templates\dashboard_pages\Blocks\New_block.html:36
+#: .\building\templates\dashboard_pages\Blocks\update_show_block.html:55
+msgid "something is Wrongs!"
 msgstr ""
 
-#: building/templates/dashboard_pages/dashboard_base.html:72
-msgid "User Managment"
-msgstr ""
-
-#: building/templates/dashboard_pages/dashboard_base.html:79
-msgid "Residence Managment"
-msgstr ""
-
-#: building/templates/dashboard_pages/dashboard_base.html:85
-#: building/templates/dashboard_pages/residence/residence_managment.html:6
-msgid "All Residence"
-msgstr ""
-
-#: building/templates/dashboard_pages/dashboard_base.html:95
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:6
 msgid "All blocks"
 msgstr ""
 
-#: building/templates/dashboard_pages/dashboard_base.html:105
-msgid "All Units"
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:13
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:44
+#: .\building\templates\dashboard_pages\Blocks\form\block_form.html:12
+msgid "Name"
 msgstr ""
 
-#: building/templates/dashboard_pages/dashboard_base.html:113
-msgid "Facility"
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:17
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:45
+#: .\building\templates\dashboard_pages\Blocks\form\block_form.html:17
+#: .\building\templates\dashboard_pages\Units\form\unit_form.html:11
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:12
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:53
+msgid "Residence Name"
 msgstr ""
 
-#: building/templates/dashboard_pages/dashboard_base.html:115
-msgid "All Facilities"
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:26
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:46
+#: .\building\templates\dashboard_pages\Blocks\form\block_form.html:27
+msgid "Number of floors"
 msgstr ""
 
-#: building/templates/dashboard_pages/residence/residence_managment.html:28
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:31
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:47
+#: .\building\templates\dashboard_pages\Blocks\form\block_form.html:33
+msgid "Number of units"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:36
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:27
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:30
+msgid "Filter"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:43
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:50
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:52
+msgid "id"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:48
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:54
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:56
+msgid "Actions"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:62
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:86
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:88
+msgid "show"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:68
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:90
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:92
+msgid "edit"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:77
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:95
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:97
+msgid "delete"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:98
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:115
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:117
+msgid "Previous"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:102
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:119
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:121
+msgid "Next"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\block_managment.html:156
+msgid "Are you sure you want to delete this block?"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\form\block_form.html:8
+msgid "Block info"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\form\block_form.html:43
+#: .\building\templates\dashboard_pages\Units\form\unit_form.html:38
+msgid "Save"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Blocks\update_show_block.html:52
+msgid "Item Edited successfully!"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:6
+#: .\building\templates\dashboard_pages\dashboard_base.html:115
+msgid "All facilities"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:12
+msgid "Residence Type"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:18
+#: .\building\templates\dashboard_pages\Facilities\form\facility_form.html:25
+msgid "ALL"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:22
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:52
+#: .\building\templates\dashboard_pages\Facilities\form\facility_form.html:9
+msgid "Title"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:53
+#: .\building\templates\dashboard_pages\Facilities\form\facility_form.html:14
+msgid "Description"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:105
+msgid "No Facility ..."
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\Facility_managment.html:150
+msgid "Are you sure you want to delete this facility?"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\New_Facility.html:28
+#: .\building\templates\dashboard_pages\Units\New_unit.html:29
+msgid "something is Wrong!"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\form\facility_form.html:6
+msgid "Facility info"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Facilities\form\facility_form.html:19
+#: .\building\templates\dashboard_pages\residence\residence_managment.html:28
 msgid "Select Type"
 msgstr ""
 
-#: core/models.py:8
+#: .\building\templates\dashboard_pages\Facilities\form\facility_form.html:31
+msgid "Submit"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Units\form\unit_form.html:7
+msgid "Unit info"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Units\form\unit_form.html:25
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:21
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:54
+msgid "Area"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Units\form\unit_form.html:30
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:25
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:55
+msgid "Population"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:6
+#: .\building\templates\dashboard_pages\dashboard_base.html:105
+msgid "All units"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:107
+msgid "No Unit ..."
+msgstr ""
+
+#: .\building\templates\dashboard_pages\Units\unit_managment.html:153
+msgid "Are you sure you want to delete this unit?"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\dashboard_base.html:33
+msgid "BCM Admin Panel"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\dashboard_base.html:71
+msgid "Dashboard"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\dashboard_base.html:72
+msgid "User Managment"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\dashboard_base.html:79
+msgid "Residence Managment"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\dashboard_base.html:85
+#: .\building\templates\dashboard_pages\residence\residence_managment.html:6
+msgid "All Residence"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\dashboard_base.html:95
+msgid "All blocks"
+msgstr ""
+
+#: .\building\templates\dashboard_pages\dashboard_base.html:113
+msgid "Facility"
+msgstr ""
+
+#: .\core\models.py:8
 msgid "created"
 msgstr ""
 
-#: core/models.py:9
+#: .\core\models.py:9
 msgid "object creation time"
 msgstr ""
 
-#: core/models.py:14
+#: .\core\models.py:14
 msgid "modified"
 msgstr ""
 
-#: core/models.py:15
+#: .\core\models.py:15
 msgid "object modification time"
 msgstr ""
 
-#: users/forms.py:14 users/templates/registration/login.html:39
-#: users/templates/registration/login.html:40
-#: users/templates/users/signup.html:38
+#: .\users\forms.py:14 .\users\templates\registration\login.html:39
+#: .\users\templates\registration\login.html:40
+#: .\users\templates\users\signup.html:38
 msgid "Username"
 msgstr ""
 
-#: users/forms.py:15 users/templates/registration/login.html:45
-#: users/templates/registration/login.html:46
-#: users/templates/users/signup.html:80 users/templates/users/signup.html:81
+#: .\users\forms.py:15 .\users\templates\registration\login.html:45
+#: .\users\templates\registration\login.html:46
+#: .\users\templates\users\signup.html:80
+#: .\users\templates\users\signup.html:81
 msgid "Password"
 msgstr ""
 
-#: users/models.py:12
+#: .\users\models.py:12
 msgid "username"
 msgstr ""
 
-#: users/models.py:13
+#: .\users\models.py:13
 msgid "username for this user"
 msgstr ""
 
-#: users/models.py:19
+#: .\users\models.py:19
 msgid "first name"
 msgstr ""
 
-#: users/models.py:20
+#: .\users\models.py:20
 msgid "first name for this user"
 msgstr ""
 
-#: users/models.py:25
+#: .\users\models.py:25
 msgid "last name"
 msgstr ""
 
-#: users/models.py:26
+#: .\users\models.py:26
 msgid "last name for this user"
 msgstr ""
 
-#: users/models.py:32
+#: .\users\models.py:32
 msgid "email"
 msgstr ""
 
-#: users/models.py:33
+#: .\users\models.py:33
 msgid "email for this user"
 msgstr ""
 
-#: users/models.py:38
+#: .\users\models.py:38
 msgid "iban"
 msgstr ""
 
-#: users/models.py:39
+#: .\users\models.py:39
 msgid "iban for this user"
 msgstr ""
 
-#: users/models.py:44
+#: .\users\models.py:44
 msgid "financial credit"
 msgstr ""
 
-#: users/models.py:45
+#: .\users\models.py:45
 msgid "financial credit for this user"
 msgstr ""
 
-#: users/models.py:51
+#: .\users\models.py:51
 msgid "is admin"
 msgstr ""
 
-#: users/models.py:52
+#: .\users\models.py:52
 msgid "is this user admin?"
 msgstr ""
 
-#: users/models.py:57
+#: .\users\models.py:57
 msgid "is active"
 msgstr ""
 
-#: users/models.py:58
+#: .\users\models.py:58
 msgid "is this user active?"
 msgstr ""
 
-#: users/templates/registration/login.html:23
+#: .\users\templates\registration\login.html:23
 msgid "BCM Application Sign In Page"
 msgstr ""
 
-#: users/templates/registration/login.html:32
+#: .\users\templates\registration\login.html:32
 msgid "Welcome to BCM Application"
 msgstr ""
 
-#: users/templates/registration/login.html:33
+#: .\users\templates\registration\login.html:33
 msgid "Sign In"
 msgstr ""
 
-#: users/templates/registration/login.html:51
+#: .\users\templates\registration\login.html:51
 msgid "Remember password"
 msgstr ""
 
-#: users/templates/registration/login.html:54
+#: .\users\templates\registration\login.html:54
 msgid "Sign in"
 msgstr "Sign in"
 
-#: users/templates/registration/login.html:55
+#: .\users\templates\registration\login.html:55
 msgid "Forgot password?"
 msgstr ""
 
-#: users/templates/registration/login.html:61
-#: users/templates/users/signup.html:91
+#: .\users\templates\registration\login.html:61
+#: .\users\templates\users\signup.html:91
 msgid "Sign Up"
 msgstr ""
 
-#: users/templates/users/signup.html:19
+#: .\users\templates\users\signup.html:19
 msgid "BCM Application Sign Up Page"
 msgstr ""
 
-#: users/templates/users/signup.html:28
+#: .\users\templates\users\signup.html:28
 msgid "Join BCM Application"
 msgstr ""
 
-#: users/templates/users/signup.html:29
+#: .\users\templates\users\signup.html:29
 msgid "Create An Account"
 msgstr ""
 
-#: users/templates/users/signup.html:46 users/templates/users/signup.html:47
+#: .\users\templates\users\signup.html:46
+#: .\users\templates\users\signup.html:47
 msgid "Iban"
 msgstr ""
 
-#: users/templates/users/signup.html:52 users/templates/users/signup.html:53
+#: .\users\templates\users\signup.html:52
+#: .\users\templates\users\signup.html:53
 msgid "First name"
 msgstr ""
 
-#: users/templates/users/signup.html:57 users/templates/users/signup.html:58
+#: .\users\templates\users\signup.html:57
+#: .\users\templates\users\signup.html:58
 msgid "Last name"
 msgstr ""
 
-#: users/templates/users/signup.html:62
+#: .\users\templates\users\signup.html:62
 msgid "Select Role"
 msgstr ""
 
-#: users/templates/users/signup.html:63
+#: .\users\templates\users\signup.html:63
 msgid "Building manager"
 msgstr ""
 
-#: users/templates/users/signup.html:64
+#: .\users\templates\users\signup.html:64
 msgid "Building resident"
 msgstr ""
 
-#: users/templates/users/signup.html:71 users/templates/users/signup.html:72
+#: .\users\templates\users\signup.html:71
+#: .\users\templates\users\signup.html:72
 msgid "Email address"
 msgstr ""
 
-#: users/templates/users/signup.html:86 users/templates/users/signup.html:87
+#: .\users\templates\users\signup.html:86
+#: .\users\templates\users\signup.html:87
 msgid "Repeat Password"
 msgstr ""
 
-#: users/templates/users/signup.html:92
+#: .\users\templates\users\signup.html:92
 msgid "Do you have an Account?Sign in"
 msgstr ""
