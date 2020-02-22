@@ -18,16 +18,17 @@ def dashboard(request):
 def residence_manage_page(request):
     response = {
         'data': Residence.objects.all(),
+        'request_type': 'new'
+
     }
     return render(request, 'dashboard_pages/residence/residence_managment.html', response)
 
 
 def new_residence_page(request):
     request_type = 'new'
-    residences = Residence.objects.all()
 
     data = {
-        'residences': residences,
+        'residences': Residence.objects.all(),
         'request_type': request_type
     }
     return render(request, 'dashboard_pages/residence/new_residence.html', data)
@@ -98,15 +99,6 @@ def new_block_page(request):
 
 def edit_block_page(request, id):
     request_type = 'edit'
-    block = Block.objects.get(id=id)
-    # if request.method == 'PUT':
-    #     serializer = BlockSerializer(block, data=request.data)
-    #     data = {}
-    #     serializer.save()
-    #     return JsonResponse(serializer.data)
-    # return JsonResponse(serializer.data)
-    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
-
     data = {
         'residences': Residence.objects.all(),
         'block_content': Block.objects.filter(id=id).get(),

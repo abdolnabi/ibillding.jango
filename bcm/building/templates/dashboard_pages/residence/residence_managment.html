@@ -71,21 +71,21 @@
 {#        <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>#}
 {#        </svg></button></td>#}
 {#    </tr>#}
-    {% if residences %}
-   {% for residence in residences %}
-    <tr id="residence_{{ residence.residence_id }}">
-      <th scope="row">{{ residence.residence_id }}</th>
+    {% if data %}
+   {% for residence in data %}
+    <tr id="residence_{{ residence.id }}">
+      <th scope="row">{{ residence.id }}</th>
       <td>{{ residence.name }}</td>
       <td>{{ residence.type }}</td>
       <td>{{ residence.address }}</td>
-      <td>{{ residence.latitude }}</td>
-         <td><button class="btn btn-success" onclick="show_residence({{ residence.residence_id }})" title="show">
+      <td>{{ residence.coordinate }}</td>
+         <td><a class="btn btn-success" href="{% url "building:show_residence_page" id=residence.id %}" title="{% trans 'show' %}">
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
-        </svg></button>&nbsp;<button class="btn btn-info" title="edit" onclick="edit_residence({{ residence.residence_id }}">
+        </svg></a>&nbsp;<a class="btn btn-info"  title="{% trans 'edit' %}" href='{% url "building:edit_residence_page" id=residence.id %}'>
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
-        </svg></button>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_item('{% url "building:residence-detail" residence.id %}',{{ residence.id }})">
+        </svg></a>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_item('{% url "building:residence-detail" residence.id %}',{{ residence.id }})">
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
         </svg></button></td>
