@@ -559,3 +559,6 @@
     min-width: fit-content;
 }
 
+.dropdown-menu dropdown-menu-right {
+    min-width: fit-content;
+}
