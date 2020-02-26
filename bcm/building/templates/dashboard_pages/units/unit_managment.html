@@ -43,6 +43,10 @@
                 {#                    </div>#}
                 {#                </div>#}
                 {##}
+            <p>
+              <a class="btn btn-primary collapsed btn-block-add" href="{%  url 'building:new_unit_page' %}">{% trans 'Add New Unit' %}</a>
+            <br/>
+            </p>
 
                 <hr/>
                 <!-- start table part -->
@@ -54,6 +58,7 @@
                         <th scope="col">{% trans 'Area' %}</th>
                         <th scope="col">{% trans 'Population' %}</th>
                         <th scope="col">{% trans 'Actions' %}</th>
+                        <th scope="col">{% trans 'Facility' %}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -84,6 +89,7 @@
                         <td>{{ unit.area }}</td>
                         <td>{{ unit.population }}</td>
             <td>
+
                 <a class="btn btn-success" href="{% url "building:show_unit_page" id=unit.id %}"
                    title="{% trans 'show' %}">
                             <svg class="c-icon">
@@ -100,6 +106,14 @@
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
                             </svg>
                         </button></td>
+        <td>
+            <a class="btn btn-primary" href="{% url "building:unit_facility_manage_page" unit_id=unit.id %}"
+                   title="{% trans 'facility' %}">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-coffee' %}"></use>
+                            </svg>
+                </a>
+        </td>
                     </tr>
             {% endfor %}
                     {% else %}

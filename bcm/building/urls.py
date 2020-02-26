@@ -7,7 +7,8 @@ from building.views import (
     delete_unit_page, delete_facility_page, ResidenceViewSet, FacilityViewSet, UnitViewSet, FacilityUnitViewSet,
     BlockViewSet, UnitUserViewSet, BoardOfDirectorViewSet, FacilityResidenceViewSet,
     FacilityResidenceAccessibilityViewSet,edit_residence_page,show_residence_page,show_block_page,
-    edit_block_page,edit_unit_page,show_unit_page,edit_facility_page,show_facility_page
+    edit_block_page,edit_unit_page,show_unit_page,edit_facility_page,show_facility_page,show_unit_facility_page,
+    new_unit_facility_page,unit_facility_manage_page,edit_unit_facility_page
 )
 
 app_name = 'building'
@@ -39,7 +40,6 @@ urlpatterns = [
     path('dashboard/block/', block_manage_page, name='block_manage_page'),
     path('dashboard/block/new/', new_block_page, name='new_block_page'),
     path('dashboard/block/edit/<int:id>', edit_block_page, name='edit_block_page'),
-    # path('dashboard/block/update/<int:id>', update_block_page, name='update_block_page'),
     path('dashboard/block/show/<int:id>', show_block_page, name='show_block_page'),
 
     # ####### Unit Path ############
@@ -47,6 +47,11 @@ urlpatterns = [
     path('dashboard/unit/new/', new_unit_page, name='new_unit_page'),
     path('dashboard/unit/edit/<int:id>', edit_unit_page, name='edit_unit_page'),
     path('dashboard/unit/show/<int:id>', show_unit_page, name='show_unit_page'),
+    # ####### Unit Facility Path ############
+    path('dashboard/unit/<int:unit_id>/facility', unit_facility_manage_page, name='unit_facility_manage_page'),
+    path('dashboard/unit/<int:unit_id>/edit_facility/<int:id>', edit_unit_facility_page, name='edit_unit_facility_page'),
+    path('dashboard/unit/<int:unit_id>/facility/<int:id>', show_unit_facility_page, name='show_unit_facility_page'),
+    path('dashboard/unit/<int:unit_id>/facility/new/', new_unit_facility_page, name='new_unit_facility_page'),
 
     # ####### Unit Path ############
     path('dashboard/facility/', facility_manage_page, name='facility_manage_page'),

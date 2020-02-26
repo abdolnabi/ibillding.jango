@@ -1,0 +1,129 @@
+{% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div class="row">
+        <div class="card container">
+            <div class="card-header"><h3>{% trans 'All unit facilities' %}</h3>
+</div>
+            <div class="card-body">
+                <form id="search_unit_unit_facility" enctype='application/json'>
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col-md-5 mb-3 form-group">
+                            <label for="id_second_title_search">{% trans 'Second Title' %}</label>
+                            <input type="text" class="form-control" id="id_second_title_search" name="title_search">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
+                </form>
+                <hr/>
+            <p>
+              <a class="btn btn-primary collapsed btn-block-add" href="{%  url 'building:new_unit_facility_page' unit_id=unit_id %}">{% trans 'Add New Facility' %}</a>
+            <br/>
+            </p>
+                <!-- start table part -->
+                <table id="unit_facility_table" class="table table-responsive-sm table-hover table-outline mb-0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">{% trans 'id' %}</th>
+                        <th scope="col">{% trans 'Second Title' %}</th>
+                        <th scope="col">{% trans 'Description' %}</th>
+                        <th scope="col">{% trans 'Facility' %}</th>
+                        <th scope="col">{% trans 'Actions' %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+{% if data %}
+    {% for unit_facility in data %}
+        <tr id="unit_facility_{{ unit_facility.id }}">
+            <th scope="row">{{ unit_facility.id }}</th>
+{#            <td>{{ unit_facility.type }}</td>#}
+                        <td>{{ unit_facility.second_title }}</td>
+                        <td>{{ unit_facility.description }}</td>
+                        <td>{{ unit_facility.facility }}</td>
+            <td>
+                <a class="btn btn-success" href="{% url "building:show_unit_facility_page" unit_id=unit_id id=unit_facility.id %}"
+                   title="{% trans 'show' %}">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
+                            </svg>
+                </a>&nbsp;<a class="btn btn-info" title="{% trans 'edit' %}"
+                             href='{% url "building:edit_unit_facility_page" unit_id=unit_id id=unit_facility.id %}'>
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+                            </svg>
+            </a>&nbsp;<button class="btn btn-danger" title="{% trans 'delete' %}"
+                              onclick="delete_item('{% url "building:facility-unit-detail" unit_facility.id %}',{{ unit_facility.id }})">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
+                            </svg>
+                        </button></td>
+                    </tr>
+             {% endfor %}
+         {% else %}
+        <tr><td class="text-center" colspan="100%">
+            {% trans 'No unit_facility ...' %}
+        </td></tr>
+            {% endif %}
+                    </tbody>
+                </table>
+                <hr/>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled"><a class="page-link" href="#"
+                                                          tabindex="-1">{% trans 'Previous' %}</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">{% trans 'Next' %}</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock bodycontent %}
+{% block c-script %}
+    <script type="text/javascript">
+    {#    send search form items with json#}
+    $(document).on('submit','#search_unit_facility',function (e) {
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+{#            url: '{% url "building:unit_facility_manage_page" %}',#}
+{#            dataType: 'json',#}
+{#            contentType: 'application/json; charset=utf-8',#}
+            data:{
+                type:$('#id_type_search').val(),
+                title: $('#id_title_search').val(),
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+
+            },
+            success:function() {
+            }
+        });
+    });
+    </script>
+    <script type="text/javascript">
+        function delete_item(url, id) {
+
+            var action = confirm("{% trans 'Are you sure you want to delete this unit facility?' %}");
+            if (action != false) {
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            if (jqXHR.status == "204") {
+                $("#unit_facility_table #unit_facility" + id).remove();
+            }
+        }
+    });
+  }
+        };
+    </script>
+{% endblock c-script %}
