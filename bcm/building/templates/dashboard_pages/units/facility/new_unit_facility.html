@@ -1,0 +1,34 @@
+{% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div id="new_unit_facility_message"></div>
+    <form class="form-horizontal" id='new_unit_facility'>
+
+        {% csrf_token %}
+        {% include "../../../dashboard_pages/units/facility/form/unit_facility_form.html" %}
+    </form>
+{% endblock bodycontent %}
+{% block c-script %}
+    <script type="text/javascript">
+        $(document).on('submit', '#new_unit_facility', function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: 'POST',
+            url: '{% url "building:facility-unit-list" %}',
+            dataType: 'json',
+            data:{
+                'second_title': $('#id_second_title').val(),
+                'description': $('#id_description').val(),
+                'facility':$('#id_facility').val(),
+                'unit':$('#id_unit').val(),
+            },
+            success:function(data) {
+                $("#new_unit_facility_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
+            },
+            error: function(data) {
+                $("#new_unit_facility_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");
+            }
+        });
+    });
+    </script>
+{% endblock c-script %}

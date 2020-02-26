@@ -562,3 +562,9 @@
 .dropdown-menu dropdown-menu-right {
     min-width: fit-content;
 }
+*[dir=rtl].btn-block-add {
+    float:left
+}
+.btn-block-add {
+    float:right;
+}

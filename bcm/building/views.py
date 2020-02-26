@@ -37,23 +37,16 @@ def new_residence_page(request):
 def edit_residence_page(request, id):
     request_type = 'edit'
     # if request.method == 'GET':
-    residence = Residence.objects.filter(id=id).get()
+    # residence = Residence.objects.filter(id=id).get()
     # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
     data = {
         'residences': Residence.objects.all(),
         'residence': Residence.objects.filter(id=id).get(),
-        'facility': Residence.objects.filter(id=id).get(),
+        'residence_facility': FacilityResidence.objects.filter(residence_id=id).get(),
         'request_type': request_type,
         'id': id,
-        # 'item_type_dropdown': item_type_dropdown
     }
-    if request.method == 'PUT':
-        serializer = ResidenceSerializer(residence, data=request.data)
-        data = {}
-        serializer.save()
-        return JsonResponse(serializer.data)
-
-    return render(request, 'dashboard_pages/residence/new_residence.html', data)
+    return render(request, 'dashboard_pages/residence/edit_residence.html', data)
 
 
 def show_residence_page(request, id):
@@ -76,6 +69,50 @@ def delete_residence_page(request):
 
     return JsonResponse(data)
 
+###################### unit facility section  #######################
+
+def unit_facility_manage_page(request,unit_id):
+    response = {
+        'data': FacilityUnit.objects.filter(unit=unit_id).all(),
+        # 'residences': Block.objects.all(),
+        'request_type': 'new',
+        'unit_id': unit_id
+    }
+    return render(request, 'dashboard_pages/units/facility/unit_facility.html', response)
+
+
+def new_unit_facility_page(request,unit_id):
+    request_type = 'new'
+    data = {
+        'facilities': Facility.objects.all(),
+        'unit_id': unit_id,
+        'request_type': request_type,
+    }
+    return render(request, 'dashboard_pages/units/facility/new_unit_facility.html', data)
+
+
+def edit_unit_facility_page(request,unit_id,id):
+    request_type = 'edit'
+    data = {
+        'facilities': Facility.objects.all(),
+        'unit_facility': FacilityUnit.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        'unit_id': unit_id,
+    }
+    return render(request, 'dashboard_pages/units/facility/update_show_unit_facility.html', data)
+
+
+def show_unit_facility_page(request,unit_id, id):
+    request_type = 'show'
+    data = {
+        'facilities': Facility.objects.all(),
+        'unit_facility': FacilityUnit.objects.filter(id=id).get(),
+        'id': id,
+        'request_type': request_type,
+        'unit_id': unit_id,
+    }
+    return render(request, 'dashboard_pages/units/facility/update_show_unit_facility.html', data)
 
 ############ Block section #######################
 
