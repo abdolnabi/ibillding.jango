@@ -9,6 +9,7 @@ from building.serializers import ResidenceSerializer, FacilitySerializer, UnitSe
     BlockSerializer, UnitUserSerializer, BoardOfDirectorSerializer, FacilityResidenceSerializer, \
     FacilityResidenceAccessibilitySerializer
 
+
 def dashboard(request):
     return render(request, 'dashboard_pages/dashboard_base.html')
 
@@ -60,18 +61,10 @@ def show_residence_page(request, id):
     return render(request, 'dashboard_pages/residence/new_residence.html', data)
 
 
-def delete_residence_page(request):
-        # id1 = request.GET.get('residence_id', None)
-        # residence.objects.get(id=id1).delete()
-    data = {
-            'deleted': True
-        }
+# ##################### unit facility section  #######################
 
-    return JsonResponse(data)
 
-###################### unit facility section  #######################
-
-def unit_facility_manage_page(request,unit_id):
+def unit_facility_manage_page(request, unit_id):
     response = {
         'data': FacilityUnit.objects.filter(unit=unit_id).all(),
         # 'residences': Block.objects.all(),
@@ -81,7 +74,7 @@ def unit_facility_manage_page(request,unit_id):
     return render(request, 'dashboard_pages/units/facility/unit_facility.html', response)
 
 
-def new_unit_facility_page(request,unit_id):
+def new_unit_facility_page(request, unit_id):
     request_type = 'new'
     data = {
         'facilities': Facility.objects.all(),
@@ -91,7 +84,7 @@ def new_unit_facility_page(request,unit_id):
     return render(request, 'dashboard_pages/units/facility/new_unit_facility.html', data)
 
 
-def edit_unit_facility_page(request,unit_id,id):
+def edit_unit_facility_page(request, unit_id, id):
     request_type = 'edit'
     data = {
         'facilities': Facility.objects.all(),
@@ -103,7 +96,7 @@ def edit_unit_facility_page(request,unit_id,id):
     return render(request, 'dashboard_pages/units/facility/update_show_unit_facility.html', data)
 
 
-def show_unit_facility_page(request,unit_id, id):
+def show_unit_facility_page(request, unit_id, id):
     request_type = 'show'
     data = {
         'facilities': Facility.objects.all(),
@@ -114,7 +107,8 @@ def show_unit_facility_page(request,unit_id, id):
     }
     return render(request, 'dashboard_pages/units/facility/update_show_unit_facility.html', data)
 
-############ Block section #######################
+# ########### Block section #######################
+
 
 def block_manage_page(request):
     response = {
@@ -232,6 +226,7 @@ def show_unit_page(request, id):
     }
     return render(request, 'dashboard_pages/units/update_show_unit.html', data)
 
+
 def delete_unit_page(request):
     def get(self, request):
         # id1 = request.GET.get('unit_id', None)
@@ -284,16 +279,6 @@ def show_facility_page(request, id):
         # 'item_type_dropdown': item_type_dropdown
     }
     return render(request, 'dashboard_pages/facilities/update_show_facility.html', data)
-
-def delete_facility_page(request):
-    def get(self, request):
-        # id1 = request.GET.get('facility_id', None)
-        # residence.objects.get(id=id1).delete()
-        data = {
-            'deleted': True
-        }
-        return JsonResponse(data)
-
 
 
 # rest view section

@@ -3,12 +3,12 @@ from rest_framework.routers import DefaultRouter
 
 from building.views import (
     dashboard, residence_manage_page, new_residence_page, new_block_page, block_manage_page,
-    unit_manage_page, new_unit_page, facility_manage_page, new_facility_page, delete_residence_page,
-    delete_unit_page, delete_facility_page, ResidenceViewSet, FacilityViewSet, UnitViewSet, FacilityUnitViewSet,
+    unit_manage_page, new_unit_page, facility_manage_page, new_facility_page,
+    ResidenceViewSet, FacilityViewSet, UnitViewSet, FacilityUnitViewSet,
     BlockViewSet, UnitUserViewSet, BoardOfDirectorViewSet, FacilityResidenceViewSet,
-    FacilityResidenceAccessibilityViewSet,edit_residence_page,show_residence_page,show_block_page,
-    edit_block_page,edit_unit_page,show_unit_page,edit_facility_page,show_facility_page,show_unit_facility_page,
-    new_unit_facility_page,unit_facility_manage_page,edit_unit_facility_page
+    FacilityResidenceAccessibilityViewSet, edit_residence_page, show_residence_page, show_block_page,
+    edit_block_page, edit_unit_page, show_unit_page, edit_facility_page, show_facility_page, show_unit_facility_page,
+    new_unit_facility_page, unit_facility_manage_page, edit_unit_facility_page
 )
 
 app_name = 'building'
@@ -49,7 +49,10 @@ urlpatterns = [
     path('dashboard/unit/show/<int:id>', show_unit_page, name='show_unit_page'),
     # ####### Unit Facility Path ############
     path('dashboard/unit/<int:unit_id>/facility', unit_facility_manage_page, name='unit_facility_manage_page'),
-    path('dashboard/unit/<int:unit_id>/edit_facility/<int:id>', edit_unit_facility_page, name='edit_unit_facility_page'),
+    path('dashboard/unit/<int:unit_id>/edit_facility/<int:id>',
+         edit_unit_facility_page,
+         name='edit_unit_facility_page'),
+
     path('dashboard/unit/<int:unit_id>/facility/<int:id>', show_unit_facility_page, name='show_unit_facility_page'),
     path('dashboard/unit/<int:unit_id>/facility/new/', new_unit_facility_page, name='new_unit_facility_page'),
 
