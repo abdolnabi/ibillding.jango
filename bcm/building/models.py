@@ -355,3 +355,28 @@ class FacilityResidenceAccessibility(BaseModel):
         verbose_name=_('accessible'),
         help_text=_('accessible for this accessibility'),
     )
+
+
+class UnitPhoneNumber(BaseModel):
+    unit = models.ForeignKey(
+        verbose_name=_('unit'),
+        help_text=_('unit for this phone'),
+        to=Unit,
+        on_delete=models.CASCADE,
+        related_name='phone_numbers'
+    )
+
+    phone = models.CharField(
+        verbose_name=_('phone'),
+        help_text=_('the phone number'),
+        max_length=16,
+    )
+
+    description = models.TextField(
+        verbose_name=_('description'),
+        help_text=_('description'),
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.phone

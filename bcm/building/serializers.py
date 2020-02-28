@@ -3,7 +3,7 @@ from rest_framework import serializers
 from building.models import (
     Residence, Facility, Unit, FacilityUnit, Block, UnitUser, BoardOfDirector,
     FacilityResidence, FacilityResidenceAccessibility,
-    Location)
+    Location, UnitPhoneNumber)
 from core.serializers import CoreModelSerializer
 
 
@@ -23,6 +23,12 @@ class UnitSerializer(CoreModelSerializer):
     class Meta:
         model = Unit
         fields = ['id', 'residence', 'area', 'population', 'users']
+
+
+class UnitPhoneNumberSerializer(CoreModelSerializer):
+    class Meta:
+        model = UnitPhoneNumber
+        fields = ['id', 'unit', 'phone', 'description']
 
 
 class FacilityUnitSerializer(CoreModelSerializer):

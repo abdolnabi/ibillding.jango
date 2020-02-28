@@ -4,10 +4,10 @@ from rest_framework import viewsets
 
 # ###########Dashboard Base section #######################
 from building.models import Residence, Facility, Unit, FacilityUnit, Block, UnitUser, BoardOfDirector, \
-    FacilityResidence, FacilityResidenceAccessibility
+    FacilityResidence, FacilityResidenceAccessibility, UnitPhoneNumber
 from building.serializers import ResidenceSerializer, FacilitySerializer, UnitSerializer, FacilityUnitSerializer, \
     BlockSerializer, UnitUserSerializer, BoardOfDirectorSerializer, FacilityResidenceSerializer, \
-    FacilityResidenceAccessibilitySerializer
+    FacilityResidenceAccessibilitySerializer, UnitPhoneNumberSerializer
 
 
 def dashboard(request):
@@ -295,6 +295,11 @@ class FacilityViewSet(viewsets.ModelViewSet):
 class UnitViewSet(viewsets.ModelViewSet):
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
+
+
+class UnitPhoneNumberViewSet(viewsets.ModelViewSet):
+    queryset = UnitPhoneNumber.objects.all()
+    serializer_class = UnitPhoneNumberSerializer
 
 
 class FacilityUnitViewSet(viewsets.ModelViewSet):

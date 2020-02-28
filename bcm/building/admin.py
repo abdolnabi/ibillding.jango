@@ -2,7 +2,7 @@ from django.contrib import admin
 from building.models import (
     Residence, Facility, Unit, FacilityUnit, Block, UnitUser, BoardOfDirector,
     FacilityResidence, FacilityResidenceAccessibility,
-    Location)
+    Location, UnitPhoneNumber)
 
 
 class ResidenceAdmin(admin.ModelAdmin):
@@ -18,6 +18,11 @@ class FacilityAdmin(admin.ModelAdmin):
 class UnitAdmin(admin.ModelAdmin):
     list_display = ('residence', 'population')
     list_filter = ('created',)
+
+
+class UnitPhoneNumberAdmin(admin.ModelAdmin):
+    list_display = ('unit', 'phone')
+    search_fields = ('phone',)
 
 
 class FacilityUnitAdmin(admin.ModelAdmin):
@@ -63,3 +68,4 @@ admin.site.register(Unit, UnitAdmin)
 admin.site.register(Facility, FacilityAdmin)
 admin.site.register(Residence, ResidenceAdmin)
 admin.site.register(Location, LocationAdmin)
+admin.site.register(UnitPhoneNumber, UnitPhoneNumberAdmin)

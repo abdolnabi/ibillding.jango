@@ -8,8 +8,8 @@ from building.views import (
     BlockViewSet, UnitUserViewSet, BoardOfDirectorViewSet, FacilityResidenceViewSet,
     FacilityResidenceAccessibilityViewSet, edit_residence_page, show_residence_page, show_block_page,
     edit_block_page, edit_unit_page, show_unit_page, edit_facility_page, show_facility_page, show_unit_facility_page,
-    new_unit_facility_page, unit_facility_manage_page, edit_unit_facility_page
-)
+    new_unit_facility_page, unit_facility_manage_page, edit_unit_facility_page,
+    UnitPhoneNumberViewSet)
 
 app_name = 'building'
 
@@ -27,6 +27,7 @@ router.register(
     FacilityResidenceAccessibilityViewSet,
     basename='facility-residence-accessibility'
 )
+router.register('phone-number', UnitPhoneNumberViewSet, basename='phone-number')
 
 urlpatterns = [
     #  Dashboard Paths =======================
