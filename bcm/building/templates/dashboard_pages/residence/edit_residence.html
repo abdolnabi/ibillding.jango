@@ -1,12 +1,24 @@
 {% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
 {% load static i18n %}
 {% block bodycontent %}
-    <div id="new_block_message"></div>
-    <form class="form-horizontal" id='new_block'>
+    <div id="new_residence_message"></div>
+    {#    {{ request_type }}#}
+    {% if request_type == 'edit' %}
+        <form class="form-horizontal" id='edit_residence'>
+        {#    {% elif request_type == 'new' %}#}
+        {#        <form class="form-horizontal" id='new_block'>#}
+    {% else %}
+        <form class="form-horizontal" id='show_residence'>
+    {% endif %}
 
-        {% csrf_token %}
+{% csrf_token %}
 
         {% include "../../dashboard_pages/residence/form/residence_form.html" %}
+<div class="card-footer">
+                        <input class="btn btn-lg btn-primary" value="{% trans 'Submit' %}" type="submit"></input>
+                    </div>
+    </div> </div>
+</form>
         <!-- third part of form -->
         <div class="row">
             <div class="col-lg-12">
@@ -17,113 +29,215 @@
                     <div class="card-body">
                         <div id="table" class="table-editable">
                             <span class="table-add float-right mb-3 mr-2"><button class="btn btn-info cil-plus"
-                                                                                  id="addrow"
+                                                                                 onclick="add_facility()" id="addrow"
                                                                                   type="button"></button></span>
                             <table id="dataTable"
                                    class="dataTable table table-bordered table-responsive-md table-striped text-center">
 
                                 <thead>
-                                <th>{% trans 'Title' %}</th>
+                                <th>{% trans 'Facility' %}</th>
+                                <th>{% trans 'Second Title' %}</th>
                                 <th>{% trans 'Description' %}</th>
                                 <th>{% trans 'Price' %}</th>
                                 <th>{% trans 'Requestable' %}</th>
                                 <th>{% trans 'َAction' %}</th>
                                 </thead>
                                 <tbody id="tbody" class="center">
-                                <form class="edit_facility">
-                                {% for facility in residence_facility %}
-                                <tr>
-
-                                    <td><label for="id_title' + {{ facility.id }} + '"></label><input type="text" class="form-control" id="id_title' + {{ facility.id }} + '" name="title' + {{ facility.id }} + '" /></td>
-                                    <td><textarea cols="30" rows="3" id="id_description' + {{ facility.id }} + '" name="description' + {{ facility.id }} + '" class="form-control" /></td>
-                                    <td><label for="id_price' + {{ facility.id }} + '"></label><input class="form-control" type="text" id="id_price' + {{ facility.id }} + '" name="price' + {{ facility.id }} + '"></td>
-                                    <td><label for="id_requestable' + {{ facility.id }} + '" class="c-switch c-switch-label c-switch-pill c-switch-primary"><input class="c-switch-input" id="id_requestable' + {{ facility.id }} + '" name="requestable' + {{ facility.id }} + '" type="checkbox" checked=""><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span></label></td>
-                                    <td><button class="ibtnDel btn btn-danger cil-trash"></button></td>
-                                    <td><input class="btn btn-lg btn-primary" value="{% trans 'Submit' %}" type="submit"></td>
-                                </tr>
+                                {% for item in residence_facility %}
+                                <tr id="facility_{{ item.id }}">
+                                    <form class="residence_facility">
+                                    <td><label for="id_facility{{ item.id }}"></label>
+                                        <select class="form-control" id="id_facility{{ item.id }}" name="facility{{ item.id }}" >
+                                        {% for facility in facilities %}
+                                    <option value="{{ facility.id }}" >{{ facility.title }}</option>
+                                    {% endfor %}
+                                    </select></td>
+                                    <td><label for="id_second_title{{ item.id }}"></label><input type="text" class="form-control" value="{{ item.second_title }}" id="id_second_title{{ item.id }}" name="second_title{{ item.id }}" /></td>
+                                    <td><textarea cols="30" rows="3" id="id_description{{ item.id }}" name="description{{ item.id }}" class="form-control">{{ item.description }}</textarea></td>
+                                    <td><label for="id_price_{{ item.id }}"></label><input class="form-control" type="text" value="{{ item.price }}" id="id_price{{ item.id }}" name="price{{ item.id }}"></td>
+                                    <td><label for="id_requestable{{ item.id }}" class="c-switch c-switch-label c-switch-pill c-switch-primary"><input class="c-switch-input" id="id_requestable{{ item.id }}" name="requestable{{ item.id }}" value="{{ item.requestable }}" type="checkbox" {% if item.requestable == True %}checked{% else %} {% endif %}><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span></label></td>
+{#                                    <input type="hidden" id="id_facility_residence" name="facility_residence" value="{{ item.id }}">#}
+{#                                    <input type="hidden" id="id_residence" name="residence" value="{{ item.residence }}">#}
+                                    <td><button class="ibtnDel btn btn-danger cil-trash" onclick="delete_item('{% url "building:facility-residence-detail" item.id %}',{{ item.id }})"></button></td>
+                                    <td><button class="btn btn-primary cil-save" onclick="edit_facility_item('{% url "building:facility-residence-detail" item.id %}',{{ item.id }})" /></td>
+                                 </form></tr>
                                 {% endfor %}
-                                </form>
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div class="c-card-footer">
-                        <input class="btn btn-lg btn-primary" value="{% trans 'Submit' %}" type="submit"></input>
-                    </div>
+
                 </div>
                 <!-- Editable table -->
             </div>
         </div>
-    </form>
+
 
 {% endblock bodycontent %}
 {% block c-script %}
-    {#    <script src="https://maps.googleapis.com/maps/js?key=AIzaSyCYCDv3Xc3H2HVpNdvps3tYmky2HWxeT_E&callback=myMap"></script>#}
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script src="{% static 'js/residence/custom_js.js' %}"></script>
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script src="{% static 'js/residence/custom_js.js' %}"></script>
+    {% if request_type == 'show' %}
+        <script type="text/javascript">
+            $('#show_residence input').attr('disabled', true);
+            $('#show_residence textarea').attr('disabled', true);
+            $('#show_residence select').attr('disabled', true);
+            $('#show_residence checkbox').attr('disabled', true);
+            $('#show_residence #residence_btn').attr('type', 'submit').remove();
+
+        </script>
+    {% endif %}
+
+    {##############   start facility section ########################}
     <script type="text/javascript">
-    $(document).on('submit','#new_residence',function (e) {
-{#        var count = $('tbody > tr').​​​​​length;#}
-{#        post_data = {};#}
-{#        for(var i=0;i<= count;i++){#}
-{#            post_data['title'+i]= $('#id_title'+i).val(),#}
-{#            post_data['description'+i]= $('#id_description'+i).val(),#}
-{#            post_data['price'+i]= $('#id_price'+i).val(),#}
-{#            post_data['requestable'+i]= $('#id_requestable'+i).val()#}
-{#        }#}
-        e.preventDefault();
+{#    edit facility in table row#}
+    function edit_facility_item(url,id) {
         $.ajax({
-            type:'POST',
-            url: '/dashboard/residence/new/',
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
+            url: url,
+            type: 'PUT',
             data: {
-                name: $('#id_name').val(),
-                parent_name: $('#id_parent_name').val(),
-                coordinate: $('#id_coordinate').val(),
-                type: $('#id_type').val(),
-                address: $('#id_address').val(),
-                rules: $('#id_rules').val(),
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-{#                facility_data:post_data.val(),#}
-{#                count: count#}
+                'id': id,
+                'residence':{{ residence_id }},
+                'facility': $('#id_facility'+id).val(),
+                'second_title': $('#id_second_title'+id).val(),
+                'description': $('#id_description'+id).val(),
+                'price': $('#id_price'+id).val(),
+                'requestable': $('#id_requestable'+id).prop('checked'),
             },
-             success:function(data) {
-                $("#new_residence_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>Item added successfully!</div>");
+            dataType: 'json',
+        });
+    };
+        {#    }#}
+    </script>
+
+    <script type="text/javascript">
+{#    add rows to table for insert new item#}
+        function add_facility() {
+            var newRow = jQuery('<tr><form class="residence_facility">');
+            var counter = $(this).closest('tr').attr('id');
+            var cols = "";
+            cols += '<td><label for="id_facility'+counter+'"></label><select class="form-control" id="id_facility'+counter+'" name="facility'+counter+'" >' +
+                +'{% for facility in facilities %}'+
+                    '<option value="{{ facility.id }}" >{{ facility.title }}</option>' +
+                    '{% endfor %}' +
+                '</select></td>';
+            cols += '<td><label for="id_title'+counter+'"></label><input type="text" class="form-control" id="id_title'+counter+'" name="title'+counter+'" /></td>';
+            cols += '<td><textarea cols="30" rows="3" id="id_description'+counter+'" name="description'+counter+'" class="form-control" /></td>';
+            cols += '<td><label for="id_price'+counter+'"></label><input class="form-control" type="text" id="id_price'+counter+'" name="price'+counter+'"></td>';
+            cols += '<td><label for="id_requestable'+counter+'" class="c-switch c-switch-label c-switch-pill c-switch-primary"><input class="c-switch-input" id="id_requestable'+counter+'" name="requestable'+counter+'" type="checkbox" checked=""><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span></label></td>';
+{#            cols += '<input type="hidden" name="id" id="id" value="'+ {{ item.id }} +'" />';#}
+            cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
+            cols += '<td><button class="btn_add_new_facility btn btn-primary cil-save"/></td>';
+            newRow.append(cols+'</form>');
+            jQuery("table.dataTable").append(newRow);
+        }
+{#        # add delete function here#}
+            jQuery(document).ready(function () {
+                jQuery("table.dataTable").on("click", ".ibtnDel", function (event) {
+                jQuery(this).closest("tr").remove();
+
+        });
+        });
+        function delete_item(url, id) {
+
+            var action = confirm("{% trans 'Are you sure you want to delete this facility residence?' %}");
+            if (action != false) {
+{#                var id = $('#id_facility_residence' + id).val();#}
+                var residence = $('#id_residence' + id).val();
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        'id': id,
+                    },
+                    dataType: 'json',
+                    success: function (data, textStatus, jqXHR) {
+                        if (jqXHR.status == "204") {
+                            $("#dataTable #facility_" + id).remove();
+                        }
+                    }
+                });
+            }
+        };
+    </script>
+
+{#    add facility to residence#}
+    <script type="text/javascript">
+        jQuery("table.dataTable").on("click", ".btn_add_new_facility", function (e) {
+        e.preventDefault();
+        var counter = $(this).closest('tr').attr('id');
+        $.ajax({
+            method: 'POST',
+            url: '{% url "building:facility-residence-list" %}',
+            dataType: 'json',
+            data:{
+                'residence':{{ residence_id }},
+                'facility': $('#id_facility'+counter).val(),
+                'second_title': $('#id_title'+counter).val(),
+                'description': $('#id_description'+counter).val(),
+                'price': $('#id_price'+counter).val(),
+                'requestable': $('#id_requestable'+counter).val(),
+            },
+            success:function(data) {
+                $("#new_residence_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
             },
             error: function(data) {
-                $("#new_residence_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>something is Wrong!</div>");
+                $("#new_residence_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");
             }
         });
     });
     </script>
-    <script type="text/javascript">
 
-        {#    if (request_type == 'edit'){#}
-        $(document).on('submit', '#edit_facility', function (e) {
+{#    end facility section#}
+    {#    start residence section#}
+    <script type="text/javascript">
+         $(document).on('submit', '#edit_residence', function (e) {
             e.preventDefault();
+{#            let facility_residences = [];#}
+{#            {% for item in residence_facility %}#}
+{#            facility_residences.push({#}
+{#                'id': {{ item.id }},#}
+{#                'residence': {{ item.residence }},#}
+{#                'facility': {{ item.facility }},#}
+{#                'second_title': {{ item.second_title }},#}
+{#                'description': {{ item.description }},#}
+{#                'requestable': {{ item.requestable }},#}
+{#                'price': {{ item.price }},#}
+{#            });#}
+{#             {% endfor %}#}
+{#        var data= JSON.stringify(facility_residences);#}
             // or display message in form, etc...
             $.ajax({
                 type: 'PUT',
-                url: '{% url "building:facility-residence-detail" facility.id %}',
+                url: '{% url "building:residence-detail" residence_id %}',
                 dataType: 'json',
                 {#            contentType: 'application/json; charset=utf-8',#}
                 data: {
-                    id: $('#id_title').val(),
-                    description: $('#id_description').val(),
-                    price: $('#id_price').val(),
-                    requestable: $('#id_requestable').val(),
-                    {#                'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()#}
+                    'id': {{ residence_id }},
+                    'parent_residence': $('#id_parent_residence').val(),
+                    'manager': $('#id_manager').val(),
+                    'name': $('#id_name').val(),
+                    'type': $('#id_type').val(),
+                    'address': $('#id_address').val(),
+                    'rules': $('#id_rules').val(),
+                    'appendix_to_statute': $('#id_appendix_to_statute').val(),
+                    'coordinate.latitude': $('#id_latitude').val(),
+                    'coordinate.longitude': $('#id_longitude').val(),
+{#                    'coordinate': $('#id_coordinate').val(),#}
+{#                    'facility_residences':data,#}
+{#                    'coordinate': $('#id_latitude').val()+'-'+$('#id_longitude').val(),#}
 
                 },
                 success: function () {
-                    $("#new_facility_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item Edited successfully!' %}</div>");
+                    $("#new_residence_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item Edited successfully!' %}</div>");
                 },
                 error: function () {
-                    $("#new_facility_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrongs!' %}</div>");
+                    $("#new_residence_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrongs!' %}</div>");
                 }
             });
 
         });
     </script>
+
 {% endblock c-script %}

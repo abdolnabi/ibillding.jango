@@ -1,4 +1,5 @@
 {% load static i18n %}
+<div class="card"><div class="card-body">
 <div class="row">
             <div class="col-sm-6">
                 <div class="card">
@@ -7,11 +8,22 @@
                     <div class="c-card-body">
                         <div class="form-group">
                             <label for="id_name">{% trans 'Name' %}</label>
-                            <input type="text" class="form-control" id="id_name" name="name" required>
+                            <input type="text" class="form-control" value="{{ residence.name }}" id="id_name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="id_parent_name">{% trans 'Parent Name' %}</label>
-                            <select class="form-control" id="id_parent_name" name="parent_name">
+                            <label for="id_manager">{% trans 'manager' %}</label>
+                            <select class="form-control" id="id_manager" name="manager">
+                                <option value=""></option>
+                                {% for user in users %}
+                                    <option name="{{ user.id }}"
+                                            value="{{ user.id }}">{{ user.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="id_parent_residence">{% trans 'Parent Name' %}</label>
+                            <select class="form-control" id="id_parent_residence" name="parent_name">
+                              <option value=""></option>
                                 {% for res in residences %}
                                     <option name="{{ res.id }}"
                                             value="{{ res.id }}">{{ res.name }}</option>
@@ -40,7 +52,7 @@
                         <div class="form-group">
                             <label class="col-form-label" for="id_appendix_to_statute">{% trans 'appendix to statute' %}</label>
                             <textarea class="form-control" id="id_appendix_to_statute" name="appendix_to_statute" rows="1"
-                                      placeholder="{% trans 'appendix to statute...' %}" spellcheck="false">{{ residence.rules }}</textarea>
+                                      placeholder="{% trans 'appendix to statute...' %}" spellcheck="false">{{ residence.appendix_to_statute }}</textarea>
                         </div>
                     </div>
                 </div>
@@ -56,11 +68,22 @@
 
                         <div id="map" class="map"></div>
                         <br/>
+                         <div class="row inline">
+{#                        <div class="form-group">#}
+{#                            <label for="id_coordinate">Coordinate</label>#}
+{#                            <input type="text" class="form-control" name="coordinate" id="id_coordinate"#}
+{#                                   value="{{ residence.coordinate }}" placeholder="coordinate"/>#}
+{#                        </div>#}
                         <div class="form-group">
-                            <label for="id_coordinate">Coordinate Points</label>
-                            <input type="text" class="form-control" name="coordinate" id="id_coordinate"
-                                   value="{{ residence.coordinate }}" placeholder="Coordinate points"/>
+                            <label for="id_latitude">Latitude</label>
+                            <input type="text" class="form-control" name="coordinate" id="id_latitude"
+                                   value="{{ residence.coordinate.latitude }}" placeholder="Latitude"/>
                         </div>
+                            <div class="form-group">
+                            <label for="id_longitude">Longitude</label>
+                            <input type="text" class="form-control" name="coordinate" id="id_longitude"
+                                   value="{{ residence.coordinate.longitude }}" placeholder="Latitude"/>
+                        </div></div>
                         <br/>
                     </div>
 

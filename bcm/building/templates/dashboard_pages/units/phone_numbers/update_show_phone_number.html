@@ -1,0 +1,57 @@
+{% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div id="new_phone_number_message"></div>
+    {#    {{ request_type }}#}
+    {% if request_type == 'edit' %}
+        <form class="form-horizontal" id='edit_phone_number'>
+        {#    {% elif request_type == 'new' %}#}
+        {#        <form class="form-horizontal" id='new_block'>#}
+    {% else %}
+        <form class="form-horizontal" id='show_phone_number'>
+    {% endif %}
+
+{% csrf_token %}
+{% include "../../../dashboard_pages/units/phone_numbers/form/phone_number_form.html" %}
+</form>
+
+{% endblock bodycontent %}
+{% block c-script %}
+    {% if request_type == 'show' %}
+        <script type="text/javascript">
+            $('#show_phone_number input').attr('disabled', true);
+            $('#show_phone_number textarea').attr('disabled', true);
+            $('#show_phone_number select').attr('disabled', true);
+            $('#show_phone_number #phone_number_btn').attr('type', 'submit').remove();
+
+        </script>
+    {% endif %}
+    <script type="text/javascript">
+
+        {#    if (request_type == 'edit'){#}
+        $(document).on('submit', '#edit_phone_number', function (e) {
+            e.preventDefault();
+            // or display message in form, etc...
+            $.ajax({
+                type: 'PUT',
+                url: '{% url "building:phone-number-detail" phone_number.id %}',
+                dataType: 'json',
+                {#            contentType: 'application/json; charset=utf-8',#}
+                data: {
+                    'unit':$('#id_unit').val(),
+                    'phone': $('#id_phone').val(),
+                    'description': $('#id_description').val(),
+                },
+                success: function () {
+                    $("#new_phone_number_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item Edited successfully!' %}</div>");
+                },
+                error: function () {
+                    $("#new_phone_number_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrongs!' %}</div>");
+                }
+            });
+
+        });
+        {#    }#}
+    </script>
+
+{% endblock c-script %}

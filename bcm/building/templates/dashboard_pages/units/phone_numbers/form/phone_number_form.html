@@ -1,0 +1,25 @@
+{% load static i18n %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="c-card-header">
+                <strong>{% trans 'Unit Facility info' %}</strong></div>
+            <div class="c-card-body col-sm-7">
+                <div class="form-group">
+                    <label for="id_phone">{% trans 'Phone' %}</label>
+                    <input type="text" class="form-control" id="id_phone" value="{{ phone_number.phone }}" name="phone"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="id_description">{% trans 'Description' %}</label>
+                    <textarea class="form-control" id="id_description" name="description" rows="4"
+                              placeholder="Description..." spellcheck="false">{{ phone_number.description }}</textarea>
+                </div>
+                <input name="unit" id="id_unit" type="hidden" value="{{ unit_id }}">
+            </div>
+            <div class="c-card-footer">
+                <button class="btn btn-lg btn-primary" id="phone_number_btn" type="submit">{% trans 'Submit' %}</button>
+            </div>
+        </div>
+    </div>
+</div>

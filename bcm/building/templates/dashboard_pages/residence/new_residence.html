@@ -2,10 +2,8 @@
 {% load static i18n %}
 {% block bodycontent %}
     <div id="new_block_message"></div>
-    <form class="form-horizontal" id='new_block'>
-
+    <form class="form-horizontal" id='new_residence'>
         {% csrf_token %}
-
         {% include "../../dashboard_pages/residence/form/residence_form.html" %}
         <!-- third part of form -->
         <div class="row">
@@ -16,13 +14,14 @@
                         <strong>{% trans 'Residence Facilities' %}</strong></div>
                     <div class="card-body">
                         <div id="table" class="table-editable">
-                            <span class="table-add float-right mb-3 mr-2"><button class="btn btn-info cil-plus"
+                            <span class="table-add float-right mb-3 mr-2"><button onclick="add_facility()" class="btn btn-info cil-plus"
                                                                                   id="addrow"
                                                                                   type="button"></button></span>
                             <table id="dataTable"
                                    class="dataTable table table-bordered table-responsive-md table-striped text-center">
 
                                 <thead>
+                                <th>{% trans 'Facility' %}</th>
                                 <th>{% trans 'Title' %}</th>
                                 <th>{% trans 'Description' %}</th>
                                 <th>{% trans 'Price' %}</th>
@@ -34,6 +33,7 @@
                             </table>
                         </div>
                     </div>
+{#                    <input type="hidden" name="facilities" id="id_facilities" value="{{ facilities }}"/>#}
                     <div class="c-card-footer">
                         <input class="btn btn-lg btn-primary" value="{% trans 'Submit' %}" type="submit"></input>
                     </div>
@@ -50,31 +50,39 @@
     <script src="{% static 'js/residence/custom_js.js' %}"></script>
     <script type="text/javascript">
     $(document).on('submit','#new_residence',function (e) {
-{#        var count = $('tbody > tr').​​​​​length;#}
-{#        post_data = {};#}
-{#        for(var i=0;i<= count;i++){#}
-{#            post_data['title'+i]= $('#id_title'+i).val(),#}
-{#            post_data['description'+i]= $('#id_description'+i).val(),#}
-{#            post_data['price'+i]= $('#id_price'+i).val(),#}
-{#            post_data['requestable'+i]= $('#id_requestable'+i).val()#}
-{#        }#}
         e.preventDefault();
+        var facility_data = $('table.dataTable tr').length;
+        var item;
+        let facility_residences = [];
+        for (item = 1; item < facility_data; item++) {
+            facility_residences.push({
+{#                'residence': 1,#}
+                'residence': 1,
+                'facility': $('#id_facility' + item).val(),
+                'second_title': $('#id_second_title' + item).val(),
+                'description': $('#id_description' + item).val(),
+                'requestable': $('#id_requestable'+item).prop('checked'),
+                'price': $('#id_price' + item).val(),
+            });
+        }
+{#        var postData = JSON.stringify(facility_residences);#}
         $.ajax({
             type:'POST',
-            url: '/dashboard/residence/new/',
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
+            dataType: 'json',
+            url: '{% url "building:residence-list" %}',
             data: {
-                name: $('#id_name').val(),
-                parent_name: $('#id_parent_name').val(),
-                coordinate: $('#id_coordinate').val(),
-                type: $('#id_type').val(),
-                address: $('#id_address').val(),
-                rules: $('#id_rules').val(),
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
-{#                facility_data:post_data.val(),#}
-{#                count: count#}
-            },
+                'name': $('#id_name').val(),
+                'manager': $('#id_manager').val(),
+                'parent_residence': $('#id_parent_residence').val(),
+                'appendix_to_statute': $('#id_appendix_to_statute').val(),
+                'coordinate.latitude': $('#id_latitude').val(),
+                'coordinate.longitude': $('#id_longitude').val(),
+{#                'coordinate': $('#id_coordinate').val(),#}
+                'type': $('#id_type').val(),
+                'address': $('#id_address').val(),
+                'rules': $('#id_rules').val(),
+                'facility_residences': JSON.stringify(facility_residences),
+                },
              success:function(data) {
                 $("#new_residence_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>Item added successfully!</div>");
             },
@@ -83,5 +91,36 @@
             }
         });
     });
+
+    </script>
+    <script type="text/javascript">
+        function add_facility() {
+            var counter = $('table.dataTable tr').length;
+            var newRow = jQuery("<tr>");
+            var cols = "";
+            // var facilities = $('#id_facilities').val();
+            // cols +='<td><label for="id_parent_residences"></label><select class="form-control" id="id_parent_residences" name="parent_residences"><option>name 1</option> <option>name 2</option><option>name 3</option> </select>'
+            cols += '<td><label for="id_facility' + counter + '"></label><select class="form-control" id="id_facility' + counter + '" name="facility' + counter + '" >' +
+                +'{% for facility in facilities %}'+
+                    '<option value="{{ facility.id }}" >{{ facility.title }}</option>' +
+                    '{% endfor %}' +
+                '</select></td>';
+            cols += '<td><label for="id_second_title' + counter + '"></label><input type="text" class="form-control" id="id_second_title' + counter + '" name="second_title' + counter + '" /></td>';
+            cols += '<td><textarea cols="30" rows="3" id="id_description' + counter + '" name="description' + counter + '" class="form-control" /></td>';
+            cols += '<td><label for="id_price' + counter + '"></label><input class="form-control" type="text" id="id_price' + counter + '" name="price' + counter + '"></td>';
+            cols += '<td><label for="id_requestable' + counter + '" class="c-switch c-switch-label c-switch-pill c-switch-primary"><input class="c-switch-input" id="id_requestable' + counter + '" name="requestable' + counter + '" type="checkbox" checked=""><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span></label></td>';
+            // cols += '<input type="hidden" name="counter" id="counter" value="'+ counter +'" />';
+            cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
+            newRow.append(cols);
+            jQuery("table.dataTable").append(newRow);
+            counter++;
+        }
+            jQuery(document).ready(function () {
+                jQuery("table.dataTable").on("click", ".ibtnDel", function (event) {
+                jQuery(this).closest("tr").remove();
+
+        });
+        });
+
     </script>
 {% endblock c-script %}
