@@ -59,28 +59,10 @@
                         <th scope="col">{% trans 'Population' %}</th>
                         <th scope="col">{% trans 'Actions' %}</th>
                         <th scope="col">{% trans 'Facility' %}</th>
+                        <th scope="col">{% trans 'PhoneNumbers' %}</th>
                     </tr>
                     </thead>
                     <tbody>
-{#                    <tr>#}
-{#                        <th scope="row">1</th>#}
-{#                        <td>Yas</td>#}
-{#                        <td>110</td>#}
-{#                        <td>3</td>#}
-{#                        <td><a class="btn btn-success" href="#" alt="show">#}
-{#                            <svg class="c-icon">#}
-{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>#}
-{#                            </svg>#}
-{#                        </a>&nbsp;<a class="btn btn-info" alt="edit" href="#">#}
-{#                            <svg class="c-icon">#}
-{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>#}
-{#                            </svg>#}
-{#                        </a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">#}
-{#                            <svg class="c-icon">#}
-{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>#}
-{#                            </svg>#}
-{#                        </a></td>#}
-{#                    </tr>#}
 {% if data %}
     {% for unit in data %}
         <tr id="unit_{{ unit.id }}">
@@ -111,6 +93,13 @@
                    title="{% trans 'facility' %}">
                             <svg class="c-icon">
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-coffee' %}"></use>
+                            </svg>
+                </a>
+        </td><td>
+            <a class="btn btn-warning" href="{% url "building:phone_number_manage_page" unit_id=unit.id %}"
+                   title="{% trans 'phone numbers' %}">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-phone' %}"></use>
                             </svg>
                 </a>
         </td>
@@ -182,46 +171,4 @@
             }
         };
     </script>
-
-    {#    function for add new item by quick form#}
-    {#     $(document).on('submit','#add_new_unit',function (e) {#}
-    {#        e.preventDefault();#}
-    {#        $.ajax({#}
-    {#            type:'POST',#}
-    {#            url: '{% url "building:unit_manage_page" %}',#}
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
-    {#            data:{#}
-    {#                residence:$('#id_residence').val(),#}
-    {#                area: $('#id_area').val(),#}
-    {#                population:$('#id_population').val(),#}
-    {#                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()#}
-    {#            },#}
-    {#            success:function(data) {#}
-    {#                $("#new_unit_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");#}
-    {#            },#}
-    {#            error: function(data) {#}
-    {#                $("#new_unit_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");#}
-    {#            }#}
-    {#        });#}
-    {#    });#}
-        {#     function for delete items#}
-    {#       function delete_unit(unit_id) {#}
-    {#           var action = confirm("{% trans 'Are you sure you want to delete this unit?' %}");#}
-    {#  if (action != false) {#}
-    {#    $.ajax({#}
-    {#        url: '{% url "building:delete_unit_page" %}',#}
-    {#        data: {#}
-    {#            'unit_id': unit_id,#}
-    {#        },#}
-{#        dataType: 'json',#}
-    {#        success: function (data) {#}
-    {#            if (data.deleted) {#}
-    {#              $("#unit_table #unit_" + unit_id).remove();#}
-    {#            }#}
-    {#        }#}
-    {#    });#}
-    {#  }#}
-    {# }#}
-
 {% endblock c-script %}

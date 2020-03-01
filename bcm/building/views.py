@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import viewsets
+from users.models import User
 
 # ###########Dashboard Base section #######################
 from building.models import Residence, Facility, Unit, FacilityUnit, Block, UnitUser, BoardOfDirector, \
@@ -30,22 +31,24 @@ def new_residence_page(request):
 
     data = {
         'residences': Residence.objects.all(),
-        'request_type': request_type
+        'request_type': request_type,
+        'users': User.objects.all(),
+        'facilities': Facility.objects.all(),
+
     }
     return render(request, 'dashboard_pages/residence/new_residence.html', data)
 
 
 def edit_residence_page(request, id):
     request_type = 'edit'
-    # if request.method == 'GET':
-    # residence = Residence.objects.filter(id=id).get()
-    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
     data = {
         'residences': Residence.objects.all(),
         'residence': Residence.objects.filter(id=id).get(),
-        'residence_facility': FacilityResidence.objects.filter(residence_id=id).get(),
+        'residence_facility': FacilityResidence.objects.filter(residence=id).all(),
+        'facilities': Facility.objects.all(),
+        'users': User.objects.all(),
         'request_type': request_type,
-        'id': id,
+        'residence_id': id,
     }
     return render(request, 'dashboard_pages/residence/edit_residence.html', data)
 
@@ -106,6 +109,49 @@ def show_unit_facility_page(request, unit_id, id):
         'unit_id': unit_id,
     }
     return render(request, 'dashboard_pages/units/facility/update_show_unit_facility.html', data)
+
+
+########################### unit phone numbers  ####################
+def phone_number_manage_page(request, unit_id):
+    response = {
+        'data': UnitPhoneNumber.objects.filter(unit=unit_id).all(),
+        # 'residences': Block.objects.all(),
+        'request_type': 'new',
+        'unit_id': unit_id
+    }
+    return render(request, 'dashboard_pages/units/phone_numbers/phone_number_managment.html', response)
+
+
+def new_phone_number_page(request, unit_id):
+    request_type = 'new'
+    data = {
+        # 'facilities': Facility.objects.all(),
+        'unit_id': unit_id,
+        'request_type': request_type,
+    }
+    return render(request, 'dashboard_pages/units/phone_numbers/new_phone_number.html', data)
+
+
+def edit_phone_number_page(request, unit_id, id):
+    request_type = 'edit'
+    data = {
+        'phone_number':UnitPhoneNumber.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        'unit_id': unit_id,
+    }
+    return render(request, 'dashboard_pages/units/phone_numbers/update_show_phone_number.html', data)
+
+
+def show_phone_number_page(request, unit_id, id):
+    request_type = 'show'
+    data = {
+        'phone_number':UnitPhoneNumber.objects.filter(id=id).get(),
+        'id': id,
+        'request_type': request_type,
+        'unit_id': unit_id,
+    }
+    return render(request, 'dashboard_pages/units/phone_numbers/update_show_phone_number.html', data)
 
 # ########### Block section #######################
 

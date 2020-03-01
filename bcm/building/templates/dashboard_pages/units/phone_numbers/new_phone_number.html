@@ -1,0 +1,33 @@
+{% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div id="new_phone_number_message"></div>
+    <form class="form-horizontal" id='new_phone_number'>
+
+        {% csrf_token %}
+        {% include "../../../dashboard_pages/units/phone_numbers/form/phone_number_form.html" %}
+    </form>
+{% endblock bodycontent %}
+{% block c-script %}
+    <script type="text/javascript">
+        $(document).on('submit', '#new_phone_number', function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: 'POST',
+            url: '{% url "building:phone-number-list" %}',
+            dataType: 'json',
+            data:{
+                'phone': $('#id_phone').val(),
+                'description': $('#id_description').val(),
+                'unit':$('#id_unit').val(),
+            },
+            success:function(data) {
+                $("#new_phone_number_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
+            },
+            error: function(data) {
+                $("#new_phone_number_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");
+            }
+        });
+    });
+    </script>
+{% endblock c-script %}
