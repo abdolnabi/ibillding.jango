@@ -45,6 +45,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         help_text=_('financial credit for this user'),
         max_digits=10,
         decimal_places=2,
+        null=True,
     )
 
     is_admin = models.BooleanField(

@@ -12,6 +12,7 @@ from building.serializers import ResidenceSerializer, FacilitySerializer, UnitSe
 
 
 def dashboard(request):
+    # username = request.user.username
     return render(request, 'dashboard_pages/dashboard_base.html')
 
 

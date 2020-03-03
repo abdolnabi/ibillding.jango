@@ -59,7 +59,6 @@
     </script>
     <link href="{% static '@coreui/coreui-chartjs/dist/css/coreui-chartjs.css' %}" rel="stylesheet">
 </head>
-<!-- start sidebar -->
 <body class="c-app c-header-fixed c-sidebar-fixed c-aside-menu-fixed c-sidebar-lg-show">
         <header class="c-header-fullwidth c-header c-header-light c-header-fixed">
             <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show"><span class="c-header-toggler-icon"></span></button><a class="c-header-brand" href="#"><img class="c-header-brand" src="{% static 'assets/brand/Logo.png' %}" width="97" height="46" alt="BCM Logo"></a>
@@ -80,6 +79,9 @@
                 {% block breadcrumb %}{% endblock breadcrumb %}
             </ul>
             <ul class="c-header-nav ml-auto mr-4">
+            {% if user.is_authenticated %}
+               <p>{{ user.get_username }}</p>
+            {% endif %}
                 <li class="c-header-nav-item dropdown d-md-down-none mx-2"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                     <svg class="c-icon">
                         <use href="{% static '@coreui/icons/sprites/free.svg#cil-bell' %}"></use>
@@ -228,7 +230,7 @@
             </ul>
 
         </header>
-
+<!-- start sidebar -->
 <div class="c-sidebar c-sidebar-dark c-sidebar-fixed c-sidebar-lg-show" id="sidebar">
 
     <ul class="c-sidebar-nav">
