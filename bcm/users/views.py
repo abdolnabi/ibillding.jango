@@ -10,6 +10,7 @@ def register(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password1'])
             user.save()
+
     else:
         form = SignUpForm()
     return render(request, 'users/signup.html', {'form': form})

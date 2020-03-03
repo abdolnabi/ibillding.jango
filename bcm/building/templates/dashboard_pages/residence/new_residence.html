@@ -3,7 +3,7 @@
 {% block bodycontent %}
     <div id="new_block_message"></div>
     <form class="form-horizontal" id='new_residence'>
-        {% csrf_token %}
+{#        {% csrf_token %}#}
         {% include "../../dashboard_pages/residence/form/residence_form.html" %}
         <!-- third part of form -->
         <div class="row">
@@ -57,7 +57,7 @@
         for (item = 1; item < facility_data; item++) {
             facility_residences.push({
 {#                'residence': 1,#}
-                'residence': 1,
+{#                'residence': 1,#}
                 'facility': $('#id_facility' + item).val(),
                 'second_title': $('#id_second_title' + item).val(),
                 'description': $('#id_description' + item).val(),

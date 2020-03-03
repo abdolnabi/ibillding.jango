@@ -60,8 +60,12 @@ def show_residence_page(request, id):
         'residence': Residence.objects.filter(id=id).get(),
         'request_type': request_type,
         'id': id,
+        'facilities': Facility.objects.all(),
+        'residence_facility': FacilityResidence.objects.filter(residence=id).all(),
+        'residence_id': id,
+
     }
-    return render(request, 'dashboard_pages/residence/new_residence.html', data)
+    return render(request, 'dashboard_pages/residence/edit_residence.html', data)
 
 
 # ##################### unit facility section  #######################
