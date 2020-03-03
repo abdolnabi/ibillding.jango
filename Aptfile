@@ -1,4 +1,4 @@
-libssl1.1-dev
+libssl-dev
 nodejs-dev
 node-gyp
 npm
