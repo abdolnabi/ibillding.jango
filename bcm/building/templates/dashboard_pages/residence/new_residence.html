@@ -3,7 +3,7 @@
 {% block bodycontent %}
     <div id="new_block_message"></div>
     <form class="form-horizontal" id='new_residence'>
-        {% csrf_token %}
+{#        {% csrf_token %}#}
         {% include "../../dashboard_pages/residence/form/residence_form.html" %}
         <!-- third part of form -->
         <div class="row">
@@ -47,7 +47,7 @@
 {% block c-script %}
     {#    <script src="https://maps.googleapis.com/maps/js?key=AIzaSyCYCDv3Xc3H2HVpNdvps3tYmky2HWxeT_E&callback=myMap"></script>#}
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <script src="{% static 'js/residence/custom_js.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/residence/custom_js.js' %}"></script>
     <script type="text/javascript">
     $(document).on('submit','#new_residence',function (e) {
         e.preventDefault();
@@ -57,7 +57,7 @@
         for (item = 1; item < facility_data; item++) {
             facility_residences.push({
 {#                'residence': 1,#}
-                'residence': 1,
+{#                'residence': 1,#}
                 'facility': $('#id_facility' + item).val(),
                 'second_title': $('#id_second_title' + item).val(),
                 'description': $('#id_description' + item).val(),

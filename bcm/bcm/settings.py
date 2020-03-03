@@ -146,7 +146,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "../node_modules"),
 ]
 
-LOGIN_REDIRECT_URL = 'users:register'
+LOGIN_REDIRECT_URL = 'building:dashboard'
 LOGIN_URL = 'users:login'
 # LOGOUT_URL = 'users:login'
 # LOGOUT_REDIRECT_URL = 'users:login'
