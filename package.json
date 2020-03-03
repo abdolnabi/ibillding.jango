@@ -114,7 +114,8 @@
     "typescript": "^2.7.1"
   },
   "engines": {
-    "node": ">=6"
+    "node": "12.14.0",
+    "npm" : "6.13.4"
   },
   "browserslist": [
     "last 1 major version",
