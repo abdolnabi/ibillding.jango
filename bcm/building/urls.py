@@ -8,8 +8,8 @@ from building.views import (
     BlockViewSet, UnitUserViewSet, BoardOfDirectorViewSet, FacilityResidenceViewSet,
     FacilityResidenceAccessibilityViewSet, edit_residence_page, show_residence_page, show_block_page,
     edit_block_page, edit_unit_page, show_unit_page, edit_facility_page, show_facility_page, show_unit_facility_page,
-    new_unit_facility_page, unit_facility_manage_page, edit_unit_facility_page,phone_number_manage_page,
-    new_phone_number_page,show_phone_number_page,edit_phone_number_page,UnitPhoneNumberViewSet)
+    new_unit_facility_page, unit_facility_manage_page, edit_unit_facility_page, phone_number_manage_page,
+    new_phone_number_page, show_phone_number_page, edit_phone_number_page, UnitPhoneNumberViewSet)
 
 app_name = 'building'
 
@@ -50,12 +50,14 @@ urlpatterns = [
     path('dashboard/unit/show/<int:id>', show_unit_page, name='show_unit_page'),
     # ####### Unit Facility Path ############
     path('dashboard/unit/<int:unit_id>/facility', unit_facility_manage_page, name='unit_facility_manage_page'),
-    path('dashboard/unit/<int:unit_id>/edit_facility/<int:id>',edit_unit_facility_page,name='edit_unit_facility_page'),
+    path('dashboard/unit/<int:unit_id>/edit_facility/<int:id>', edit_unit_facility_page,
+         name='edit_unit_facility_page'),
     path('dashboard/unit/<int:unit_id>/facility/<int:id>', show_unit_facility_page, name='show_unit_facility_page'),
     path('dashboard/unit/<int:unit_id>/facility/new/', new_unit_facility_page, name='new_unit_facility_page'),
-   # ####### Unit phone numbers Path ############
+    # ####### Unit phone numbers Path ############
     path('dashboard/unit/<int:unit_id>/phone_number', phone_number_manage_page, name='phone_number_manage_page'),
-    path('dashboard/unit/<int:unit_id>/edit_phone_number/<int:id>',edit_phone_number_page,name='edit_phone_number_page'),
+    path('dashboard/unit/<int:unit_id>/edit_phone_number/<int:id>', edit_phone_number_page,
+         name='edit_phone_number_page'),
     path('dashboard/unit/<int:unit_id>/phone_number/<int:id>', show_phone_number_page, name='show_phone_number_page'),
     path('dashboard/unit/<int:unit_id>/phone_number/new/', new_phone_number_page, name='new_phone_number_page'),
 

@@ -1,7 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework import viewsets
-from users.models import User
 
 # ###########Dashboard Base section #######################
 from building.models import Residence, Facility, Unit, FacilityUnit, Block, UnitUser, BoardOfDirector, \
@@ -9,6 +8,7 @@ from building.models import Residence, Facility, Unit, FacilityUnit, Block, Unit
 from building.serializers import ResidenceSerializer, FacilitySerializer, UnitSerializer, FacilityUnitSerializer, \
     BlockSerializer, UnitUserSerializer, BoardOfDirectorSerializer, FacilityResidenceSerializer, \
     FacilityResidenceAccessibilitySerializer, UnitPhoneNumberSerializer
+from users.models import User
 
 
 def dashboard(request):
@@ -116,7 +116,7 @@ def show_unit_facility_page(request, unit_id, id):
     return render(request, 'dashboard_pages/units/facility/update_show_unit_facility.html', data)
 
 
-########################### unit phone numbers  ####################
+# ########################## unit phone numbers  ####################
 def phone_number_manage_page(request, unit_id):
     response = {
         'data': UnitPhoneNumber.objects.filter(unit=unit_id).all(),
@@ -140,7 +140,7 @@ def new_phone_number_page(request, unit_id):
 def edit_phone_number_page(request, unit_id, id):
     request_type = 'edit'
     data = {
-        'phone_number':UnitPhoneNumber.objects.filter(id=id).get(),
+        'phone_number': UnitPhoneNumber.objects.filter(id=id).get(),
         'request_type': request_type,
         'id': id,
         'unit_id': unit_id,
@@ -151,12 +151,13 @@ def edit_phone_number_page(request, unit_id, id):
 def show_phone_number_page(request, unit_id, id):
     request_type = 'show'
     data = {
-        'phone_number':UnitPhoneNumber.objects.filter(id=id).get(),
+        'phone_number': UnitPhoneNumber.objects.filter(id=id).get(),
         'id': id,
         'request_type': request_type,
         'unit_id': unit_id,
     }
     return render(request, 'dashboard_pages/units/phone_numbers/update_show_phone_number.html', data)
+
 
 # ########### Block section #######################
 
