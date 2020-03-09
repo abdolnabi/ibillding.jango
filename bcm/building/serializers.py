@@ -79,8 +79,16 @@ class FacilityResidenceAccessibilitySerializer(CoreModelSerializer):
         fields = ['id', 'facility_residence', 'type', 'accessible']
 
 
+class ResidenceFacilityResidenceSerializer(CoreModelSerializer):
+    class Meta:
+        model = FacilityResidence
+        fields = ['id', 'residence', 'facility', 'second_title', 'description', 'requestable',
+                  'price', 'blocks']
+        read_only_fields = ('residence',)
+
+
 class ResidenceSerializer(CoreModelSerializer):
-    facility_residences = FacilityResidenceSerializer(many=True, required=False)
+    facility_residences = ResidenceFacilityResidenceSerializer(many=True, required=False)
     coordinate = LocationSerializer()
 
     class Meta:
@@ -110,7 +118,7 @@ class ResidenceSerializer(CoreModelSerializer):
                 if isinstance(item.get('blocks'), list):
                     del item['blocks']
 
-                obj = FacilityResidence.objects.create(**item)
+                obj = FacilityResidence.objects.create(residence=instance, **item)
                 instance.facility_residences.add(obj)
 
             instance.save()
