@@ -86,7 +86,7 @@ class ResidenceFacilityResidenceSerializer(CoreModelSerializer):
                   'price', 'blocks']
         read_only_fields = ('residence',)
 
-
+import json
 class ResidenceSerializer(CoreModelSerializer):
     facility_residences = ResidenceFacilityResidenceSerializer(many=True, required=False)
     coordinate = LocationSerializer()
@@ -100,20 +100,26 @@ class ResidenceSerializer(CoreModelSerializer):
 
     def create(self, validated_data):
         coordinate_data = validated_data.pop('coordinate')
+        request = self.context['request']
+        facility_residenc = json.loads(request.data.get('facility_residences'))
         coordinate = dict()
         for key, value in coordinate_data.items():
             coordinate[key] = value
         coordinate = Location.objects.create(**coordinate)
         validated_data['coordinate'] = coordinate
-        if 'facility_residences' in validated_data.keys():
-            facility_residence_data = validated_data.pop('facility_residences')
+        if facility_residenc != []:
+            facility_residence_data = facility_residenc
 
             instance = super().create(validated_data)
 
             for facility_residence in facility_residence_data:
                 item = dict()
                 for key, value in facility_residence.items():
-                    item[key] = value
+                    if key == 'facility':
+                        facility_obj = Facility.objects.get(id=value)
+                        item[key] = facility_obj
+                    else:
+                        item[key] = value
 
                 if isinstance(item.get('blocks'), list):
                     del item['blocks']

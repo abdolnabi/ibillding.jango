@@ -3,7 +3,7 @@
 {% block bodycontent %}
     <div id="new_block_message"></div>
     <form class="form-horizontal" id='new_residence'>
-{#        {% csrf_token %}#}
+        {% csrf_token %}
         {% include "../../dashboard_pages/residence/form/residence_form.html" %}
         <!-- third part of form -->
         <div class="row">
@@ -49,23 +49,26 @@
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="{% static 'js/residence/custom_js.js' %}"></script>
     <script type="text/javascript">
+
     $(document).on('submit','#new_residence',function (e) {
         e.preventDefault();
         var facility_data = $('table.dataTable tr').length;
         var item;
+{#        var value;#}
         let facility_residences = [];
         for (item = 1; item < facility_data; item++) {
+
             facility_residences.push({
 {#                'residence': 1,#}
 {#                'residence': 1,#}
-                'facility': $('#id_facility' + item).val(),
+                facility: $('#id_facility' + item).val(),
                 'second_title': $('#id_second_title' + item).val(),
                 'description': $('#id_description' + item).val(),
-                'requestable': $('#id_requestable'+item).prop('checked'),
+                'requestable': $('#id_requestable' + item).prop("checked"),
                 'price': $('#id_price' + item).val(),
+                'blocks':[]
             });
         }
-{#        var postData = JSON.stringify(facility_residences);#}
         $.ajax({
             type:'POST',
             dataType: 'json',
@@ -81,7 +84,9 @@
                 'type': $('#id_type').val(),
                 'address': $('#id_address').val(),
                 'rules': $('#id_rules').val(),
-                'facility_residences': JSON.stringify(facility_residences),
+                'facility_residences':JSON.stringify(facility_residences),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
                 },
              success:function(data) {
                 $("#new_residence_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>Item added successfully!</div>");
