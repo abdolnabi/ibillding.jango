@@ -42,6 +42,7 @@
                                 {% for item in residence_facility %}
                                 <tr id="facility_{{ item.id }}">
                                     <form class="residence_facility" id="residence_facility">
+                                    {% csrf_token %}
                                     <td><label for="id_facility{{ item.id }}"></label>
                                         <select class="form-control" id="id_facility{{ item.id }}" name="facility{{ item.id }}" >
                                     {% for facility in facilities %}
@@ -110,6 +111,8 @@
                 'description': $('#id_description'+id).val(),
                 'price': $('#id_price'+id).val(),
                 'requestable': $('#id_requestable'+id).prop('checked'),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
             },
             success:function(data) {
                 $("#new_residence_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
@@ -125,7 +128,7 @@
     <script type="text/javascript">
 {#    add rows to table for insert new item#}
         function add_facility() {
-            var newRow = jQuery('<tr><form class="residence_facility">');
+            var newRow = jQuery('<tr><form class="residence_facility">{% csrf_token %}');
             var counter = $(this).closest('tr').attr('id');
             var cols = "";
             cols += '<td><label for="id_facility'+counter+'"></label><select class="form-control" id="id_facility'+counter+'" name="facility'+counter+'" >' +
@@ -189,6 +192,8 @@
                 'description': $('#id_description'+counter).val(),
                 'price': $('#id_price'+counter).val(),
                 'requestable': $('#id_requestable'+counter).val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
             },
             success:function(data) {
                 $("#new_residence_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
@@ -236,6 +241,8 @@
                     'coordinate.latitude': $('#id_latitude').val(),
                     'coordinate.longitude': $('#id_longitude').val(),
                     'coordinate_id': {{ residence.coordinate_id }},
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
 {#                    'coordinate.id': {{ residence.coordinate.id }},#}
 {#                    'coordinate': $('#id_coordinate').val(),#}
 {#                    'facility_residences':data,#}
