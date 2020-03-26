@@ -332,6 +332,82 @@ def show_facility_page(request, id):
     }
     return render(request, 'dashboard_pages/facilities/update_show_facility.html', data)
 
+############ budget_manage_page  #############
+def budget_manage_page(request):
+    return render(request, 'dashboard_pages/budget/budget_management.html')
+
+############ Income_manage_page  #############
+def income_manage_page(request):
+    return render(request, 'dashboard_pages/budget/income/income_management.html')
+
+
+def new_income_page(request):
+    request_type = 'new'
+    data = {
+        'request_type': request_type
+    }
+    return render(request, 'dashboard_pages/budget/income/new_income.html', data)
+
+
+def edit_income_page(request):
+    request_type = 'edit'
+
+    # data = {
+    #     'facility': Facility.objects.filter(id=id).get(),
+    #     'request_type': request_type,
+    #     'id': id,
+    #     # 'item_type_dropdown': item_type_dropdown
+    # }
+    return render(request, 'dashboard_pages/budget/income/update_show_income.html')
+
+
+def show_income_page(request):
+    request_type = 'show'
+    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
+    # data = {
+    #     'facility': Facility.objects.filter(id=id).get(),
+    #     'request_type': request_type,
+    #     'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    # }
+    return render(request, 'dashboard_pages/budget/income/update_show_income.html')
+
+############ Expense_manage_page  #############
+def expense_manage_page(request):
+    return render(request, 'dashboard_pages/budget/expense/expense_management.html')
+
+
+def new_expense_page(request):
+    request_type = 'new'
+    data = {
+        'request_type': request_type
+    }
+    return render(request, 'dashboard_pages/budget/expense/new_expense.html', data)
+
+
+def edit_expense_page(request):
+    request_type = 'edit'
+
+    # data = {
+    #     'facility': Facility.objects.filter(id=id).get(),
+    #     'request_type': request_type,
+    #     'id': id,
+    #     # 'item_type_dropdown': item_type_dropdown
+    # }
+    return render(request, 'dashboard_pages/budget/income/update_show_expense.html')
+
+
+def show_expense_page(request):
+    request_type = 'show'
+    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
+    # data = {
+    #     'facility': Facility.objects.filter(id=id).get(),
+    #     'request_type': request_type,
+    #     'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    # }
+    return render(request, 'dashboard_pages/budget/expense/update_show_expense.html')
+
 
 # rest view section
 class ResidenceViewSet(viewsets.ModelViewSet):

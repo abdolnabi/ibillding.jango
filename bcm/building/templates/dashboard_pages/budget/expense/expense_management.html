@@ -1,0 +1,71 @@
+{% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <!-- table section  -->
+    <div class="row">
+    <div class="card container">
+        <div class="card-header"><h3>{% trans 'All Expense' %}</h3></div>
+  <div class="card-body">
+      <!-- start table part -->
+<p>
+              <a class="btn btn-primary collapsed btn-block-add" href="{%  url 'building:new_expense_page' %}">{% trans 'Add New expense' %}</a>
+            <br/>
+            </p>
+      <table id="expense_table"class="table table-responsive-sm table-hover table-outline mb-0">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">title</th>
+      <th scope="col">period</th>
+      <th scope="col">start at</th>
+      <th scope="col">dead line(days)</th>
+      <th scope="col">due at</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if data %}
+   {% for expense in data %}
+    <tr id="expense_{{ expense.id }}">
+      <th scope="row">{{ expense.id }}</th>
+      <td>{{ expense.title }}</td>
+      <td>{{ expense.period }}</td>
+      <td>{{ expense.start_at }}</td>
+      <td>{{ expense.deadline_in_days }}</td>
+      <td>{{ expense.due_at }}</td>
+         <td><a class="btn btn-success" href="{% url "building:show_expense_page" id=expense.id %}" title="{% trans 'show' %}">
+        <svg class="c-icon">
+        <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
+        </svg></a>&nbsp;<a class="btn btn-info"  title="{% trans 'edit' %}" href='{% url "building:edit_expense_page" id=expense.id %}'>
+        <svg class="c-icon">
+        <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+        </svg></a>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_item('{% url "building:expense-detail" expense.id %}',{{ expense.id }})">
+        <svg class="c-icon">
+        <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
+        </svg></button></td>
+    </tr>
+  {% endfor %}
+    {% else %}
+        <tr><td class="text-center" colspan="100%">
+            No expense ...
+        </td></tr>
+            {% endif %}
+  </tbody>
+</table><hr/>
+      <!-- Pagination -->
+      <nav aria-label="Page navigation example">
+<ul class="pagination justify-content-center">
+<li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Previous</a></li>
+<li class="page-item"><a class="page-link" href="#">1</a></li>
+<li class="page-item"><a class="page-link" href="#">2</a></li>
+<li class="page-item"><a class="page-link" href="#">3</a></li>
+<li class="page-item"><a class="page-link" href="#">Next</a></li>
+</ul>
+</nav>
+    </div>
+    </div>
+    </div>
+{% endblock bodycontent %}
+{% block c-script %}
+
+{% endblock c-script %}

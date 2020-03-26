@@ -1,0 +1,74 @@
+{% load static i18n %}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="c-card-header">
+                <strong>{% trans 'income info' %}</strong></div>
+            <div class="c-card-body col-sm-7">
+                <div class="form-group">
+                    <label for="id_title">{% trans 'Title' %}</label>
+                    <input type="text" class="form-control" id="id_title" value="{{ income.title }}" name="title"
+                           required>
+                </div>
+                               <div class="form-group">
+                    <label for="id_target_type">{% trans 'Select Target Type' %}</label>
+                    <select class="form-control" id="id_target_type" name="target_type">
+                        <option value="{{ income.target_type }}">{{ income.target_type }}</option>
+                        <option value="RESIDENCE">{% trans 'Residence' %}</option>
+                        <option value="BLOCK">{% trans 'Block' %}</option>
+                        <option value="UNIT">{% trans 'Unit' %}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="id_target_name">{% trans 'Select Target Name' %}</label>
+                    <select class="form-control" id="id_target_name" name="target_name">
+                        <option value="{{ income.target_name }}">{{ income.target_name }}</option>
+                        <option value="RESIDENCE">{% trans 'Residence (list)' %}</option>
+                        <option value="BLOCK">{% trans 'Block (list)' %}</option>
+                        <option value="UNIT">{% trans 'Unit (list)' %}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                        <label for="id_period">{% trans 'Period' %}</label>
+                        <input type="number" step="1" class="form-control" value="{{ income.period }}" id="id_period"
+                               name="period">
+                    </div>
+                <div class="form-group">
+                    <label for="id_start_at">{% trans 'Start at' %}</label>
+                    <input type="date" class="form-control" id="id_start_at" value="{{ income.start_at }}" name="start_at"
+                           required>
+                </div>
+                <input type="hidden" name="class" value="income">
+                 <div class="form-group">
+                        <label for="id_deadline_in_days">{% trans 'Dead line (days)' %}</label>
+                        <input type="number" step="1" class="form-control" value="{{ income.deadline_in_days }}" id="id_deadline_in_days"
+                               name="deadline_in_days">
+                    </div>
+                 <div class="form-group">
+                    <label for="id_finish_at">{% trans 'Finish at' %}</label>
+                    <input type="date" class="form-control" id="id_finish_at" value="{{ income.finish_at }}" name="finish_at"
+                           required>
+                </div>
+                 <div class="form-group">
+                    <label for="id_price">{% trans 'Price' %}</label>
+                    <input type="text" class="form-control" id="id_price" value="{{ income.price }}" name="price"
+                           required>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="id_price_formula">{% trans 'Price Formula' %}</label>
+                    <textarea class="form-control" id="id_price_formula" name="price_formula" rows="4"
+                              placeholder="price formula..." spellcheck="false">{{ income.price_formula }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label" for="id_parameters">{% trans 'Parameters' %}</label>
+                    <textarea class="form-control" id="id_parameters" name="parameters" rows="4"
+                              placeholder="parameters..." spellcheck="false">{{ income.parameters }}</textarea>
+                </div>
+
+            </div>
+            <div class="c-card-footer">
+                <button class="btn btn-lg btn-primary" id="income_btn" type="submit">{% trans 'Submit' %}</button>
+            </div>
+        </div>
+    </div>
+</div>

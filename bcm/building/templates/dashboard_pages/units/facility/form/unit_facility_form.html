@@ -13,6 +13,7 @@
                       <div class="form-group">
                         <label for="id_facility">{% trans 'Facility Name' %}</label>
                         <select class="form-control" id="id_facility" name="facility">
+                        <option value="{{ unit_facility.facility }}">{{ unit_facility.facility }}</option>
                             {% for item in facilities %}
                                 <option name="{{ item.id }}"
                                         value="{{ item.id }}"{% if item.id == unit_facility.facility %} defualt

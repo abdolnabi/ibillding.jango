@@ -1,0 +1,108 @@
+{% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+                        <div class="row">
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="card text-white">
+                                    <a class="btn btn-primary text-decoration-none text-white rgba-white-strong" href="{%  url 'building:income_manage_page' %}">
+                                        <div class="card-body card-body pb-0 d-flex justify-content-between align-items-start inline-group">
+                                        <div>
+                                            <div class="text-value-lg">Income</div>
+                                            <div>Manage income</div><br/>
+                                        </div>
+                                           <div class="btn-group">
+                                                <svg class="c-icon c-icon-2xl">
+                                                    <use href="{% static '@coreui/icons/sprites/free.svg#cil-credit-card' %}"></use>
+                                                </svg>
+                                        </div>
+                                    </div>
+</a>
+                                </div>
+                            </div>
+                            <!-- /.col-->
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="card text-white">
+                                <a class="btn btn-warning text-decoration-none text-white rgba-white-strong" href="{%  url 'building:expense_manage_page' %}">
+                                    <div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="text-value-lg">Expense</div>
+                                            <div>Manage expense</div><br/>
+                                        </div>
+                                    <div class="btn-group">
+                                                <svg class="c-icon c-icon-2xl">
+                                                    <use href="{% static '@coreui/icons/sprites/free.svg#cil-money' %}"></use>
+                                                </svg>
+                                        </div>
+                                    </div>
+
+                                </div></a>
+                            </div>
+                            <!-- /.col-->
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="card text-white">
+                                <a class="btn btn-success text-decoration-none text-white rgba-white-strong" href="{%  url 'building:unit_manage_page' %}">
+                                    <div class="card-body card-body pb-0 d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="text-value-lg">Report</div>
+                                            <div>Budget report</div><br/>
+                                        </div>
+                                    <div class="btn-group">
+                                                <svg class="c-icon c-icon-2xl">
+                                                    <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+                                                </svg>
+                                        </div>
+                                    </div>
+
+                                </div></a>
+                                    </div>
+
+                                </div>
+    <!-- table section  -->
+    <div class="row">
+    <div class="card container">
+        <div class="card-header"><h3>{% trans 'All Budget' %}</h3></div>
+  <div class="card-body">
+      <!-- start table part -->
+<canvas id="lineChart"></canvas>
+
+    </div>
+    </div>
+    </div>
+{% endblock bodycontent %}
+{% block c-script %}
+<script type="text/javascript">
+var ctxL = document.getElementById("lineChart").getContext('2d');
+var myLineChart = new Chart(ctxL, {
+type: 'line',
+data: {
+labels: ["January", "February", "March", "April", "May", "June", "July"],
+datasets: [{
+label: "Income",
+data: [55, 49, 10, 31, 26, 35, 40],
+backgroundColor: [
+'rgba(255, 99, 132, .2)',
+],
+borderColor: [
+'rgba(255, 99, 132, .7)',
+],
+borderWidth: 2
+},
+{
+label: "Expense",
+data: [28, 48, 40, 19, 30, 27, 20],
+backgroundColor: [
+'rgba(54, 162, 235, .2)',
+],
+borderColor: [
+'rgba(54, 162, 235, .7)',
+],
+borderWidth: 2
+}
+]
+},
+options: {
+responsive: true
+}
+});
+</script>
+{% endblock c-script %}

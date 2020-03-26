@@ -22,9 +22,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <meta name="description" content="BCM Apartment Managment">
+    <meta name="description" content="BCM Apartment Management">
     <meta name="author" content="">
-    <meta name="keyword" content="BCM,Apartment,Managment,Dashboard">
+    <meta name="keyword" content="BCM,Apartment,management,Dashboard">
     <meta name="msapplication-TileColor" content="#ffffff">
 {#    <meta name="msapplication-TileImage" content="{% static 'assets/favicon/ms-icon-144x144.png' %}">#}
     <meta name="theme-color" content="#ffffff">
@@ -238,13 +238,13 @@
             <svg class="c-sidebar-nav-icon">
                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-speedometer' %}"></use>
             </svg>{% trans 'Dashboard' %}</a></li>
-        <li class="c-sidebar-nav-title">{% trans 'User Managment' %}</li>
+        <li class="c-sidebar-nav-title">{% trans 'User management' %}</li>
         <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="#">
             <svg class="c-sidebar-nav-icon">
                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-user' %}"></use>
-            </svg> Users</a></li>
+            </svg> {% trans 'Users' %}</a></li>
         <!-- residence Section -->
-        <li class="c-sidebar-nav-title">{% trans 'Residence Managment' %}</li>
+        <li class="c-sidebar-nav-title">{% trans 'Residence management' %}</li>
         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
             <svg class="c-sidebar-nav-icon">
                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-building' %}"></use>
@@ -285,6 +285,11 @@
                 <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{%  url 'building:new_facility_page' %}"><span class="c-sidebar-nav-icon"></span> Add New Facility</a></li>
             </ul>
         </li>
+   <li class="c-sidebar-nav-title">{% trans 'Financial Management' %}</li>
+        <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{%  url 'building:budget_manage_page' %}">
+            <svg class="c-sidebar-nav-icon">
+                <use href="{% static '@coreui/icons/sprites/free.svg#cil-dollar' %}"></use>
+            </svg> {% trans 'Budget' %}</a></li>
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
 </div>

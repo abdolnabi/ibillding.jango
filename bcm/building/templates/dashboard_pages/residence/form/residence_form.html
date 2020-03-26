@@ -13,21 +13,27 @@
                         <div class="form-group">
                             <label for="id_manager">{% trans 'manager' %}</label>
                             <select class="form-control" id="id_manager" name="manager">
-                                <option value=""></option>
+                            <option value="{{ residence.manager }}">{{ residence.manager }}</option>
                                 {% for user in users %}
                                     <option name="{{ user.id }}"
-                                            value="{{ user.id }}">{{ user.username }}</option>
+                                            value="{{ user.id }}" {% if user.username == residence.manager %} defualt
+                                        selected{% endif %}>{{ user.username }}</option>
                                 {% endfor %}
+
+
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="id_parent_residence">{% trans 'Parent Name' %}</label>
                             <select class="form-control" id="id_parent_residence" name="parent_name">
-                              <option value=""></option>
+                                <option value="{{ residence.parent_residence }}">{{ residence.parent_residence }}</option>
                                 {% for res in residences %}
                                     <option name="{{ res.id }}"
-                                            value="{{ res.id }}">{{ res.name }}</option>
+                                            value="{{ res.id }}"{% if res.id == residence.parent_residence %} default
+                                        selected{% endif %}>{{ res.name }}</option>
                                 {% endfor %}
+                                <option value=""></option>
+
                             </select>
                         </div>
                         <div class="form-group">
