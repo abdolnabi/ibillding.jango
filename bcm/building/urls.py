@@ -9,7 +9,10 @@ from building.views import (
     FacilityResidenceAccessibilityViewSet, edit_residence_page, show_residence_page, show_block_page,
     edit_block_page, edit_unit_page, show_unit_page, edit_facility_page, show_facility_page, show_unit_facility_page,
     new_unit_facility_page, unit_facility_manage_page, edit_unit_facility_page, phone_number_manage_page,
-    new_phone_number_page, show_phone_number_page, edit_phone_number_page, UnitPhoneNumberViewSet)
+    new_phone_number_page, show_phone_number_page, edit_phone_number_page, UnitPhoneNumberViewSet,
+    budget_manage_page,income_manage_page,new_income_page,edit_income_page,show_income_page,
+    expense_manage_page,new_expense_page,edit_expense_page,show_expense_page
+)
 
 app_name = 'building'
 
@@ -67,7 +70,17 @@ urlpatterns = [
     path('dashboard/facility/edit/<int:id>', edit_facility_page, name='edit_facility_page'),
     path('dashboard/facility/show/<int:id>', show_facility_page, name='show_facility_page'),
 
-    # path('dashboard/facility/delete/', delete_facility_page, name='new_facility_page'),
-    # path('dashboard/facility/edit/', edit_facility_page, name='new_facility_page'),
+    ############## budget section  #############
+    path('dashboard/budget', budget_manage_page, name='budget_manage_page'),
+    ############## budget- income section  #############
+    path('dashboard/income', income_manage_page, name='income_manage_page'),
+    path('dashboard/income/new/', new_income_page, name='new_income_page'),
+    path('dashboard/income/edit/<int:id>', edit_income_page, name='edit_income_page'),
+    path('dashboard/income/show/<int:id>', show_income_page, name='show_income_page'),
+    ############## budget- income section  #############
+    path('dashboard/expense', expense_manage_page, name='expense_manage_page'),
+    path('dashboard/expense/new/', new_expense_page, name='new_expense_page'),
+    path('dashboard/expense/edit/<int:id>', edit_expense_page, name='edit_expense_page'),
+    path('dashboard/expense/show/<int:id>', show_expense_page, name='show_expense_page'),
     path('api/', include(router.urls)),
 ]

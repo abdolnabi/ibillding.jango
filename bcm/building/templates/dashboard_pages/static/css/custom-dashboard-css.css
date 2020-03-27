@@ -568,3 +568,6 @@
 .btn-block-add {
     float:right;
 }
+.dropdown-menu{
+    min-width: min-content;;
+}

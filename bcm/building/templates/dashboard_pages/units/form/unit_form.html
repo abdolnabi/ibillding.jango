@@ -10,11 +10,12 @@
                     <div class="col-md-4 mb-3 form-group">
                         <label for="id_residence">{% trans 'Residence Name' %}</label>
                         <select class="form-control" id="id_residence" name="residence">
+                        <option value="{{ unit.residence }}">{{ unit.residence }}</option>
                             {% for item in residences %}
                                 <option name="{{ item.id }}"
                                         value="{{ item.id }}"
                                         {% if item.id == unit.residence %}
-                                        selected="selected"
+                                        default selected
                                         {% endif %}>
                                     {{ item.name }}
                                 </option>

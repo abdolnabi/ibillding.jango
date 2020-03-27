@@ -18,7 +18,7 @@
                         <select class="form-control" id="id_residence" name="residence">
                             {% for item in residences %}
                                 <option name="{{ item.id }}"
-                                        value="{{ item.id }}"{% if item.id == block_content.residence %} defualt
+                                        value="{{ item.id }}"{% if item.id == block_content.residence %} default
                                         selected{% endif %}>{{ item.name }}</option>
                             {% endfor %}
                         </select>
