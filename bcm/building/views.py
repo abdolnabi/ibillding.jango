@@ -3,11 +3,32 @@ from django.shortcuts import render
 from rest_framework import viewsets
 
 # ###########Dashboard Base section #######################
-from building.models import Residence, Facility, Unit, FacilityUnit, Block, UnitUser, BoardOfDirector, \
-    FacilityResidence, FacilityResidenceAccessibility, UnitPhoneNumber
-from building.serializers import ResidenceSerializer, FacilitySerializer, UnitSerializer, FacilityUnitSerializer, \
-    BlockSerializer, UnitUserSerializer, BoardOfDirectorSerializer, FacilityResidenceSerializer, \
-    FacilityResidenceAccessibilitySerializer, UnitPhoneNumberSerializer
+from building.models import (
+    Residence,
+    Facility,
+    Unit,
+    FacilityUnit,
+    Block,
+    UnitUser,
+    BoardOfDirector,
+    FacilityResidence,
+    FacilityResidenceAccessibility,
+    UnitPhoneNumber,
+    Budget,
+)
+from building.serializers import (
+    ResidenceSerializer,
+    FacilitySerializer,
+    UnitSerializer,
+    FacilityUnitSerializer,
+    BlockSerializer,
+    UnitUserSerializer,
+    BoardOfDirectorSerializer,
+    FacilityResidenceSerializer,
+    FacilityResidenceAccessibilitySerializer,
+    UnitPhoneNumberSerializer,
+    BudgetSerializer,
+)
 from users.models import User
 
 
@@ -332,11 +353,13 @@ def show_facility_page(request, id):
     }
     return render(request, 'dashboard_pages/facilities/update_show_facility.html', data)
 
-############ budget_manage_page  #############
+
+# ########### budget_manage_page  #############
 def budget_manage_page(request):
     return render(request, 'dashboard_pages/budget/budget_management.html')
 
-############ Income_manage_page  #############
+
+# ########### Income_manage_page  #############
 def income_manage_page(request):
     return render(request, 'dashboard_pages/budget/income/income_management.html')
 
@@ -350,7 +373,7 @@ def new_income_page(request):
 
 
 def edit_income_page(request):
-    request_type = 'edit'
+    # request_type = 'edit'
 
     # data = {
     #     'facility': Facility.objects.filter(id=id).get(),
@@ -362,17 +385,18 @@ def edit_income_page(request):
 
 
 def show_income_page(request):
-    request_type = 'show'
+    # request_type = 'show'
     # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
     # data = {
     #     'facility': Facility.objects.filter(id=id).get(),
     #     'request_type': request_type,
     #     'id': id,
-        # 'item_type_dropdown': item_type_dropdown
+    # 'item_type_dropdown': item_type_dropdown
     # }
     return render(request, 'dashboard_pages/budget/income/update_show_income.html')
 
-############ Expense_manage_page  #############
+
+# ########### Expense_manage_page  #############
 def expense_manage_page(request):
     return render(request, 'dashboard_pages/budget/expense/expense_management.html')
 
@@ -386,7 +410,7 @@ def new_expense_page(request):
 
 
 def edit_expense_page(request):
-    request_type = 'edit'
+    # request_type = 'edit'
 
     # data = {
     #     'facility': Facility.objects.filter(id=id).get(),
@@ -398,13 +422,13 @@ def edit_expense_page(request):
 
 
 def show_expense_page(request):
-    request_type = 'show'
+    # request_type = 'show'
     # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
     # data = {
     #     'facility': Facility.objects.filter(id=id).get(),
     #     'request_type': request_type,
     #     'id': id,
-        # 'item_type_dropdown': item_type_dropdown
+    # 'item_type_dropdown': item_type_dropdown
     # }
     return render(request, 'dashboard_pages/budget/expense/update_show_expense.html')
 
@@ -458,3 +482,8 @@ class FacilityResidenceViewSet(viewsets.ModelViewSet):
 class FacilityResidenceAccessibilityViewSet(viewsets.ModelViewSet):
     queryset = FacilityResidenceAccessibility.objects.all()
     serializer_class = FacilityResidenceAccessibilitySerializer
+
+
+class BudgetViewSet(viewsets.ModelViewSet):
+    queryset = Budget.objects.all()
+    serializer_class = BudgetSerializer
