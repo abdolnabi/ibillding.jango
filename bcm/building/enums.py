@@ -23,3 +23,49 @@ class FacilityResidenceAccessibilitiesType:
     UNIT = 'UNIT'
     RESIDENCE = 'RESIDENCE'
     BLOCK = 'BLOCK'
+
+
+class BillClassType:
+    INCOME = 'INCOME'
+    EXPENSE = 'EXPENSE'
+
+
+class BillType:
+    SETTLEMENT_REQUEST = 'SETTLEMENT_REQUEST'
+    ADVERTISEMENT = 'ADVERTISEMENT'
+    REQUEST = 'REQUEST'
+    BUDGET = 'BUDGET'
+
+
+class BillCurrency:
+    IRR = 'IRR'
+    USD = 'USD'
+
+
+class BillStatus:
+    PENDING = 'PENDING'
+    CONFIRMED = 'CONFIRMED'
+    REJECTED = 'REJECTED'
+    EXPIRED = 'EXPIRED'
+
+
+class AdvertisementType:
+    LOCAL = 'LOCAL'
+    GLOBAL = 'GLOBAL'
+
+
+class AdvertisementStatus:
+    INACTIVE = 'INACTIVE'
+    ACTIVE = 'ACTIVE'
+
+
+class PaymentStatus:
+    PENDING = 'PENDING'
+    CONFIRMED = 'CONFIRMED'
+    REJECTED = 'REJECTED'
+    EXPIRED = 'EXPIRED'
+
+
+class BudgetClassType:
+    INCOME = 'INCOME'
+    EXPENSE = 'EXPENSE'

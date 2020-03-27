@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+import json
 from building.models import (
     Residence,
     Facility,
@@ -12,6 +12,7 @@ from building.models import (
     FacilityResidenceAccessibility,
     Location,
     UnitPhoneNumber,
+    Budget,
 )
 from core.serializers import CoreModelSerializer
 
@@ -86,7 +87,7 @@ class ResidenceFacilityResidenceSerializer(CoreModelSerializer):
                   'price', 'blocks']
         read_only_fields = ('residence',)
 
-import json
+
 class ResidenceSerializer(CoreModelSerializer):
     facility_residences = ResidenceFacilityResidenceSerializer(many=True, required=False)
     coordinate = LocationSerializer()
@@ -143,3 +144,10 @@ class ResidenceSerializer(CoreModelSerializer):
         instance = super().update(instance, validated_data)
 
         return instance
+
+
+class BudgetSerializer(CoreModelSerializer):
+    class Meta:
+        model = Budget
+        fields = ('id', 'title', 'budget_class', 'period', 'start_at', 'deadline_in_days', 'finish_at', 'due_at',
+                  'price', 'price_formula', 'parameters')
