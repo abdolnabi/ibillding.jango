@@ -13,8 +13,10 @@ from building.models import (
     Location,
     UnitPhoneNumber,
     Budget,
+    AccountingTarget,
 )
-from core.serializers import CoreModelSerializer
+from core.serializers import CoreModelSerializer, ContentTypeField
+from core.services import content_type_converter
 
 
 class LocationSerializer(CoreModelSerializer):
@@ -146,8 +148,45 @@ class ResidenceSerializer(CoreModelSerializer):
         return instance
 
 
+class AccountingTargetListSerializer(CoreModelSerializer):
+    content_type = ContentTypeField()
+
+    class Meta:
+        model = AccountingTarget
+        fields = ('id', 'content_type', 'object_id', 'budgets', 'bills')
+
+
+class AccountingTargetCreateSerializer(CoreModelSerializer):
+    id = serializers.IntegerField(required=False)
+    content_type = ContentTypeField()
+
+    class Meta:
+        model = AccountingTarget
+        fields = ('id', 'content_type', 'object_id', 'budgets', 'bills')
+
+
 class BudgetSerializer(CoreModelSerializer):
+    accounting_targets = AccountingTargetCreateSerializer(many=True, required=False)
+
     class Meta:
         model = Budget
         fields = ('id', 'title', 'budget_class', 'period', 'start_at', 'deadline_in_days', 'finish_at', 'due_at',
-                  'price', 'price_formula', 'parameters')
+                  'price', 'price_formula', 'parameters', 'accounting_targets')
+
+    def create(self, validated_data):
+        accounting_targets = validated_data.pop('accounting_targets', [])
+        budget = super().create(validated_data)
+        for accounting_target in accounting_targets:
+            serializer = AccountingTargetCreateSerializer(data=accounting_target)
+            serializer.is_valid(raise_exception=True)
+            content_type = serializer.validated_data['content_type']
+            content_type = content_type_converter(str(content_type), mode='internal', id=False)
+            accounting_target = serializer.save(content_type=content_type)
+            budget.accounting_targets.add(accounting_target)
+
+        return budget
+
+    def update(self, instance, validated_data):
+        validated_data.pop('accounting_targets')
+
+        return super().update(instance, validated_data)

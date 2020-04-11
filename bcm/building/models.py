@@ -23,50 +23,6 @@ from core.models import BaseModel
 from users.models import User
 
 
-class AccountingTarget(BaseModel):
-    app_label = 'building'
-    accounting_target_limit = (
-            Q(app_label=app_label, model='residence') |
-            Q(app_label=app_label, model='block') |
-            Q(app_label=app_label, model='unit')
-    )
-
-    content_type = models.ForeignKey(
-        verbose_name=_('content type'),
-        help_text=_('content type'),
-        to=ContentType,
-        on_delete=models.CASCADE,
-        limit_choices_to=accounting_target_limit,
-    )
-
-    object_id = models.PositiveIntegerField(
-        verbose_name=_('object id'),
-        help_text=_('object id'),
-    )
-
-    content_object = GenericForeignKey('content_type', 'object_id')
-
-    value = models.CharField(
-        verbose_name=_('value'),
-        help_text=_('value'),
-        max_length=255,
-    )
-
-    budgets = models.ManyToManyField(
-        verbose_name=_('budgets'),
-        help_text=_('budgets'),
-        to='Budget',
-        related_name='accounting_targets',
-    )
-
-    bills = models.ManyToManyField(
-        verbose_name=_('bills'),
-        help_text=_('bills'),
-        to='Bill',
-        related_name='accounting_targets'
-    )
-
-
 class Location(models.Model):
     latitude = models.FloatField(
         verbose_name=_('latitude'),
@@ -697,4 +653,53 @@ class Payment(BaseModel):
         help_text=_('status of payment'),
         choices=PAYMENT_STATUS_CHOICES,
         default=PaymentStatus.PENDING
+    )
+
+
+class AccountingTarget(BaseModel):
+    app_label = 'building'
+    accounting_target_limit = (
+            Q(app_label=app_label, model='residence') |
+            Q(app_label=app_label, model='block') |
+            Q(app_label=app_label, model='unit')
+    )
+    accounting_target_choice = (
+       (ContentType.objects.get(model='residence').id, _('residence')),
+       (ContentType.objects.get(model='block').id, _('block')),
+       (ContentType.objects.get(model='unit').id, _('unit')),
+    )
+
+    content_type = models.ForeignKey(
+        verbose_name=_('content type'),
+        help_text=_('content type'),
+        to=ContentType,
+        on_delete=models.CASCADE,
+        limit_choices_to=accounting_target_limit,
+        choices=accounting_target_choice,
+        default=accounting_target_choice[0][0]
+    )
+
+    object_id = models.PositiveIntegerField(
+        verbose_name=_('object id'),
+        help_text=_('object id'),
+    )
+
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    budgets = models.ManyToManyField(
+        verbose_name=_('budgets'),
+        help_text=_('budgets'),
+        to='Budget',
+        related_name='accounting_targets',
+        null=True,
+        blank=True,
+    )
+
+    bills = models.ManyToManyField(
+        verbose_name=_('bills'),
+        help_text=_('bills'),
+        to='Bill',
+        related_name='accounting_targets',
+        null=True,
+        blank=True,
     )

@@ -1,8 +1,10 @@
 from django.http import JsonResponse
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, mixins
 
 # ###########Dashboard Base section #######################
+from rest_framework.viewsets import GenericViewSet
+
 from building.models import (
     Residence,
     Facility,
@@ -15,6 +17,7 @@ from building.models import (
     FacilityResidenceAccessibility,
     UnitPhoneNumber,
     Budget,
+    AccountingTarget,
 )
 from building.serializers import (
     ResidenceSerializer,
@@ -28,6 +31,7 @@ from building.serializers import (
     FacilityResidenceAccessibilitySerializer,
     UnitPhoneNumberSerializer,
     BudgetSerializer,
+    AccountingTargetListSerializer,
 )
 from users.models import User
 
@@ -487,3 +491,13 @@ class FacilityResidenceAccessibilityViewSet(viewsets.ModelViewSet):
 class BudgetViewSet(viewsets.ModelViewSet):
     queryset = Budget.objects.all()
     serializer_class = BudgetSerializer
+
+
+class AccountingTargetViewSet(mixins.CreateModelMixin,
+                              mixins.RetrieveModelMixin,
+                              mixins.UpdateModelMixin,
+                              mixins.DestroyModelMixin,
+                              mixins.ListModelMixin,
+                              GenericViewSet):
+    queryset = AccountingTarget.objects.all()
+    serializer_class = AccountingTargetListSerializer
