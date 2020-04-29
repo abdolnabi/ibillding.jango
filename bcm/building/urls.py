@@ -47,6 +47,10 @@ from building.views import (
     new_expense_page,
     edit_expense_page,
     show_expense_page,
+    bill_manage_page,
+    edit_bill_page,
+    new_bill_page,
+    show_bill_page,
     AccountingTargetViewSet,
 )
 
@@ -120,5 +124,12 @@ urlpatterns = [
     path('dashboard/expense/new/', new_expense_page, name='new_expense_page'),
     path('dashboard/expense/edit/<int:id>', edit_expense_page, name='edit_expense_page'),
     path('dashboard/expense/show/<int:id>', show_expense_page, name='show_expense_page'),
+
+    # ####### bill Path ############
+    path('dashboard/bill/', bill_manage_page, name='bill_manage_page'),
+    path('dashboard/bill/new/', new_bill_page, name='new_bill_page'),
+    path('dashboard/bill/edit/<int:id>', edit_bill_page, name='edit_bill_page'),
+    path('dashboard/bill/show/<int:id>', show_bill_page, name='show_bill_page'),
+
     path('api/', include(router.urls)),
 ]

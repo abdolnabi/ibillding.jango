@@ -1,5 +1,10 @@
 {% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
 {% load static i18n %}
+{% block HeadOfFile %}
+        <link href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+ <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
+     <script type="text/javascript" src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
+{% endblock HeadOfFile %}
 {% block bodycontent %}
     <div id="new_income_message"></div>
     {#    {{ request_type }}#}
@@ -14,34 +19,249 @@
 {% csrf_token %}
 {% include "../../../dashboard_pages/budget/income/form/income_form.html" %}
 </form>
+  <!-- third part of form -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Editable table -->
+                <div class="card">
+                    <div class="c-card-header">
+                        <strong>{% trans 'Budget Targets' %}</strong></div>
+                    <div class="card-body">
+                        <div id="table" class="table-editable">
+                            <span class="table-add float-right mb-3 mr-2"><button class="btn btn-info cil-plus"
+                                                                                 onclick="add_accounting_target()" id="addrow"
+                                                                                  type="button"></button></span>
+                            <table id="dataTable"
+                                   class="dataTable table table-bordered table-responsive-md table-striped text-center">
+
+                                <thead>
+                                  <thead>
+                                <th>{% trans 'Target Type' %}</th>
+                                <th>{% trans 'Target name' %}</th>
+                                <th>{% trans 'َAction' %}</th>
+                                </thead>
+                                <tbody id="tbody" class="center">
+                                {% for item in budget_targets %}
+                                <tr id="accounting_target_{{ item.id }}">
+                                    <form class="budget_target" id="budget_target">
+                                    {% csrf_token %}
+                                    <td><label for="id_target_type{{ item.id }}"></label>
+                                        <select class="form-control first-select" id="id_target_type{{ item.id }}s" name="target_type{{ item.id }}" >
+                                    {% for accounting_target in targets %}
+                                    <option value="{{ accounting_target.id }}" {% if accounting_target.id == item.accounting_target %}selected{% endif %}>{{ accounting_target.title }}</option>
+                                    {% endfor %}
+                                    </select></td>
+                                        <td><label for="id_target_name{{ item.id }}"></label>
+                                        <select class="form-control second-select" id="id_target_name{{ item.id }}s" name="target_name{{ item.id }}" >
+                                    {% for accounting_target in accounting_targets %}
+                                    <option value="{{ accounting_target.id }}" {% if accounting_target.id == item.accounting_target %}selected{% endif %}>{{ accounting_target.title }}</option>
+                                    {% endfor %}
+                                    </select></td>
+                                    <td><button class="ibtnDel btn btn-danger cil-trash" onclick="delete_item('{% url "building:accounting-target-detail" item.id %}',{{ item.id }})"></button></td>
+                                    <td><button id="accounting_target_btn" class="btn btn-primary cil-save" onclick="edit_accounting_target_item('{% url "building:accounting-target-detail" item.id %}',{{ item.id }})" /></td>
+                                 </form></tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Editable table -->
+            </div>
+        </div>
+
 
 {% endblock bodycontent %}
 {% block c-script %}
+
     {% if request_type == 'show' %}
         <script type="text/javascript">
             $('#show_income input').attr('disabled', true);
             $('#show_income textarea').attr('disabled', true);
             $('#show_income select').attr('disabled', true);
-            $('#show_income #unit_income_btn').attr('type', 'submit').remove();
+            $('#show_income checkbox').attr('disabled', true);
+            $('#show_income #income_btn').attr('type', 'submit').remove();
+            $('#addrow').remove();
+            $('#tbody tr td textarea').attr('disabled', true);
+            $('#tbody tr td input').attr('disabled', true);
+            $('#tbody tr td select').attr('disabled', true);
+            $('#tbody tr td checkbox').attr('disabled', true);
+            $('#tbody tr td .c-switch-slider').attr('disabled', true);
+            $('#tbody tr td button').attr('disabled', true);;
+{#            $('#tbody tr td').attr('type', 'button').disabled();#}
+
 
         </script>
     {% endif %}
-    <script type="text/javascript">
 
-        {#    if (request_type == 'edit'){#}
-        $(document).on('submit', '#edit_income', function (e) {
+        {##############   start accounting_target section ########################}
+    <script type="text/javascript">
+{#    edit accounting_target in table row#}
+    function edit_accounting_target_item(url,id) {
+        $.ajax({
+            url: url,
+            type: 'PUT',
+            dataType: 'json',
+            data: {
+                'id': id,
+{#                'budget':{{ budget_id }},#}
+                'Budgets': {{ income.id }},
+                'content_type': $('#id_target_type' + item).val(),
+                'object_id': $('#id_target_name' + item).val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
+            },
+            success:function(data) {
+                $("#new_income_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
+            },
+            error: function(data) {
+                $("#new_income_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");
+            }
+        });
+    };
+        {#    }#}
+    </script>
+
+    <script type="text/javascript">
+{#    add rows to table for insert new item#}
+        function add_accounting_target() {
+            var newRow = jQuery('<tr><form class="accounting_target">{% csrf_token %}');
+            var counter = $('table.dataTable tr form.accounting_target').length;;
+            var cols = "";
+{#            cols += '<td>'+counter+'</td>'#}
+{#            cols += '<td><label for="id_accounting_target'+counter+'"></label><select class="form-control" id="id_accounting_target'+counter+'" name="accounting_target'+counter+'" >' +#}
+{#                +'{% for accounting_target in accounting_targets %}'+#}
+{#                    '<option value="{{ accounting_target.id }}" >{{ accounting_target.title }}</option>' +#}
+{#                    '{% endfor %}' +#}
+{#                '</select></td>';#}
+            cols += '<td ><label for="id_target_type' + counter + '"></label>' +
+                '<select class="form-control first-select" id="id_target_type' + counter + '" name="target_type' + counter + '" >' +
+                '<option value="residence" >residence</option>' +
+                '<option value="block" >block</option>' +
+                '<option value="unit" >unit</option></select></td>';
+
+            cols += '<td><label for="id_target_name' + counter + '"></label><select class="second-select form-control" id="id_target_name' + counter + '" name="target_name' + counter + '" >' +
+{#                    '<option value=""></option>'#}
+{#                '{% for target in residences %}'+#}
+{#                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +#}
+{#                    '{% endfor %}'+#}
+
+                '</select></td>';
+{#            cols += '<input type="hidden" name="id" id="id" value="'+ {{ item.id }} +'" />';#}
+            cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
+            cols += '<td><button class="btn_add_new_accounting_target btn btn-primary cil-save"/></td>';
+            newRow.append(cols+'</form>');
+            jQuery("table.dataTable").append(newRow);
+        }
+{#        # add delete function here#}
+            jQuery(document).ready(function () {
+                jQuery("table.dataTable").on("click", ".ibtnDel", function (event) {
+                jQuery(this).closest("tr").remove();
+
+        });
+        });
+    $('table.dataTable').on('change','.first-select',function(event){
+        var val_type = jQuery(this).val();
+        if(val_type == "residence") {
+            $(this).closest('tr').find('select.second-select').empty().append('' +
+                '{% for target in residences %}'+
+                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +
+                    '{% endfor %}');
+
+        }if(val_type == "block") {
+            $(this).closest('tr').find('select.second-select').empty().append(''+
+             '{% for target in blocks %}'+
+                '<option value="{{ target.id }}" >{{ target.name }}</option>' +
+                     '{% endfor %}');
+
+        }if(val_type == "unit") {
+            $(this).closest('tr').find('select.second-select').empty().append('' +
+             '{% for target in units %}'+
+                '<option value="{{ target.id }}" >{{ target.name }}</option>' +
+                     '{% endfor %}');
+
+        }
+  });
+        function delete_item(url, id) {
+
+            var action = confirm("{% trans 'Are you sure you want to delete this accounting_target income?' %}");
+            if (action != false) {
+{#                var id = $('#id_accounting_target_income' + id).val();#}
+                var income = $('#id_budget' + id).val();
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        'id': id,
+                    },
+                    dataType: 'json',
+                    success: function (data, textStatus, jqXHR) {
+                        if (jqXHR.status == "204") {
+                            $("#dataTable #accounting_target_" + id).remove();
+                        }
+                    }
+                });
+            }
+        };
+    </script>
+
+{#    add accounting_target to income#}
+    <script type="text/javascript">
+        jQuery("table.dataTable").on("click", ".btn_add_new_accounting_target", function (e) {
+        e.preventDefault();
+        var counter = $(this).closest('tr').attr('id');
+        $.ajax({
+            method: 'POST',
+{#            url: '{% url "building:accounting-target-list" %}',#}
+            dataType: 'json',
+            data:{
+                'Budgets': {{ income.id }},
+{#                'accounting_target_id': $('#id_accounting_target'+counter).val(),#}
+                'content_type': $('#id_target_type'+counter).val(),
+                'object_id': $('#id_target_name'+counter).val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
+            },
+            success:function(data) {
+                $("#new_income_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
+            },
+            error: function(data) {
+                $("#new_income_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");
+            }
+        });
+    });
+    </script>
+
+{#    end accounting_target section#}
+    {#    start income section#}
+    <script type="text/javascript">
+         $(document).on('submit', '#edit_income', function (e) {
             e.preventDefault();
-            // or display message in form, etc...
             $.ajax({
                 type: 'PUT',
-                url: '{% url "building:income-detail" unit_income.id %}',
+                url: '{% url "building:budget-detail" income.id %}',
                 dataType: 'json',
                 {#            contentType: 'application/json; charset=utf-8',#}
                 data: {
-                    'unit':$('#id_unit').val(),
-                    'income':$('#id_income').val(),
-                    'second_title': $('#id_second_title').val(),
-                    'description': $('#id_description').val(),
+                "title": $('#id_title').val(),
+                "budget_class": $('#id_budget_class').val(),
+                "period": $('#id_period').val(),
+                "start_at": $('#id_start_at').val(),
+                "deadline_in_days": $('#id_deadline_in_days').val(),
+                "finish_at": $('#id_finish_at').val(),
+                "due_at": $('#id_due_at').val(),
+                "price": $('#id_price').val(),
+                "price_formula": $('#id_price_formula').val(),
+                "parameters": $('#id_parameters').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
+{#                    'coordinate.id': {{ income.coordinate.id }},#}
+{#                    'coordinate': $('#id_coordinate').val(),#}
+{#                    'accounting_target_incomes':data,#}
+{#                    'coordinate': $('#id_latitude').val()+'-'+$('#id_longitude').val(),#}
+
                 },
                 success: function () {
                     $("#new_income_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item Edited successfully!' %}</div>");
@@ -52,7 +272,6 @@
             });
 
         });
-        {#    }#}
     </script>
-
+    
 {% endblock c-script %}

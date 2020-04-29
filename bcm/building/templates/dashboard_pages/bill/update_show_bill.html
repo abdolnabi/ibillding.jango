@@ -1,0 +1,64 @@
+{% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div id="new_bill_message"></div>
+    {#    {{ request_type }}#}
+    {% if request_type == 'edit' %}
+        <form class="form-horizontal" id='edit_bill'>
+        {#    {% elif request_type == 'new' %}#}
+        {#        <form class="form-horizontal" id='new_block'>#}
+    {% else %}
+        <form class="form-horizontal" id='show_bill'>
+    {% endif %}
+
+{% csrf_token %}
+{% include "../dashboard_pages/bill/form/bill_form.html" %}
+</form>
+
+{% endblock bodycontent %}
+{% block c-script %}
+    {% if request_type == 'show' %}
+        <script type="text/javascript">
+            $('#show_bill input').attr('disabled', true);
+            $('#show_bill textarea').attr('disabled', true);
+            $('#show_bill select').attr('disabled', true);
+            $('#show_bill #unit_bill_btn').attr('type', 'submit').remove();
+
+        </script>
+    {% endif %}
+    <script type="text/javascript">
+
+        {#    if (request_type == 'edit'){#}
+        $(document).on('submit', '#edit_bill', function (e) {
+            e.preventDefault();
+            // or display message in form, etc...
+            $.ajax({
+                type: 'PUT',
+                url: '{% url "building:budget-detail" bill.id %}',
+                dataType: 'json',
+                {#            contentType: 'application/json; charset=utf-8',#}
+                data: {
+                    "title": $('#id_title').val(),
+                "budget_class": $('#id_budget_class').val(),
+                "period": $('#id_period').val(),
+                "start_at": $('#id_start_at').val(),
+                "deadline_in_days": $('#id_deadline_in_days').val(),
+                "finish_at": $('#id_finish_at').val(),
+                "due_at": $('#id_due_at').val(),
+                "price": $('#id_price').val(),
+                "price_formula": $('#id_price_formula').val(),
+                "parameters": $('#id_parameters').val()
+                },
+                success: function () {
+                    $("#new_bill_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item Edited successfully!' %}</div>");
+                },
+                error: function () {
+                    $("#new_bill_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrongs!' %}</div>");
+                }
+            });
+
+        });
+        {#    }#}
+    </script>
+
+{% endblock c-script %}

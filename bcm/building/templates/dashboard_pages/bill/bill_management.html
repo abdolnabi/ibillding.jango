@@ -1,0 +1,169 @@
+{% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
+{% load static i18n %}
+{% block bodycontent %}
+    <div class="row">
+        <div class="card container">
+            <div class="card-header"><h3>{% trans 'All bills' %}</h3></div>
+            <div class="card-body">
+            {#   start search bill section  #}
+                <form id="search_bill" enctype='application/json'>
+                    {% csrf_token %}
+                  <div class="form-row">
+                   <div class="col-md-3 mb-3 form-group">
+                            <label for="id_user_id_search">{% trans 'user' %}</label>
+                            <select class="form-control" id="id_user_id_search" name="user_id_search">
+                                {% for user in users %}
+                                    <option name="{{ user.id }}"
+                                            value="{{ user.id }}">{{ user.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3 form-group">
+                            <label for="id_class_search">{% trans 'Class' %}</label>
+                            <select class="form-control" id="id_class_search" name="class_search">
+                                    <option name="income" value="income">INCOME</option>
+                                    <option name="expense" value="expense">EXPENSE</option>
+                            </select>
+                        </div>
+                    <div class="col-md-3 mb-3 form-group">
+                            <label for="id_type_search">{% trans 'Type' %}</label>
+                            <select class="form-control" id="id_type_search" name="type_search">
+                                    <option name="settlement_request" value="settlement_request">settlement_request</option>
+                                    <option name="advertisement" value="advertisement">advertisement</option>
+                                    <option name="request" value="request">request</option>
+                                    <option name="budget" value="budget">budget</option>
+                            </select>
+                        </div>
+                    <div class="col-md-3 mb-3 form-group">
+                            <label for="id_status_search">{% trans 'Status' %}</label>
+                            <select class="form-control" id="id_status_search" name="status_search">
+                                    <option name="pending" value="pending">pending</option>
+                                    <option name="confirmed" value="confirmed">confirmed</option>
+                                    <option name="rejected" value="rejected">rejected</option>
+                                    <option name="expired" value="expired">expired</option>
+                            </select>
+                        </div>
+                  </div>
+
+                    <button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
+                </form>
+                <hr/>
+                <!-- start table part -->
+                <table id="bill_table" class="table table-responsive-sm table-hover table-outline mb-0">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">{% trans 'id' %}</th>
+                        <th scope="col">{% trans 'User' %}</th>
+                        <th scope="col">{% trans 'Class Name' %}</th>
+                        <th scope="col">{% trans 'Type' %}</th>
+                        <th scope="col">{% trans 'Due at' %}</th>
+                        <th scope="col">{% trans 'Price' %}</th>
+                        <th scope="col">{% trans 'Status' %}</th>
+                        <th scope="col">{% trans 'Actions' %}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for bill in data %}
+                        <tr id="bill_{{ bill.id }}">
+                            <td scope="row">{{ bill.id }}</td>
+                            <td class="bill_user_id bill_data">{{ bill.user_id }}</td>
+                            <td class="bill_class_data">{{ bill.class }}</td>
+                            <td class="bill_type bill_data">{{ bill.type }}</td>
+                            <td class="bill_due_at bill_data">{{ bill.due_at }}</td>
+                            <td class="bill_price">{{ bill.price }}</td>
+                            <td class="bill_status">{{ bill.status }}</td>
+                            <td class="bill_data"><a class="btn btn-success"
+                                                      href="{% url "building:show_bill_page" id=bill.id %}"
+                                                      title="{% trans 'show' %}">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
+                            </svg>
+                                {#                        </a>&nbsp;<a class="btn btn-info" title="{% trans 'edit' %}" href="{% url "building:edit_bill_page" id=bill.id %}">#}
+                            </a>&nbsp;
+                                <a class="btn btn-info" title="{% trans 'edit' %}"
+                                   href='{% url "building:edit_bill_page" id=bill.id %}'>
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
+                            </svg>
+
+                                </a>
+                                {#                                <form id="delete_form">#}
+                                <button onclick="delete_item('{% url "building:bill-detail" bill.id %}',{{ bill.id }})"
+                                        class="btn btn-danger" title="{% trans 'delete' %}">
+                            <svg class="c-icon">
+                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
+                            </svg>
+                                </button>
+                                {#                                </form>#}
+                            </td>
+                    </tr>
+            {% endfor %}
+{#        {% else %}#}
+{#        <tr><td class="text-center" colspan="100%">#}
+{#            No bill ...#}
+{#        </td></tr>#}
+{#            {% endif %}#}
+                    </tbody>
+                </table>
+                <hr/>
+                <!-- Pagination -->
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled"><a class="page-link" href="#"
+                                                          tabindex="-1">{% trans 'Previous' %}</a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">{% trans 'Next' %}</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock bodycontent %}
+{% block c-script %}
+    <script type="text/javascript">
+        $(document).on('submit', '#search_bill', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '{% url "building:bill_manage_page" %}',
+                dataType: 'json',
+                data: {
+                    name: $('#id_user_id_search').val(),
+                    residence: $('#id_class_search').val(),
+                    number_of_floors: $('#id_type_search').val(),
+                    number_of_units: $('#id_status_search').val(),
+                    {#            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
+                },
+                success: function () {
+
+                }
+            });
+        });
+
+        function delete_item(url, id) {
+
+            var action = confirm("{% trans 'Are you sure you want to delete this bill?' %}");
+            if (action != false) {
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            if (jqXHR.status == "204") {
+                $("#bill_table #bill_" + id).remove();
+            }
+        }
+    });
+  }
+        };
+    </script>
+
+{% endblock c-script %}

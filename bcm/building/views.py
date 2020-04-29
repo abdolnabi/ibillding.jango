@@ -70,6 +70,7 @@ def edit_residence_page(request, id):
     data = {
         'residences': Residence.objects.all(),
         'residence': Residence.objects.filter(id=id).get(),
+        # 'residence_manager': User.objects.filter(id=id).get(),
         'residence_facility': FacilityResidence.objects.filter(residence=id).all(),
         'facilities': Facility.objects.all(),
         'users': User.objects.all(),
@@ -365,31 +366,48 @@ def budget_manage_page(request):
 
 # ########### Income_manage_page  #############
 def income_manage_page(request):
-    return render(request, 'dashboard_pages/budget/income/income_management.html')
+    request_type = 'new'
+
+    data = {
+        'request_type': request_type,
+        'incomes': Budget.objects.filter(budget_class='INCOME').all()
+    }
+    return render(request, 'dashboard_pages/budget/income/income_management.html',data)
 
 
 def new_income_page(request):
     request_type = 'new'
     data = {
+        'residences': Residence.objects.all(),
+        'blocks': Block.objects.all(),
+        'units': Unit.objects.all(),
         'request_type': request_type
     }
     return render(request, 'dashboard_pages/budget/income/new_income.html', data)
 
 
-def edit_income_page(request):
-    # request_type = 'edit'
+def edit_income_page(request, id):
+    request_type = 'edit'
+    income = Budget.objects.filter(id=id).get()
+    data = {
+        'residences': Residence.objects.all(),
+        'blocks': Block.objects.all(),
+        'units': Unit.objects.all(),
+        # 'residence': Residence.objects.filter(id=income.object_id),
+        # 'block': Block.objects.filter(id=income.object_id),
+        # 'unit': Unit.objects.filter(id=income.object_id),
+        'income': income,
+        'budget_targets': AccountingTarget.objects.filter(budgets=id).all(),
+        # 'budget_targets' :
+        'request_type': request_type,
+        'id': id,
+    # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/budget/income/update_show_income.html',data)
 
-    # data = {
-    #     'facility': Facility.objects.filter(id=id).get(),
-    #     'request_type': request_type,
-    #     'id': id,
-    #     # 'item_type_dropdown': item_type_dropdown
-    # }
-    return render(request, 'dashboard_pages/budget/income/update_show_income.html')
 
-
-def show_income_page(request):
-    # request_type = 'show'
+def show_income_page(request,id):
+    request_type = 'show'
     # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
     # data = {
     #     'facility': Facility.objects.filter(id=id).get(),
@@ -402,30 +420,44 @@ def show_income_page(request):
 
 # ########### Expense_manage_page  #############
 def expense_manage_page(request):
-    return render(request, 'dashboard_pages/budget/expense/expense_management.html')
+    request_type = 'new'
+
+    data = {
+        'request_type': request_type,
+        'expenses': Budget.objects.filter(budget_class='EXPENSE').all()
+    }
+    return render(request, 'dashboard_pages/budget/expense/expense_management.html', data)
 
 
 def new_expense_page(request):
     request_type = 'new'
     data = {
+        'residences': Residence.objects.all(),
+        'blocks': Block.objects.all(),
+        'units': Unit.objects.all(),
         'request_type': request_type
     }
     return render(request, 'dashboard_pages/budget/expense/new_expense.html', data)
 
 
-def edit_expense_page(request):
-    # request_type = 'edit'
+def edit_expense_page(request,id):
+    request_type = 'edit'
 
-    # data = {
-    #     'facility': Facility.objects.filter(id=id).get(),
-    #     'request_type': request_type,
-    #     'id': id,
-    #     # 'item_type_dropdown': item_type_dropdown
-    # }
-    return render(request, 'dashboard_pages/budget/income/update_show_expense.html')
+    data = {
+        'residences': Residence.objects.all(),
+        'blocks': Block.objects.all(),
+        'units': Unit.objects.all(),
+        'expense': Budget.objects.filter(id=id).get(),
+        'budget_targets': AccountingTarget.objects.filter(budgets=id).all(),
+        # 'budget_targets' :
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/budget/expense/update_show_expense.html', data)
 
 
-def show_expense_page(request):
+def show_expense_page(request,id):
     # request_type = 'show'
     # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
     # data = {
@@ -435,6 +467,47 @@ def show_expense_page(request):
     # 'item_type_dropdown': item_type_dropdown
     # }
     return render(request, 'dashboard_pages/budget/expense/update_show_expense.html')
+
+def bill_manage_page(request):
+    response = {
+        'users': User.objects.all(),
+        # 'residences': Residence.objects.all(),
+        'request_type': 'new'
+    }
+    return render(request, 'dashboard_pages/bill/bill_management.html', response)
+
+def new_bill_page(request):
+    request_type = 'new'
+    data = {
+        'users': User.objects.all(),
+        'request_type': request_type
+    }
+    return render(request, 'dashboard_pages/bill/new_bill.html', data)
+
+
+def edit_bill_page(request, id):
+    request_type = 'edit'
+    data = {
+        'residences': Residence.objects.all(),
+        'block_content': Block.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/blocks/update_show_block.html', data)
+
+def show_bill_page(request, id):
+    request_type = 'show'
+    # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
+    data = {
+        'residences': Residence.objects.all(),
+        'block_content': Block.objects.filter(id=id).get(),
+        'request_type': request_type,
+        'id': id,
+        # 'item_type_dropdown': item_type_dropdown
+    }
+    return render(request, 'dashboard_pages/blocks/update_show_block.html', data)
+
 
 
 # rest view section

@@ -24,8 +24,8 @@
     </tr>
   </thead>
   <tbody>
-    {% if data %}
-   {% for income in data %}
+    {% if incomes %}
+   {% for income in incomes %}
     <tr id="income_{{ income.id }}">
       <th scope="row">{{ income.id }}</th>
       <td>{{ income.title }}</td>
@@ -39,7 +39,7 @@
         </svg></a>&nbsp;<a class="btn btn-info"  title="{% trans 'edit' %}" href='{% url "building:edit_income_page" id=income.id %}'>
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>
-        </svg></a>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_item('{% url "building:income-detail" income.id %}',{{ income.id }})">
+        </svg></a>&nbsp;<button class="btn btn-danger" alt="delete" onclick="delete_item('{% url "building:budget-detail" income.id %}',{{ income.id }})">
         <svg class="c-icon">
         <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
         </svg></button></td>
@@ -67,5 +67,24 @@
     </div>
 {% endblock bodycontent %}
 {% block c-script %}
+    <script type="text/javascript">
+        function delete_item(url, id) {
 
+            var action = confirm("{% trans 'Are you sure you want to delete this budget?' %}");
+            if (action != false) {
+    $.ajax({
+        url: url,
+        type: 'DELETE',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            if (jqXHR.status == "204") {
+                $("#income_table #income_" + id).remove();
+            }
+        }
+    });
+  }
+        };</script>
 {% endblock c-script %}
