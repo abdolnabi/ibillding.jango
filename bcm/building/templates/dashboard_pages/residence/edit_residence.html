@@ -129,7 +129,7 @@
 {#    add rows to table for insert new item#}
         function add_facility() {
             var newRow = jQuery('<tr><form class="residence_facility">{% csrf_token %}');
-            var counter = $(this).closest('tr').attr('id');
+            var counter = $(this).closest('tr').id;
             var cols = "";
             cols += '<td><label for="id_facility'+counter+'"></label><select class="form-control" id="id_facility'+counter+'" name="facility'+counter+'" >' +
                 +'{% for facility in facilities %}'+

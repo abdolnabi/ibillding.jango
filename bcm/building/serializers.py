@@ -174,16 +174,21 @@ class BudgetSerializer(CoreModelSerializer):
                   'price', 'price_formula', 'parameters', 'accounting_targets')
 
     def create(self, validated_data):
-        accounting_targets = validated_data.pop('accounting_targets', [])
+        # getting accounting_targets from request, it's not exist in validated_data because it's an array
+        request = self.context['request']
+        accounting_targets = json.loads(request.data.get('accounting_targets'))
+        # accounting_targets = validated_data.pop('accounting_targets')
         budget = super().create(validated_data)
-        for accounting_target in accounting_targets:
+        if accounting_targets != []:
+         for accounting_target in accounting_targets:
             serializer = AccountingTargetCreateSerializer(data=accounting_target)
             serializer.is_valid(raise_exception=True)
             content_type = serializer.validated_data['content_type']
             content_type = content_type_converter(str(content_type), mode='internal', id=False)
             accounting_target = serializer.save(content_type=content_type)
             budget.accounting_targets.add(accounting_target)
-
+        else:
+            budget.accounting_targets =[]
         return budget
 
     def update(self, instance, validated_data):

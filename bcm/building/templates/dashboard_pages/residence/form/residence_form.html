@@ -13,26 +13,30 @@
                         <div class="form-group">
                             <label for="id_manager">{% trans 'manager' %}</label>
                             <select class="form-control" id="id_manager" name="manager">
-                            <option value="{{ residence.manager }}">{{ residence.manager }}</option>
+{#                            <option value="{{ residence.manager_id }}">{{ residence.manager_id }}</option>#}
                                 {% for user in users %}
+                                  {% if user.id == residence.manager_id %}
+                                      fff
+                                    <option name="{{ user.id }}" selected
+                                            value="{{ residence.manager_id }}">{{ user.username }}</option>
+                                {% endif %}
                                     <option name="{{ user.id }}"
-                                            value="{{ user.id }}" {% if user.username == residence.manager %} defualt
-                                        selected{% endif %}>{{ user.username }}</option>
+                                            value="{{ user.id }}">{{ user.username }}</option>
                                 {% endfor %}
-
 
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="id_parent_residence">{% trans 'Parent Name' %}</label>
                             <select class="form-control" id="id_parent_residence" name="parent_name">
-                                <option value="{{ residence.parent_residence }}">{{ residence.parent_residence }}</option>
-                                {% for res in residences %}
-                                    <option name="{{ res.id }}"
-                                            value="{{ res.id }}"{% if res.id == residence.parent_residence %} default
-                                        selected{% endif %}>{{ res.name }}</option>
-                                {% endfor %}
                                 <option value=""></option>
+                                {% for res in residences %}
+                                {% if res.id == residence.parent_residence_id %}
+                                    <option name="{{ res.id }}"
+                                            value="{{ residence.parent_residence_id }}" selected>{{ res.name }}</option>
+                                {% endif %}
+                                     <option name="{{ res.id }}" value="{{ res.id }}">{{ res.name }}</option>
+                                {% endfor %}
 
                             </select>
                         </div>

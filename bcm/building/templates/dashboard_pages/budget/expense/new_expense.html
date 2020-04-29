@@ -1,25 +1,92 @@
 {% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
-{% load static i18n %}
+{% load static i18n define_action %}
+{% block HeadOfFile %}
+{#        <link href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">#}
+{# <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>#}
+
+
+{% endblock HeadOfFile %}
 {% block bodycontent %}
     <div id="new_expense_message"></div>
     <form class="form-horizontal" id='new_expense'>
 
         {% csrf_token %}
         {% include "../../../dashboard_pages/budget/expense/form/expense_form.html" %}
+          <div class="row">
+            <div class="col-lg-12">
+                <!-- Editable table -->
+                <div class="card">
+                    <div class="c-card-header">
+                        <strong>{% trans 'expense Target' %}</strong></div>
+                    <div class="card-body">
+                        <div id="table" class="table-editable">
+                            <span class="table-add float-right mb-3 mr-2"><button onclick="add_new_row()" class="btn btn-info cil-plus"
+                                                                                  id="addrow"
+                                                                                  type="button"></button></span>
+                            <table id="dataTable"
+                                   class="dataTable table table-bordered table-responsive-md table-striped text-center">
+
+                                <thead>
+                                <th>{% trans 'Target Type' %}</th>
+                                <th>{% trans 'Target name' %}</th>
+
+                                <th>{% trans 'َAction' %}</th>
+                                </thead>
+                                <tbody id="tbody" class="center">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+{#                    <input type="hidden" name="facilities" id="id_facilities" value="{{ facilities }}"/>#}
+                    <div class="c-card-footer">
+                        <input class="btn btn-lg btn-primary" id="expense_btn" value="{% trans 'Submit' %}" type="submit"></input>
+                    </div>
+                </div>
+                <!-- Editable table -->
+            </div>
+        </div>
     </form>
+
 {% endblock bodycontent %}
 {% block c-script %}
     <script type="text/javascript">
         $(document).on('submit', '#new_expense', function (e) {
-        e.preventDefault();
+                e.preventDefault();
+        var target_data = $('table.dataTable tr').length;
+        var item;
+{#        var value;#}
+        let target_list = [];
+        for (item = 1; item < target_data; item++) {
+
+            target_list.push({
+{#                'residence': 1,#}
+{#                'residence': 1,#}
+{#                'target': $('#id_target' + item).val(),#}
+                'content_type': $('#id_target_type' + item).val(),
+                'object_id': $('#id_target_name' + item).val(),
+{#                'requestable': $('#id_requestable' + item).prop("checked"),#}
+{#                'price': $('#id_price' + item).val(),#}
+{#                'blocks':[]#}
+            });
+        }
         $.ajax({
             method: 'POST',
-{#            url: '{% url "building:expense-list" %}',#}
+            url: '{% url "building:budget-list" %}',
             dataType: 'json',
             data:{
-                'title': $('#id_title').val(),
-                'description': $('#id_description').val(),
-                'type': $('#id_type').val(),
+                "title": $('#id_title').val(),
+                "period": $('#id_period').val(),
+                "start_at": $('#id_start_at').val(),
+                "deadline_in_days": $('#id_deadline_in_days').val(),
+                "finish_at": $('#id_finish_at').val(),
+                "budget_class":"EXPENSE",
+                "due_at": $('#id_due_at').val(),
+                "price": $('#id_price').val(),
+                "price_formula": $('#id_price_formula').val(),
+                "parameters": $('#id_parameters').val(),
+                'accounting_targets':JSON.stringify(target_list),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
             },
             success:function(data) {
                 $("#new_expense_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
@@ -30,4 +97,168 @@
         });
     });
     </script>
+    <script type="text/javascript">
+        var selectedCountry;
+      function add_new_row() {
+            var counter = $('table.dataTable tr').length;
+            var newRow = jQuery("<tr>");
+            var cols = "";
+
+            cols += '<td ><label for="id_target_type' + counter + '"></label>' +
+                '<select class="form-control first-select" id="id_target_type' + counter + '" name="target_type' + counter + '" >' +
+                '<option value="residence" >residence</option>' +
+                '<option value="block" >block</option>' +
+                '<option value="unit" >unit</option></select></td>';
+
+            cols += '<td><label for="id_target_name' + counter + '"></label><select class="second-select form-control" id="id_target_name' + counter + '" name="target_name' + counter + '" >' +
+{#                    '<option value=""></option>'#}
+{#                '{% for target in residences %}'+#}
+{#                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +#}
+{#                    '{% endfor %}'+#}
+
+                '</select></td>';
+            cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
+            newRow.append(cols);
+            jQuery("table.dataTable").append(newRow);
+            counter++;
+        }
+            jQuery(document).ready(function () {
+                jQuery("table.dataTable").on("click", ".ibtnDel", function (event) {
+                jQuery(this).closest("tr").remove();
+
+        });
+        });
+{#    $("select").onload(function(){#}
+{#                selectedCountry = $(this).children("option:selected").val();#}
+{#                alert("You have selected the country - " + selectedCountry);#}
+{#      });#}
+{#            if($(this). children("option:selected").val() !== null) {#}
+{#                    var e = $(this). children("option:selected").val()#}
+{#                    var str = e.options[e.selectedIndex].text;#}
+{#                    {% define selectedCountry as my_id %}#}
+    $('table.dataTable').on('change','.first-select',function(){
+        var val_type = jQuery(this).val();
+        if(val_type == "residence") {
+            $(this).closest('tr').find('select.second-select').empty().append('' +
+                '{% for target in residences %}'+
+                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +
+                    '{% endfor %}');
+
+        }if(val_type == "block") {
+            $(this).closest('tr').find('select.second-select').empty().append(''+
+             '{% for target in blocks %}'+
+                '<option value="{{ target.id }}" >{{ target.name }}</option>' +
+                     '{% endfor %}');
+
+        }if(val_type == "unit") {
+            $(this).closest('tr').find('select.second-select').empty().append('' +
+             '{% for target in units %}'+
+                '<option value="{{ target.id }}" >{{ target.name }}</option>' +
+                     '{% endfor %}');
+
+        }
+  });
+    </script>
+{#    <script type="text/javascript">#}
+{#        function add_new_row() {#}
+{#            var counter = $('table.dataTable tr').length;#}
+{#            var newRow = jQuery("<tr>");#}
+{#            var cols = "";#}
+{#            cols +='<td><label for="id_parent_residences"></label><select class="form-control" id="id_parent_residences" name="parent_residences"><option>name 1</option> <option>name 2</option><option>name 3</option> </select>'#}
+{##}
+{#            cols += '<td><label for="id_target_type' + counter + '"></label>' +#}
+{#                '<select class="form-control" id="id_target_type' + counter + '" name="target_type' + counter + '" >' +#}
+{#                '<option value="Residence" >Residence</option>' +#}
+{#                '<option value="Block" >Block</option>' +#}
+{#                '<option value="Unit" >Unit</option></select></td>';#}
+{#            if(document.getElementById("id_target_name") !== null) {#}
+{#                    var e = document.getElementById("id_target_name").value;#}
+{#                    var str = e.options[e.selectedIndex].text;#}
+{#                }#}
+{#            var element = document.getElementById("id_target_type"+ counter);#}
+{#            var result = element.options[element.selectedIndex].value;#}
+{#            cols += '<td><label for="id_target_name' + counter + '"></label>' +#}
+{#                '<select class="form-control" id="id_target_name' + counter + '" name="target_name' + counter + '" >' +#}
+{#                +'<option value="" >'+  +'</option>' +#}
+{#                +'{% if result == 'Residence' %}'#}
+{#                '{% for target in residences %}'+#}
+{#                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +#}
+{#                    '{% endfor %}'+#}
+{#                +'{% if tt == 'Block' %}'#}
+{#                    +'{% for target in blocks %}'+#}
+{#                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +#}
+{#                    '{% endfor %}'#}
+{#                + '{% elif tt == 'Unit' %}'#}
+{#                     +'{% for target in blocks %}'+#}
+{#                    '<option value="{{ target.id }}" >{{ target.id }}</option>' +#}
+{#                    '{% endfor %}'#}
+{#                +{% endif %}#}
+{#                '</select></td>';#}
+{#            cols += '<td><label for="id_second_title' + counter + '"></label><input type="text" class="form-control" id="id_second_title' + counter + '" name="second_title' + counter + '" /></td>';#}
+{#            cols += '<td><textarea cols="30" rows="3" id="id_description' + counter + '" name="description' + counter + '" class="form-control" /></td>';#}
+{#            cols += '<td><label for="id_price' + counter + '"></label><input class="form-control" type="text" id="id_price' + counter + '" name="price' + counter + '"></td>';#}
+{#            cols += '<td><label for="id_requestable' + counter + '" class="c-switch c-switch-label c-switch-pill c-switch-primary"><input class="c-switch-input" id="id_requestable' + counter + '" name="requestable' + counter + '" type="checkbox" checked=""><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span></label></td>';#}
+{#            // cols += '<input type="hidden" name="counter" id="counter" value="'+ counter +'" />';#}
+{#            cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';#}
+{#            newRow.append(cols);#}
+{#            jQuery("table.dataTable").append(newRow);#}
+{#            counter++;#}
+{#        }#}
+{#            jQuery(document).ready(function () {#}
+{#                jQuery("table.dataTable").on("click", ".ibtnDel", function (event) {#}
+{#                jQuery(this).closest("tr").remove();#}
+{##}
+{#        });#}
+{#        });#}
+{#function check () #}
+{#{#}
+{#    var e = document.getElementById("id_target_name").value;#}
+{#    var str = e.options[e.selectedIndex].text;#}
+{##}
+{#    alert(str);#}
+{##}
+{#    if (str==="Hardware")#}
+{#    {#}
+{#        SPICEWORKS.utils.addStyle('#ticket_c_hardware_clone{display: none !important;}');#}
+{#    }       #}
+{# } #}
+{##}
+{#SPICEWORKS.app.helpdesk.ready(check);​#}
+{#    </script>#}
+{#    <script type="text/javascript">#}
+{#        function getFirstTdContent(row) {#}
+{#    elem = row.children[0];#}
+{#    alert(elem.textContent); // Do whatever you want to do with the content here#}
+{# }#}
+{#    </script>#}
+{#    <script type="text/javascript">#}
+{#            jQuery(document).ready(function () {#}
+{#                if(document.getElementById("id_target_name") !== null) {#}
+{#                    var e = document.getElementById("id_target_name").value;#}
+{#                    var str = e.options[e.selectedIndex].text;#}
+{#                }#}
+{#        $(document).onclick('#id_target_type', function (e) {#}
+{#            var element = document.getElementById("id_target_type");#}
+{#            var result = element.options[element.selectedIndex].value;#}
+{#        {% if result == 'Block' %}#}
+{#          element.getAttribute(name);#}
+{##}
+{#            {% for target in blocks %}#}
+{#                '<option value="{{ target.id }}" >{{ target.name }}</option>'#}
+{#                                    '{% endfor %}'#}
+{#        {% elif tt == 'Unit' %}#}
+{#            {% for target in blocks %}#}
+{#                '<option value="{{ target.id }}" >{{ target.id }}</option>'#}
+{#                 '{% endfor %}'#}
+{#            {% endif %}#}
+{#        });#}
+{#    });#}
+
+{#    </script>#}
+
+{#    <script type="text/javascript">#}
+{#            $(function () {#}
+{#                $('#id_start_at').datetimepicker();#}
+{#            });#}
+{#        </script>#}
 {% endblock c-script %}

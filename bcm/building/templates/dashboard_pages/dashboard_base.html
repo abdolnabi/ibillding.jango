@@ -6,7 +6,6 @@
 {% else %}
     {% define "ltr" as dir %}
 {% endif %}
-{% block HeadOfFile %}
 <!DOCTYPE html>
 <!--
 * CoreUI - Free Bootstrap Admin Template
@@ -28,7 +27,8 @@
     <meta name="msapplication-TileColor" content="#ffffff">
 {#    <meta name="msapplication-TileImage" content="{% static 'assets/favicon/ms-icon-144x144.png' %}">#}
     <meta name="theme-color" content="#ffffff">
-    {% endblock HeadOfFile %}
+    {% block HeadOfFile %}
+{% endblock HeadOfFile %}
 {% block Title %}
     <title>{% trans 'BCM Admin Panel' %}</title>
 {% endblock Title %}
@@ -44,6 +44,8 @@
     <link href="{% static 'css/custom-dashboard-css.css' %}" rel="stylesheet">
     <link href="{% static 'vendors/pace-progress/css/pace.min.css' %}" rel="stylesheet">
     <!-- Global site tag (gtag.js) - Google Analytics-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -290,6 +292,14 @@
             <svg class="c-sidebar-nav-icon">
                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-dollar' %}"></use>
             </svg> {% trans 'Budget' %}</a></li>
+         <li class="c-sidebar-nav-item c-sidebar-nav-dropdown"><a class="c-sidebar-nav-link c-sidebar-nav-dropdown-toggle" href="#">
+            <svg class="c-sidebar-nav-icon">
+                <use href="{% static '@coreui/icons/sprites/free.svg#cil-bold' %}"></use>
+            </svg>{% trans 'Bill' %}</a>
+         <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{%  url 'building:bill_manage_page' %}"><span class="c-sidebar-nav-icon"></span>{% trans 'All Bills' %}</a></li>
+                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{%  url 'building:new_bill_page' %}"><span class="c-sidebar-nav-icon"></span> Add New Bill</a></li>
+            </ul>
     </ul>
     <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
 </div>
@@ -701,6 +711,10 @@
 {#    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>#}
 <script type="text/javascript" src="{% static '@coreui/utils/dist/coreui-utils.js' %}"></script>
 
+
+{#             <script type="text/javascript" src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>#}
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 {% block c-script %}{% endblock c-script %}
 </body>
 </html>

@@ -10,35 +10,55 @@
                     <input type="text" class="form-control" id="id_title" value="{{ expense.title }}" name="title"
                            required>
                 </div>
-                               <div class="form-group">
-                    <label for="id_target_type">{% trans 'Select Target Type' %}</label>
-                    <select class="form-control" id="id_target_type" name="target_type">
-                        <option value="{{ expense.target_type }}">{{ expense.target_type }}</option>
-                        <option value="RESIDENCE">{% trans 'Residence' %}</option>
-                        <option value="BLOCK">{% trans 'Block' %}</option>
-                        <option value="UNIT">{% trans 'Unit' %}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="id_target_name">{% trans 'Select Target Name' %}</label>
-                    <select class="form-control" id="id_target_name" name="target_name">
-                        <option value="{{ expense.target_name }}">{{ expense.target_name }}</option>
-                        <option value="RESIDENCE">{% trans 'Residence (list)' %}</option>
-                        <option value="BLOCK">{% trans 'Block (list)' %}</option>
-                        <option value="UNIT">{% trans 'Unit (list)' %}</option>
-                    </select>
-                </div>
+{##}
+{##}
+{##}
+{##}
+{##}
+{#                <div class="form-group">#}
+{#                  <label class="control-label">Appointment Time</label>#}
+{#                  <div class='input-group date' id='datetimepicker1'>#}
+{#                     <input type='text' class="form-control" />#}
+{#                     <span class="input-group-addon">#}
+{#                     <span class="ui-icon-calendar"></span>#}
+{#                     </span>#}
+{#                  </div>#}
+{#               </div>#}
+{#                               <div class="form-group">#}
+{#                    <label for="id_target_type">{% trans 'Select Target Type' %}</label>#}
+{#                    <select class="form-control" id="id_target_type" name="target_type">#}
+{#                        <option value="{{ expense.target_type }}">{{ expense.target_type }}</option>#}
+{#                        <option value="RESIDENCE">{% trans 'Residence' %}</option>#}
+{#                        <option value="BLOCK">{% trans 'Block' %}</option>#}
+{#                        <option value="UNIT">{% trans 'Unit' %}</option>#}
+{#                    </select>#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <label for="id_target_name">{% trans 'Select Target Name' %}</label>#}
+{#                    <select class="form-control" id="id_target_name" name="target_name">#}
+{#                        <option value="{{ expense.target_name }}">{{ expense.target_name }}</option>#}
+{#                        <option value="RESIDENCE">{% trans 'Residence (list)' %}</option>#}
+{#                        <option value="BLOCK">{% trans 'Block (list)' %}</option>#}
+{#                        <option value="UNIT">{% trans 'Unit (list)' %}</option>#}
+{#                    </select>#}
+{#                </div>#}
                 <div class="form-group">
                         <label for="id_period">{% trans 'Period' %}</label>
                         <input type="number" step="1" class="form-control" value="{{ expense.period }}" id="id_period"
                                name="period">
                     </div>
+            <div class="form-group input-group date" id="datetimepicker1">
+                <label for="id_start_at">{% trans 'Start at' %}</label>
+                    <input type="text" class="form-control" id="id_start_at" value="{{ expense.start_at }}" name="start_at">
+
+            </div>
+
                 <div class="form-group">
-                    <label for="id_start_at">{% trans 'Start at' %}</label>
-                    <input type="date" class="form-control" id="id_start_at" value="{{ expense.start_at }}" name="start_at"
+                    <label for="id_due_at">{% trans 'Due at' %}</label>
+                    <input type="text" class="form-control" id="id_due_at" value="{{ expense.due_at }}" name="due_at"
                            required>
                 </div>
-                <input type="hidden" name="class" value="expense">
+                <input type="hidden" id="id_budget_class" name="budget_class" value="expense">
                  <div class="form-group">
                         <label for="id_deadline_in_days">{% trans 'Dead line (days)' %}</label>
                         <input type="number" step="1" class="form-control" value="{{ expense.deadline_in_days }}" id="id_deadline_in_days"
@@ -46,7 +66,7 @@
                     </div>
                  <div class="form-group">
                     <label for="id_finish_at">{% trans 'Finish at' %}</label>
-                    <input type="date" class="form-control" id="id_finish_at" value="{{ expense.finish_at }}" name="finish_at"
+                    <input type="text" class="form-control" id="id_finish_at" value="{{ expense.finish_at }}" name="finish_at"
                            required>
                 </div>
                  <div class="form-group">
@@ -66,9 +86,17 @@
                 </div>
 
             </div>
-            <div class="c-card-footer">
-                <button class="btn btn-lg btn-primary" id="expense_btn" type="submit">{% trans 'Submit' %}</button>
-            </div>
+{#            <div class="c-card-footer">#}
+{#                <button class="btn btn-lg btn-primary" id="expense_btn" type="submit">{% trans 'Submit' %}</button>#}
+{#            </div>#}
         </div>
     </div>
 </div>
+{#  <script type="text/javascript">#}
+{#            jQuery(function () {#}
+{#                jQuery('#datetimepicker1').datetimepicker();#}
+{#            });#}
+{#  jQuery(function () {#}
+{#    $('#datetimepicker1').datetimepicker();#}
+{# });#}
+{#        </script>#}
