@@ -14,6 +14,7 @@ from building.models import (
     UnitPhoneNumber,
     Budget,
     AccountingTarget,
+    Bill,
 )
 from core.serializers import CoreModelSerializer, ContentTypeField
 from core.services import content_type_converter
@@ -162,10 +163,35 @@ class AccountingTargetCreateSerializer(CoreModelSerializer):
 
     class Meta:
         model = AccountingTarget
-        fields = ('id', 'content_type', 'object_id', 'budgets', 'bills')
+        fields = ('id', 'content_type', 'object_id')
 
 
-class BudgetSerializer(CoreModelSerializer):
+class AccountingTargetSerializerMixin:
+    def create(self, validated_data):
+        # getting accounting_targets from request, it's not exist in validated_data because it's an array
+        request = self.context['request']
+        accounting_targets = json.loads(request.data.get('accounting_targets'))
+        # accounting_targets = validated_data.pop('accounting_targets')
+        instance = super().create(validated_data)
+        if accounting_targets != []:
+            for accounting_target in accounting_targets:
+                serializer = AccountingTargetCreateSerializer(data=accounting_target)
+                serializer.is_valid(raise_exception=True)
+                content_type = serializer.validated_data['content_type']
+                content_type = content_type_converter(str(content_type), mode='internal', id=False)
+                accounting_target = serializer.save(content_type=content_type)
+                instance.accounting_targets.add(accounting_target)
+        else:
+            instance.accounting_targets = []
+        return instance
+
+    def update(self, instance, validated_data):
+        validated_data.pop('accounting_targets')
+
+        return super().update(instance, validated_data)
+
+
+class BudgetSerializer(AccountingTargetSerializerMixin, CoreModelSerializer):
     accounting_targets = AccountingTargetCreateSerializer(many=True, required=False)
 
     class Meta:
@@ -173,25 +199,11 @@ class BudgetSerializer(CoreModelSerializer):
         fields = ('id', 'title', 'budget_class', 'period', 'start_at', 'deadline_in_days', 'finish_at', 'due_at',
                   'price', 'price_formula', 'parameters', 'accounting_targets')
 
-    def create(self, validated_data):
-        # getting accounting_targets from request, it's not exist in validated_data because it's an array
-        request = self.context['request']
-        accounting_targets = json.loads(request.data.get('accounting_targets'))
-        # accounting_targets = validated_data.pop('accounting_targets')
-        budget = super().create(validated_data)
-        if accounting_targets != []:
-         for accounting_target in accounting_targets:
-            serializer = AccountingTargetCreateSerializer(data=accounting_target)
-            serializer.is_valid(raise_exception=True)
-            content_type = serializer.validated_data['content_type']
-            content_type = content_type_converter(str(content_type), mode='internal', id=False)
-            accounting_target = serializer.save(content_type=content_type)
-            budget.accounting_targets.add(accounting_target)
-        else:
-            budget.accounting_targets =[]
-        return budget
 
-    def update(self, instance, validated_data):
-        validated_data.pop('accounting_targets')
+class BillSerializer(AccountingTargetSerializerMixin, CoreModelSerializer):
+    accounting_targets = AccountingTargetCreateSerializer(many=True, required=False)
 
-        return super().update(instance, validated_data)
+    class Meta:
+        model = Bill
+        fields = ('id', 'bill_class', 'type', 'due_at', 'price', 'currency', 'description', 'status_description',
+                  'status', 'accounting_targets',)

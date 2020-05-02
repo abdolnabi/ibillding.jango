@@ -18,6 +18,7 @@ from building.models import (
     UnitPhoneNumber,
     Budget,
     AccountingTarget,
+    Bill,
 )
 from building.serializers import (
     ResidenceSerializer,
@@ -32,6 +33,7 @@ from building.serializers import (
     UnitPhoneNumberSerializer,
     BudgetSerializer,
     AccountingTargetListSerializer,
+    BillSerializer,
 )
 from users.models import User
 
@@ -564,6 +566,14 @@ class FacilityResidenceAccessibilityViewSet(viewsets.ModelViewSet):
 class BudgetViewSet(viewsets.ModelViewSet):
     queryset = Budget.objects.all()
     serializer_class = BudgetSerializer
+
+
+class BillViewSet(viewsets.ModelViewSet):
+    queryset = Bill.objects.all()
+    serializer_class = BillSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class AccountingTargetViewSet(mixins.CreateModelMixin,

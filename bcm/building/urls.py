@@ -52,6 +52,7 @@ from building.views import (
     new_bill_page,
     show_bill_page,
     AccountingTargetViewSet,
+    BillViewSet,
 )
 
 app_name = 'building'
@@ -72,6 +73,7 @@ router.register(
 )
 router.register('phone-number', UnitPhoneNumberViewSet, basename='phone-number')
 router.register('budget', BudgetViewSet, basename='budget')
+router.register('bill', BillViewSet, basename='bill')
 router.register('accounting-target', AccountingTargetViewSet, basename='accounting-target')
 
 urlpatterns = [
