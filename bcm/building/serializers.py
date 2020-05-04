@@ -181,8 +181,7 @@ class AccountingTargetSerializerMixin:
                 content_type = content_type_converter(str(content_type), mode='internal', id=False)
                 accounting_target = serializer.save(content_type=content_type)
                 instance.accounting_targets.add(accounting_target)
-        else:
-            instance.accounting_targets = []
+
         return instance
 
     def update(self, instance, validated_data):
