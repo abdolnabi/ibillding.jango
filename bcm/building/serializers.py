@@ -1,5 +1,9 @@
+from django.contrib.contenttypes.models import ContentType
 from rest_framework import serializers
 import json
+from django.utils.translation import ugettext_lazy as _
+from rest_framework.exceptions import ValidationError
+
 from building.models import (
     Residence,
     Facility,
@@ -149,12 +153,20 @@ class ResidenceSerializer(CoreModelSerializer):
         return instance
 
 
-class AccountingTargetListSerializer(CoreModelSerializer):
+class AccountingTargetSerializer(CoreModelSerializer):
     content_type = ContentTypeField()
 
     class Meta:
         model = AccountingTarget
         fields = ('id', 'content_type', 'object_id', 'budgets', 'bills')
+
+    def validate_content_type(self, content_type):
+        content_type = content_type_converter(str(content_type), mode='internal', id=False)
+
+        if not isinstance(content_type, ContentType):
+            raise ValidationError(detail=_('content type is invalid'))
+
+        return content_type
 
 
 class AccountingTargetCreateSerializer(CoreModelSerializer):

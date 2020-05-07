@@ -32,7 +32,7 @@ from building.serializers import (
     FacilityResidenceAccessibilitySerializer,
     UnitPhoneNumberSerializer,
     BudgetSerializer,
-    AccountingTargetListSerializer,
+    AccountingTargetSerializer,
     BillSerializer,
 )
 from users.models import User
@@ -374,7 +374,7 @@ def income_manage_page(request):
         'request_type': request_type,
         'incomes': Budget.objects.filter(budget_class='INCOME').all()
     }
-    return render(request, 'dashboard_pages/budget/income/income_management.html',data)
+    return render(request, 'dashboard_pages/budget/income/income_management.html', data)
 
 
 def new_income_page(request):
@@ -403,13 +403,13 @@ def edit_income_page(request, id):
         # 'budget_targets' :
         'request_type': request_type,
         'id': id,
-    # 'item_type_dropdown': item_type_dropdown
+        # 'item_type_dropdown': item_type_dropdown
     }
-    return render(request, 'dashboard_pages/budget/income/update_show_income.html',data)
+    return render(request, 'dashboard_pages/budget/income/update_show_income.html', data)
 
 
-def show_income_page(request,id):
-    request_type = 'show'
+def show_income_page(request, id):
+    # request_type = 'show'
     # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
     # data = {
     #     'facility': Facility.objects.filter(id=id).get(),
@@ -442,7 +442,7 @@ def new_expense_page(request):
     return render(request, 'dashboard_pages/budget/expense/new_expense.html', data)
 
 
-def edit_expense_page(request,id):
+def edit_expense_page(request, id):
     request_type = 'edit'
 
     data = {
@@ -459,7 +459,7 @@ def edit_expense_page(request,id):
     return render(request, 'dashboard_pages/budget/expense/update_show_expense.html', data)
 
 
-def show_expense_page(request,id):
+def show_expense_page(request, id):
     # request_type = 'show'
     # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
     # data = {
@@ -470,6 +470,7 @@ def show_expense_page(request,id):
     # }
     return render(request, 'dashboard_pages/budget/expense/update_show_expense.html')
 
+
 def bill_manage_page(request):
     response = {
         'users': User.objects.all(),
@@ -477,6 +478,7 @@ def bill_manage_page(request):
         'request_type': 'new'
     }
     return render(request, 'dashboard_pages/bill/bill_management.html', response)
+
 
 def new_bill_page(request):
     request_type = 'new'
@@ -498,6 +500,7 @@ def edit_bill_page(request, id):
     }
     return render(request, 'dashboard_pages/blocks/update_show_block.html', data)
 
+
 def show_bill_page(request, id):
     request_type = 'show'
     # item_type_dropdown = Residence.RESIDENCE_TYPE_CHOICES
@@ -509,7 +512,6 @@ def show_bill_page(request, id):
         # 'item_type_dropdown': item_type_dropdown
     }
     return render(request, 'dashboard_pages/blocks/update_show_block.html', data)
-
 
 
 # rest view section
@@ -583,4 +585,4 @@ class AccountingTargetViewSet(mixins.CreateModelMixin,
                               mixins.ListModelMixin,
                               GenericViewSet):
     queryset = AccountingTarget.objects.all()
-    serializer_class = AccountingTargetListSerializer
+    serializer_class = AccountingTargetSerializer

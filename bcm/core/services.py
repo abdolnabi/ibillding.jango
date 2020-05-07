@@ -22,15 +22,15 @@ accounting_target_internal = {str(residence.id): residence,
 
 def content_type_converter(key, mode, id=True):
     if mode == 'representation':
-        data = accounting_target_representation[key]
+        data = accounting_target_representation.get(key)
         if isinstance(data, str):
             return data
         return data
 
     elif mode == 'internal':
-        data = accounting_target_internal[key]
+        data = accounting_target_internal.get(key)
         if isinstance(data, str):
             return data
-        if id:
+        if id and hasattr(data, 'id'):
             return data.id
         return data
