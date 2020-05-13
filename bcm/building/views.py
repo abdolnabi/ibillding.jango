@@ -450,10 +450,10 @@ def edit_expense_page(request, id):
         'blocks': Block.objects.all(),
         'units': Unit.objects.all(),
         'expense': Budget.objects.filter(id=id).get(),
-        'budget_targets': AccountingTarget.objects.filter(budgets=id).all(),
+        'accounting_budget_targets': AccountingTarget.objects.filter(budgets=id).all(),
         # 'budget_targets' :
         'request_type': request_type,
-        'id': id,
+        'expense_id': id,
         # 'item_type_dropdown': item_type_dropdown
     }
     return render(request, 'dashboard_pages/budget/expense/update_show_expense.html', data)
