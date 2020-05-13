@@ -395,15 +395,10 @@ def edit_income_page(request, id):
         'residences': Residence.objects.all(),
         'blocks': Block.objects.all(),
         'units': Unit.objects.all(),
-        # 'residence': Residence.objects.filter(id=income.object_id),
-        # 'block': Block.objects.filter(id=income.object_id),
-        # 'unit': Unit.objects.filter(id=income.object_id),
-        'income': income,
-        'budget_targets': AccountingTarget.objects.filter(budgets=id).all(),
-        # 'budget_targets' :
+        'income': Budget.objects.filter(id=id).get(),
+        'accounting_budget_targets': AccountingTarget.objects.filter(budgets=id).all(),
         'request_type': request_type,
-        'id': id,
-        # 'item_type_dropdown': item_type_dropdown
+        'income_id': id,
     }
     return render(request, 'dashboard_pages/budget/income/update_show_income.html', data)
 
