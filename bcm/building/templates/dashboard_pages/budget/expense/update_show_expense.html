@@ -7,17 +7,22 @@
 {% endblock HeadOfFile %}
 {% block bodycontent %}
     <div id="new_expense_message"></div>
-    {#    {{ request_type }}#}
     {% if request_type == 'edit' %}
         <form class="form-horizontal" id='edit_expense'>
-        {#    {% elif request_type == 'new' %}#}
-        {#        <form class="form-horizontal" id='new_block'>#}
+
     {% else %}
         <form class="form-horizontal" id='show_expense'>
     {% endif %}
 
 {% csrf_token %}
 {% include "../../../dashboard_pages/budget/expense/form/expense_form.html" %}
+    <div class="c-card-footer">
+                        <input class="btn btn-lg btn-primary" id="expense_btn" value="{% trans 'Submit' %}" type="submit"></input>
+                    </div>
+        </div>
+    </div>
+</div>
+
 </form>
   <!-- third part of form -->
         <div class="row">
@@ -41,41 +46,46 @@
                                 <th>{% trans 'َAction' %}</th>
                                 </thead>
                                 <tbody id="tbody" class="center">
-                                {% for item in budget_targets %}
+                                {% for item in accounting_budget_targets %}
                                 <tr id="accounting_target_{{ item.id }}">
                                     <form class="budget_target" id="budget_target">
                                     {% csrf_token %}
                                     <td><label for="id_target_type{{ item.id }}"></label>
-                                        <select class="form-control first-select" id="id_target_type{{ item.id }}s" name="target_type{{ item.id }}" >
-                                    {% for target in budget_targets %}
-                                    <option value="{{ target.id }}" {% if target.id == item.accounting_target and target.content_type == "building | block" %}selected{% endif %}>{{ target.content_type }}</option>
+                                        <select class="form-control first-select" id="id_target_type{{ item.id }}s" name="target_type{{ item.id }}s" >
+{#                                    {% for target in accounting_budget_targets %}#}
+                                        {% if item.content_type|stringformat:"s" == "building | block" %}
+                                         <option value="block" {% if item.content_type|stringformat:"s" == "building | block" %}selected{% endif %}>{{ item.content_type }}</option>
+                                        {% elif item.content_type|stringformat:"s" == "building | residence" %}
+                                           <option value="residence" {% if item.content_type|stringformat:"s" == "building | residence" %}selected{% endif %}>{{ item.content_type }}</option>
+                                        {% elif item.content_type|stringformat:"s" == "building | unit" %}
+                                            <option value="unit" {% if item.content_type|stringformat:"s" == "building | unit" %}selected{% endif %}>{{ item.content_type }}</option>
+                                        {% endif %}
+
                                         <option value="residence" >residence</option>
                                         <option value="block" >block</option>
                                         <option value="unit" >unit</option>
                                     </select></td>
                                         <td><label for="id_target_name{{ item.id }}"></label>
-                                        <select class="form-control second-select" id="id_target_name{{ item.id }}s" name="target_name{{ item.id }}" >
+                                        <select class="form-control second-select" id="id_target_name{{ item.id }}s" name="target_name{{ item.id }}s" >
 {#                                    {% for acc_target in budget_targets %}#}
-{#                                        {% if target.content_type == "residence" %}#}
-{#                                            {% for residence in residences %}#}
-{#                                            <option value="{{ residence.id }}" {% if target.id == item.accounting_target and target.object_id == residence.id %}selected{% endif %}>{{ target.object_id }}</option>#}
-{#                                            {% endfor %}#}
-                                        {% for block in blocks %}
-                                        {% if target.content_type == "block" %}
-                                            <option value="{{ target.object_id }}" {% if target.id == item.accounting_target %}selected{% endif %}>{{ target.object_id }}</option>
-{#                                        {% else %}#}
-{#                                            <option value="{{ block.id }}">{{ target.content_type }}</option>#}
-                                        {% endif %}
-                                        {% endfor %}
-{#                                        {% elif target.content_type == "unit" %}#}
-{#                                            {% for unit in units %}#}
-{#                                            <option value="{{ unit.id }}" {% if target.id == item.accounting_target and target.object_id == unit.id %}selected{% endif %}>{{ unit.id }}</option>#}
-{#                                            {% endfor %}#}
-                                    {% endfor %}
+                                        {% if item.content_type|stringformat:"s" == "building | residence" %}
+                                            {% for residence in residences %}
+                                            <option value="{{ residence.id }}" {% if item.id == expense.accounting_target.id and item.object_id == residence.id %}selected{% endif %}>{{ residence.name }}</option>
+                                            {% endfor %}
+                                       {% elif item.content_type|stringformat:"s" == "building | block" %}
+                                            {% for block in blocks %}
+                                            <option value="{{ block.id }}" {% if item.id == expense.accounting_target.id and item.object_id == block.id %}selected{% endif %}>{{ block.name }}</option>
+                                       {% endfor %}
+
+                                        {% elif item.content_type|stringformat:"s" == "building | unit" %}
+                                            {% for unit in units %}
+                                            <option value="{{ unit.id }}" {% if item.id == expense.accounting_target.id and item.object_id == unit.id %}selected{% endif %}>{{ unit.title }}</option>
+                                            {% endfor %}
+                                           {% endif %}
 
                                     </select></td>
                                     <td><button class="ibtnDel btn btn-danger cil-trash" onclick="delete_item('{% url "building:accounting-target-detail" item.id %}',{{ item.id }})"></button></td>
-                                    <td><button id="accounting_target_btn" class="btn btn-primary cil-save" onclick="edit_accounting_target_item('{% url "building:accounting-target-detail" item.id %}',{{ item.id }})" /></td>
+                                    <td><button id="accounting_target_btn" class="btn btn-primary cil-save" onclick="edit_accounting_target_item('{% url "building:accounting-target-detail" item.id %}',{{ item.id }})"></button></td>
                                  </form></tr>
                                 {% endfor %}
 
@@ -118,15 +128,15 @@
 {#    edit accounting_target in table row#}
     function edit_accounting_target_item(url,id) {
         $.ajax({
-            url: url,
             type: 'PUT',
+            url: url,
             dataType: 'json',
             data: {
                 'id': id,
 {#                'budget':{{ budget_id }},#}
-                'Budgets': {{ expense.id }},
-                'content_type': $('#id_target_type' + item).val(),
-                'object_id': $('#id_target_name' + item).val(),
+                'budgets': {{ expense_id }},
+                'content_type': $('#id_target_type' + id+'s').val(),
+                'object_id': $('#id_target_name' + id+'s').val(),
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
 
             },
@@ -145,14 +155,8 @@
 {#    add rows to table for insert new item#}
         function add_accounting_target() {
             var newRow = jQuery('<tr><form class="accounting_target">{% csrf_token %}');
-            var counter = $('table.dataTable tr form.accounting_target').length;;
+            var counter = $('table.dataTable tr').length;;
             var cols = "";
-{#            cols += '<td>'+counter+'</td>'#}
-{#            cols += '<td><label for="id_accounting_target'+counter+'"></label><select class="form-control" id="id_accounting_target'+counter+'" name="accounting_target'+counter+'" >' +#}
-{#                +'{% for accounting_target in accounting_targets %}'+#}
-{#                    '<option value="{{ accounting_target.id }}" >{{ accounting_target.title }}</option>' +#}
-{#                    '{% endfor %}' +#}
-{#                '</select></td>';#}
             cols += '<td ><label for="id_target_type' + counter + '"></label>' +
                 '<select class="form-control first-select" id="id_target_type' + counter + '" name="target_type' + counter + '" >' +
                 '<option value="residence" >residence</option>' +
@@ -160,13 +164,8 @@
                 '<option value="unit" >unit</option></select></td>';
 
             cols += '<td><label for="id_target_name' + counter + '"></label><select class="second-select form-control" id="id_target_name' + counter + '" name="target_name' + counter + '" >' +
-{#                    '<option value=""></option>'#}
-{#                '{% for target in residences %}'+#}
-{#                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +#}
-{#                    '{% endfor %}'+#}
 
                 '</select></td>';
-{#            cols += '<input type="hidden" name="id" id="id" value="'+ {{ item.id }} +'" />';#}
             cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
             cols += '<td><button class="btn_add_new_accounting_target btn btn-primary cil-save"/></td>';
             newRow.append(cols+'</form>');
@@ -181,19 +180,19 @@
         });
     $('table.dataTable').on('change','.first-select',function(event){
         var val_type = jQuery(this).val();
-        if(val_type == "residence") {
+        if(val_type == "residence" || val_type == "building | residence") {
             $(this).closest('tr').find('select.second-select').empty().append('' +
                 '{% for target in residences %}'+
                     '<option value="{{ target.id }}" >{{ target.name }}</option>' +
                     '{% endfor %}');
 
-        }if(val_type == "block") {
+        }if(val_type == "block" || val_type == "building | block") {
             $(this).closest('tr').find('select.second-select').empty().append(''+
              '{% for target in blocks %}'+
                 '<option value="{{ target.id }}" >{{ target.name }}</option>' +
                      '{% endfor %}');
 
-        }if(val_type == "unit") {
+        }if(val_type == "unit" || val_type == "building | unit") {
             $(this).closest('tr').find('select.second-select').empty().append('' +
              '{% for target in units %}'+
                 '<option value="{{ target.id }}" >{{ target.name }}</option>' +
@@ -228,16 +227,17 @@
     <script type="text/javascript">
         jQuery("table.dataTable").on("click", ".btn_add_new_accounting_target", function (e) {
         e.preventDefault();
-        var counter = $(this).closest('tr').attr('id');
+        var counter = $('table.dataTable tr').length;
+        var count_number = counter -1;
         $.ajax({
             method: 'POST',
-{#            url: '{% url "building:accounting-target-list" %}',#}
+            url: '{% url "building:accounting-target-list" %}',
             dataType: 'json',
             data:{
-                'Budgets': {{ expense.id }},
+                'budgets': {{ expense.id }},
 {#                'accounting_target_id': $('#id_accounting_target'+counter).val(),#}
-                'content_type': $('#id_target_type'+counter).val(),
-                'object_id': $('#id_target_name'+counter).val(),
+                'content_type': $('#id_target_type' + count_number).val(),
+                'object_id': $('#id_target_name'+count_number).val(),
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
 
             },
@@ -258,12 +258,12 @@
             e.preventDefault();
             $.ajax({
                 type: 'PUT',
-                url: '{% url "building:budget-detail" expense.id %}',
+                url: '{% url "building:budget-detail" expense_id %}',
                 dataType: 'json',
                 {#            contentType: 'application/json; charset=utf-8',#}
                 data: {
                 "title": $('#id_title').val(),
-                "budget_class": $('#id_budget_class').val(),
+                "budget_class": "EXPENSE",
                 "period": $('#id_period').val(),
                 "start_at": $('#id_start_at').val(),
                 "deadline_in_days": $('#id_deadline_in_days').val(),
@@ -273,11 +273,6 @@
                 "price_formula": $('#id_price_formula').val(),
                 "parameters": $('#id_parameters').val(),
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-
-{#                    'coordinate.id': {{ expense.coordinate.id }},#}
-{#                    'coordinate': $('#id_coordinate').val(),#}
-{#                    'accounting_target_expenses':data,#}
-{#                    'coordinate': $('#id_latitude').val()+'-'+$('#id_longitude').val(),#}
 
                 },
                 success: function () {

@@ -210,19 +210,7 @@
     <script type="text/javascript">
          $(document).on('submit', '#edit_residence', function (e) {
             e.preventDefault();
-{#            let facility_residences = [];#}
-{#            {% for item in residence_facility %}#}
-{#            facility_residences.push({#}
-{#                'id': {{ item.id }},#}
-{#                'residence': {{ item.residence }},#}
-{#                'facility': {{ item.facility }},#}
-{#                'second_title': {{ item.second_title }},#}
-{#                'description': {{ item.description }},#}
-{#                'requestable': {{ item.requestable }},#}
-{#                'price': {{ item.price }},#}
-{#            });#}
-{#             {% endfor %}#}
-{#        var data= JSON.stringify(facility_residences);#}
+
             // or display message in form, etc...
             $.ajax({
                 type: 'PUT',
@@ -242,11 +230,6 @@
                     'coordinate.longitude': $('#id_longitude').val(),
                     'coordinate_id': {{ residence.coordinate_id }},
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-
-{#                    'coordinate.id': {{ residence.coordinate.id }},#}
-{#                    'coordinate': $('#id_coordinate').val(),#}
-{#                    'facility_residences':data,#}
-{#                    'coordinate': $('#id_latitude').val()+'-'+$('#id_longitude').val(),#}
 
                 },
                 success: function () {

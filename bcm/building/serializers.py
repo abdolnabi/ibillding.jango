@@ -197,7 +197,7 @@ class AccountingTargetSerializerMixin:
         return instance
 
     def update(self, instance, validated_data):
-        validated_data.pop('accounting_targets')
+        validated_data.pop('accounting_targets',[])
 
         return super().update(instance, validated_data)
 

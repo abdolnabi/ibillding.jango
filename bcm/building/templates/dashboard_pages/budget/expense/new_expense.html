@@ -60,14 +60,10 @@
         for (item = 1; item < target_data; item++) {
 
             target_list.push({
-{#                'residence': 1,#}
-{#                'residence': 1,#}
-{#                'target': $('#id_target' + item).val(),#}
+
                 'content_type': $('#id_target_type' + item).val(),
                 'object_id': $('#id_target_name' + item).val(),
-{#                'requestable': $('#id_requestable' + item).prop("checked"),#}
-{#                'price': $('#id_price' + item).val(),#}
-{#                'blocks':[]#}
+
             });
         }
         $.ajax({
@@ -111,10 +107,7 @@
                 '<option value="unit" >unit</option></select></td>';
 
             cols += '<td><label for="id_target_name' + counter + '"></label><select class="second-select form-control" id="id_target_name' + counter + '" name="target_name' + counter + '" >' +
-{#                    '<option value=""></option>'#}
-{#                '{% for target in residences %}'+#}
-{#                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +#}
-{#                    '{% endfor %}'+#}
+
 
                 '</select></td>';
             cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
@@ -128,14 +121,7 @@
 
         });
         });
-{#    $("select").onload(function(){#}
-{#                selectedCountry = $(this).children("option:selected").val();#}
-{#                alert("You have selected the country - " + selectedCountry);#}
-{#      });#}
-{#            if($(this). children("option:selected").val() !== null) {#}
-{#                    var e = $(this). children("option:selected").val()#}
-{#                    var str = e.options[e.selectedIndex].text;#}
-{#                    {% define selectedCountry as my_id %}#}
+
     $('table.dataTable').on('change','.first-select',function(){
         var val_type = jQuery(this).val();
         if(val_type == "residence") {
@@ -159,106 +145,4 @@
         }
   });
     </script>
-{#    <script type="text/javascript">#}
-{#        function add_new_row() {#}
-{#            var counter = $('table.dataTable tr').length;#}
-{#            var newRow = jQuery("<tr>");#}
-{#            var cols = "";#}
-{#            cols +='<td><label for="id_parent_residences"></label><select class="form-control" id="id_parent_residences" name="parent_residences"><option>name 1</option> <option>name 2</option><option>name 3</option> </select>'#}
-{##}
-{#            cols += '<td><label for="id_target_type' + counter + '"></label>' +#}
-{#                '<select class="form-control" id="id_target_type' + counter + '" name="target_type' + counter + '" >' +#}
-{#                '<option value="Residence" >Residence</option>' +#}
-{#                '<option value="Block" >Block</option>' +#}
-{#                '<option value="Unit" >Unit</option></select></td>';#}
-{#            if(document.getElementById("id_target_name") !== null) {#}
-{#                    var e = document.getElementById("id_target_name").value;#}
-{#                    var str = e.options[e.selectedIndex].text;#}
-{#                }#}
-{#            var element = document.getElementById("id_target_type"+ counter);#}
-{#            var result = element.options[element.selectedIndex].value;#}
-{#            cols += '<td><label for="id_target_name' + counter + '"></label>' +#}
-{#                '<select class="form-control" id="id_target_name' + counter + '" name="target_name' + counter + '" >' +#}
-{#                +'<option value="" >'+  +'</option>' +#}
-{#                +'{% if result == 'Residence' %}'#}
-{#                '{% for target in residences %}'+#}
-{#                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +#}
-{#                    '{% endfor %}'+#}
-{#                +'{% if tt == 'Block' %}'#}
-{#                    +'{% for target in blocks %}'+#}
-{#                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +#}
-{#                    '{% endfor %}'#}
-{#                + '{% elif tt == 'Unit' %}'#}
-{#                     +'{% for target in blocks %}'+#}
-{#                    '<option value="{{ target.id }}" >{{ target.id }}</option>' +#}
-{#                    '{% endfor %}'#}
-{#                +{% endif %}#}
-{#                '</select></td>';#}
-{#            cols += '<td><label for="id_second_title' + counter + '"></label><input type="text" class="form-control" id="id_second_title' + counter + '" name="second_title' + counter + '" /></td>';#}
-{#            cols += '<td><textarea cols="30" rows="3" id="id_description' + counter + '" name="description' + counter + '" class="form-control" /></td>';#}
-{#            cols += '<td><label for="id_price' + counter + '"></label><input class="form-control" type="text" id="id_price' + counter + '" name="price' + counter + '"></td>';#}
-{#            cols += '<td><label for="id_requestable' + counter + '" class="c-switch c-switch-label c-switch-pill c-switch-primary"><input class="c-switch-input" id="id_requestable' + counter + '" name="requestable' + counter + '" type="checkbox" checked=""><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span></label></td>';#}
-{#            // cols += '<input type="hidden" name="counter" id="counter" value="'+ counter +'" />';#}
-{#            cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';#}
-{#            newRow.append(cols);#}
-{#            jQuery("table.dataTable").append(newRow);#}
-{#            counter++;#}
-{#        }#}
-{#            jQuery(document).ready(function () {#}
-{#                jQuery("table.dataTable").on("click", ".ibtnDel", function (event) {#}
-{#                jQuery(this).closest("tr").remove();#}
-{##}
-{#        });#}
-{#        });#}
-{#function check () #}
-{#{#}
-{#    var e = document.getElementById("id_target_name").value;#}
-{#    var str = e.options[e.selectedIndex].text;#}
-{##}
-{#    alert(str);#}
-{##}
-{#    if (str==="Hardware")#}
-{#    {#}
-{#        SPICEWORKS.utils.addStyle('#ticket_c_hardware_clone{display: none !important;}');#}
-{#    }       #}
-{# } #}
-{##}
-{#SPICEWORKS.app.helpdesk.ready(check);​#}
-{#    </script>#}
-{#    <script type="text/javascript">#}
-{#        function getFirstTdContent(row) {#}
-{#    elem = row.children[0];#}
-{#    alert(elem.textContent); // Do whatever you want to do with the content here#}
-{# }#}
-{#    </script>#}
-{#    <script type="text/javascript">#}
-{#            jQuery(document).ready(function () {#}
-{#                if(document.getElementById("id_target_name") !== null) {#}
-{#                    var e = document.getElementById("id_target_name").value;#}
-{#                    var str = e.options[e.selectedIndex].text;#}
-{#                }#}
-{#        $(document).onclick('#id_target_type', function (e) {#}
-{#            var element = document.getElementById("id_target_type");#}
-{#            var result = element.options[element.selectedIndex].value;#}
-{#        {% if result == 'Block' %}#}
-{#          element.getAttribute(name);#}
-{##}
-{#            {% for target in blocks %}#}
-{#                '<option value="{{ target.id }}" >{{ target.name }}</option>'#}
-{#                                    '{% endfor %}'#}
-{#        {% elif tt == 'Unit' %}#}
-{#            {% for target in blocks %}#}
-{#                '<option value="{{ target.id }}" >{{ target.id }}</option>'#}
-{#                 '{% endfor %}'#}
-{#            {% endif %}#}
-{#        });#}
-{#    });#}
-
-{#    </script>#}
-
-{#    <script type="text/javascript">#}
-{#            $(function () {#}
-{#                $('#id_start_at').datetimepicker();#}
-{#            });#}
-{#        </script>#}
 {% endblock c-script %}
