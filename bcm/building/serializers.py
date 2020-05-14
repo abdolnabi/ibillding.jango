@@ -216,5 +216,5 @@ class BillSerializer(AccountingTargetSerializerMixin, CoreModelSerializer):
 
     class Meta:
         model = Bill
-        fields = ('id', 'bill_class', 'type', 'due_at', 'price', 'currency', 'description', 'status_description',
+        fields = ('id', 'user', 'bill_class', 'type', 'due_at', 'price', 'currency', 'description', 'status_description',
                   'status', 'accounting_targets',)
