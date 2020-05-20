@@ -1,53 +1,279 @@
 {% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
 {% load static i18n %}
+{% block HeadOfFile %}
+        <link href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+ <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
+     <script type="text/javascript" src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
+{% endblock HeadOfFile %}
 {% block bodycontent %}
     <div id="new_bill_message"></div>
-    {#    {{ request_type }}#}
     {% if request_type == 'edit' %}
         <form class="form-horizontal" id='edit_bill'>
-        {#    {% elif request_type == 'new' %}#}
-        {#        <form class="form-horizontal" id='new_block'>#}
+
     {% else %}
         <form class="form-horizontal" id='show_bill'>
     {% endif %}
 
 {% csrf_token %}
-{% include "../dashboard_pages/bill/form/bill_form.html" %}
+{% include "../../dashboard_pages/bill/form/bill_form.html" %}
+    <div class="c-card-footer">
+                        <input class="btn btn-lg btn-primary" id="bill_btn" value="{% trans 'Submit' %}" type="submit"></input>
+                    </div>
+        </div>
+    </div>
+</div>
+
 </form>
+  <!-- third part of form -->
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Editable table -->
+                <div class="card">
+                    <div class="c-card-header">
+                        <strong>{% trans 'Bill Targets' %}</strong></div>
+                    <div class="card-body">
+                        <div id="table" class="table-editable">
+                            <span class="table-add float-right mb-3 mr-2"><button class="btn btn-info cil-plus"
+                                                                                 onclick="add_accounting_target()" id="addrow"
+                                                                                  type="button"></button></span>
+                            <table id="dataTable"
+                                   class="dataTable table table-bordered table-responsive-md table-striped text-center">
+
+                                <thead>
+                                  <thead>
+                                <th>{% trans 'Target Type' %}</th>
+                                <th>{% trans 'Target name' %}</th>
+                                <th>{% trans 'َAction' %}</th>
+                                </thead>
+                                <tbody id="tbody" class="center">
+                                {% for item in accounting_bill_targets %}
+                                <tr id="accounting_target_{{ item.id }}">
+                                    <form class="bill_target" id="bill_target">
+                                    {% csrf_token %}
+                                    <td><label for="id_target_type{{ item.id }}"></label>
+                                        <select class="form-control first-select" id="id_target_type{{ item.id }}s" name="target_type{{ item.id }}s" >
+{#                                    {% for target in accounting_budget_targets %}#}
+                                        {% if item.content_type|stringformat:"s" == "building | block" %}
+                                         <option value="block" {% if item.content_type|stringformat:"s" == "building | block" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
+                                        {% elif item.content_type|stringformat:"s" == "building | residence" %}
+                                           <option value="residence" {% if item.content_type|stringformat:"s" == "building | residence" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
+                                        {% elif item.content_type|stringformat:"s" == "building | unit" %}
+                                            <option value="unit" {% if item.content_type|stringformat:"s" == "building | unit" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
+                                        {% endif %}
+
+                                        <option value="residence" >residence</option>
+                                        <option value="block" >block</option>
+                                        <option value="unit" >unit</option>
+                                    </select></td>
+                                        <td><label for="id_target_name{{ item.id }}"></label>
+                                        <select class="form-control second-select" id="id_target_name{{ item.id }}s" name="target_name{{ item.id }}s" >
+{#                                    {% for acc_target in budget_targets %}#}
+                                        {% if item.content_type|stringformat:"s" == "building | residence" %}
+                                            {% for residence in residences %}
+                                            <option value="{{ residence.id }}" {% if item.object_id == residence.id %}selected="selected"{% endif %}>{{ residence.name }}</option>
+                                            {% endfor %}
+                                       {% elif item.content_type|stringformat:"s" == "building | block" %}
+                                            {% for block in blocks %}
+                                            <option value="{{ block.id }}" {% if item.object_id == block.id %}selected="selected"{% endif %}>{{ block.name }}</option>
+                                       {% endfor %}
+
+                                        {% elif item.content_type|stringformat:"s" == "building | unit" %}
+                                            {% for unit in units %}
+                                            <option value="{{ unit.id }}" {% if item.object_id == unit.id %}selected="selected"{% endif %}>{{ unit.title }}</option>
+                                            {% endfor %}
+                                           {% endif %}
+
+                                    </select></td>
+                                    <td><button class="ibtnDel btn btn-danger cil-trash" onclick="delete_item('{% url "building:accounting-target-detail" item.id %}',{{ item.id }})"></button></td>
+                                    <td><button id="accounting_target_btn" class="btn btn-primary cil-save" onclick="edit_accounting_target_item('{% url "building:accounting-target-detail" item.id %}',{{ item.id }})"></button></td>
+                                 </form></tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Editable table -->
+            </div>
+        </div>
+
 
 {% endblock bodycontent %}
 {% block c-script %}
+
     {% if request_type == 'show' %}
         <script type="text/javascript">
             $('#show_bill input').attr('disabled', true);
             $('#show_bill textarea').attr('disabled', true);
             $('#show_bill select').attr('disabled', true);
-            $('#show_bill #unit_bill_btn').attr('type', 'submit').remove();
+            $('#show_bill checkbox').attr('disabled', true);
+            $('#show_bill #bill_btn').attr('type', 'submit').remove();
+            $('#addrow').remove();
+            $('#tbody tr td textarea').attr('disabled', true);
+            $('#tbody tr td input').attr('disabled', true);
+            $('#tbody tr td select').attr('disabled', true);
+            $('#tbody tr td checkbox').attr('disabled', true);
+            $('#tbody tr td .c-switch-slider').attr('disabled', true);
+            $('#tbody tr td button').attr('disabled', true);;
+{#            $('#tbody tr td').attr('type', 'button').disabled();#}
+
 
         </script>
     {% endif %}
-    <script type="text/javascript">
 
-        {#    if (request_type == 'edit'){#}
-        $(document).on('submit', '#edit_bill', function (e) {
+        {##############   start accounting_target section ########################}
+    <script type="text/javascript">
+{#    edit accounting_target in table row#}
+    function edit_accounting_target_item(url,id) {
+        $.ajax({
+            type: 'PUT',
+            url: url,
+            dataType: 'json',
+            data: {
+                'id': id,
+{#                'budget':{{ budget_id }},#}
+                'bills': {{ bill.id }},
+                'content_type': $('#id_target_type' + id+'s').val(),
+                'object_id': $('#id_target_name' + id+'s').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
+            },
+            success:function(data) {
+                $("#new_bill_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
+            },
+            error: function(data) {
+                $("#new_bill_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");
+            }
+        });
+    };
+        {#    }#}
+    </script>
+
+    <script type="text/javascript">
+{#    add rows to table for insert new item#}
+        function add_accounting_target() {
+            var newRow = jQuery('<tr><form class="accounting_target">{% csrf_token %}');
+            var counter = $('table.dataTable tr').length;;
+            var cols = "";
+            cols += '<td ><label for="id_target_type' + counter + '"></label>' +
+                '<select class="form-control first-select" id="id_target_type' + counter + '" name="target_type' + counter + '" >' +
+                '<option value="residence" >residence</option>' +
+                '<option value="block" >block</option>' +
+                '<option value="unit" >unit</option></select></td>';
+
+            cols += '<td><label for="id_target_name' + counter + '"></label><select class="second-select form-control" id="id_target_name' + counter + '" name="target_name' + counter + '" >' +
+
+                '</select></td>';
+            cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
+            cols += '<td><button class="btn_add_new_accounting_target btn btn-primary cil-save"/></td>';
+            newRow.append(cols+'</form>');
+            jQuery("table.dataTable").append(newRow);
+        }
+{#        # add delete function here#}
+            jQuery(document).ready(function () {
+                jQuery("table.dataTable").on("click", ".ibtnDel", function (event) {
+                jQuery(this).closest("tr").remove();
+
+        });
+        });
+    $('table.dataTable').on('change','.first-select',function(event){
+        var val_type = jQuery(this).val();
+        if(val_type == "residence" || val_type == "building | residence") {
+            $(this).closest('tr').find('select.second-select').empty().append('' +
+                '{% for target in residences %}'+
+                    '<option value="{{ target.id }}" >{{ target.name }}</option>' +
+                    '{% endfor %}');
+
+        }if(val_type == "block" || val_type == "building | block") {
+            $(this).closest('tr').find('select.second-select').empty().append(''+
+             '{% for target in blocks %}'+
+                '<option value="{{ target.id }}" >{{ target.name }}</option>' +
+                     '{% endfor %}');
+
+        }if(val_type == "unit" || val_type == "building | unit") {
+            $(this).closest('tr').find('select.second-select').empty().append('' +
+             '{% for target in units %}'+
+                '<option value="{{ target.id }}" >{{ target.name }}</option>' +
+                     '{% endfor %}');
+
+        }
+  });
+        function delete_item(url, id) {
+
+            var action = confirm("{% trans 'Are you sure you want to delete this accounting_target bill?' %}");
+            if (action != false) {
+{#                var id = $('#id_accounting_target_bill' + id).val();#}
+                var bill = $('#id_bill' + id).val();
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        'id': id,
+                    },
+                    dataType: 'json',
+                    success: function (data, textStatus, jqXHR) {
+                        if (jqXHR.status == "204") {
+                            $("#dataTable #accounting_target_" + id).remove();
+                        }
+                    }
+                });
+            }
+        };
+    </script>
+
+{#    add accounting_target to bill#}
+    <script type="text/javascript">
+        jQuery("table.dataTable").on("click", ".btn_add_new_accounting_target", function (e) {
+        e.preventDefault();
+        var counter = $('table.dataTable tr').length;
+        var count_number = counter -1;
+        $.ajax({
+            method: 'POST',
+            url: '{% url "building:accounting-target-list" %}',
+            dataType: 'json',
+            data:{
+                'bills': {{ bill_id }},
+{#                'accounting_target_id': $('#id_accounting_target'+counter).val(),#}
+                'content_type': $('#id_target_type' + count_number).val(),
+                'object_id': $('#id_target_name'+count_number).val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
+            },
+            success:function(data) {
+                $("#new_bill_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");
+            },
+            error: function(data) {
+                $("#new_bill_message").html("<div class='alert alert-danger'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'something is Wrong!' %}</div>");
+            }
+        });
+    });
+    </script>
+
+{#    end accounting_target section#}
+    {#    start bill section#}
+    <script type="text/javascript">
+         $(document).on('submit', '#edit_bill', function (e) {
             e.preventDefault();
-            // or display message in form, etc...
             $.ajax({
                 type: 'PUT',
-                url: '{% url "building:budget-detail" bill.id %}',
+                url: '{% url "building:bill-detail" bill_id %}',
                 dataType: 'json',
                 {#            contentType: 'application/json; charset=utf-8',#}
                 data: {
-                    "title": $('#id_title').val(),
-                "budget_class": $('#id_budget_class').val(),
-                "period": $('#id_period').val(),
-                "start_at": $('#id_start_at').val(),
-                "deadline_in_days": $('#id_deadline_in_days').val(),
-                "finish_at": $('#id_finish_at').val(),
-                "due_at": $('#id_due_at').val(),
-                "price": $('#id_price').val(),
-                "price_formula": $('#id_price_formula').val(),
-                "parameters": $('#id_parameters').val()
+                'user': $('#id_user').val(),
+                'bill_class': $('#id_class').val(),
+                'type': $('#id_type').val(),
+                'due_at': $('#id_due_at').val(),
+                'price': $('#id_price').val(),
+                'currency': $('#id_currency').val(),
+                'description': $('#id_description').val(),
+                'status_description': $('#id_status_description').val(),
+                'status': $('#id_status').val(),
+                'parameters': $('#id_parameters').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+
                 },
                 success: function () {
                     $("#new_bill_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item Edited successfully!' %}</div>");
@@ -58,7 +284,6 @@
             });
 
         });
-        {#    }#}
     </script>
-
+    
 {% endblock c-script %}
