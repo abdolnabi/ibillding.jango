@@ -663,11 +663,16 @@ class AccountingTarget(BaseModel):
             Q(app_label=app_label, model='block') |
             Q(app_label=app_label, model='unit')
     )
-    accounting_target_choice = (
-       (ContentType.objects.get(model='residence').id, _('residence')),
-       (ContentType.objects.get(model='block').id, _('block')),
-       (ContentType.objects.get(model='unit').id, _('unit')),
-    )
+    @staticmethod
+    def get_accounting_target_choice():
+        try:
+            return (
+               (ContentType.objects.get(model='residence').id, _('residence')),
+               (ContentType.objects.get(model='block').id, _('block')),
+               (ContentType.objects.get(model='unit').id, _('unit')),
+            )
+        except:
+            return ()
 
     content_type = models.ForeignKey(
         verbose_name=_('content type'),
@@ -675,8 +680,6 @@ class AccountingTarget(BaseModel):
         to=ContentType,
         on_delete=models.CASCADE,
         limit_choices_to=accounting_target_limit,
-        choices=accounting_target_choice,
-        default=accounting_target_choice[0][0]
     )
 
     object_id = models.PositiveIntegerField(
