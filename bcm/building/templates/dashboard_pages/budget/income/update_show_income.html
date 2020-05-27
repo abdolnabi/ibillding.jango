@@ -14,7 +14,7 @@
         <form class="form-horizontal" id='show_income'>
     {% endif %}
 
-{% csrf_token %}
+{#{% csrf_token %}#}
 {% include "../../../dashboard_pages/budget/income/form/income_form.html" %}
     <div class="c-card-footer">
                         <input class="btn btn-lg btn-primary" id="income_btn" value="{% trans 'Submit' %}" type="submit"></input>
@@ -137,7 +137,7 @@
                 'budgets': {{ income_id }},
                 'content_type': $('#id_target_type' + id+'s').val(),
                 'object_id': $('#id_target_name' + id+'s').val(),
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+{#                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
 
             },
             success:function(data) {
@@ -238,7 +238,7 @@
 {#                'accounting_target_id': $('#id_accounting_target'+counter).val(),#}
                 'content_type': $('#id_target_type' + count_number).val(),
                 'object_id': $('#id_target_name'+count_number).val(),
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+{#                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
 
             },
             success:function(data) {
@@ -272,7 +272,7 @@
                 "price": $('#id_price').val(),
                 "price_formula": $('#id_price_formula').val(),
                 "parameters": $('#id_parameters').val(),
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+{#                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
 
                 },
                 success: function () {
