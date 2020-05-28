@@ -68,15 +68,21 @@
                     </thead>
                     <tbody>
 
-                    {% for bill in data %}
+                    {% for bill in bills %}
                         <tr id="bill_{{ bill.id }}">
                             <td scope="row">{{ bill.id }}</td>
-                            <td class="bill_user_id bill_data">{{ bill.user_id }}</td>
-                            <td class="bill_class_data">{{ bill.class }}</td>
+                            <td class="bill_user_id bill_data">{{ bill.user }}</td>
+                            <td class="bill_class_data">{{ bill.bill_class }}</td>
                             <td class="bill_type bill_data">{{ bill.type }}</td>
                             <td class="bill_due_at bill_data">{{ bill.due_at }}</td>
                             <td class="bill_price">{{ bill.price }}</td>
-                            <td class="bill_status">{{ bill.status }}</td>
+                            <td class="bill_status">
+                            {% if bill.status == "PENDING" %}<span class="badge badge-warning">{{ bill.status }}</span>
+                            {% elif bill.status == "CONFIRMED" %}<span class="badge badge-success">{{ bill.status }}</span>
+                            {% elif  bill.status == "REJECTED" %}<span class="badge badge-danger">{{ bill.status }}</span>
+                            {% elif bill.status == "EXPIRED" %}<span class="badge badge-dark">{{ bill.status }}</span>
+                            {% endif %}
+                            </td>
                             <td class="bill_data"><a class="btn btn-success"
                                                       href="{% url "building:show_bill_page" id=bill.id %}"
                                                       title="{% trans 'show' %}">
@@ -103,11 +109,7 @@
                             </td>
                     </tr>
             {% endfor %}
-{#        {% else %}#}
-{#        <tr><td class="text-center" colspan="100%">#}
-{#            No bill ...#}
-{#        </td></tr>#}
-{#            {% endif %}#}
+
                     </tbody>
                 </table>
                 <hr/>
@@ -141,7 +143,7 @@
                     residence: $('#id_class_search').val(),
                     number_of_floors: $('#id_type_search').val(),
                     number_of_units: $('#id_status_search').val(),
-                    {#            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
                 },
                 success: function () {
 

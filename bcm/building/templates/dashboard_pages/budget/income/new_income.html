@@ -1,16 +1,13 @@
 {% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
 {% load static i18n define_action %}
 {% block HeadOfFile %}
-{#        <link href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">#}
-{# <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>#}
-
 
 {% endblock HeadOfFile %}
 {% block bodycontent %}
     <div id="new_income_message"></div>
     <form class="form-horizontal" id='new_income'>
-
-        {% csrf_token %}
+{#        {% csrf_token %}#}
+{#        read income_form contain main form for CRUD#}
         {% include "../../../dashboard_pages/budget/income/form/income_form.html" %}
           <div class="row">
             <div class="col-lg-12">
@@ -38,7 +35,6 @@
                             </table>
                         </div>
                     </div>
-{#                    <input type="hidden" name="facilities" id="id_facilities" value="{{ facilities }}"/>#}
                     <div class="c-card-footer">
                         <input class="btn btn-lg btn-primary" id="income_btn" value="{% trans 'Submit' %}" type="submit"></input>
                     </div>
@@ -55,7 +51,6 @@
                 e.preventDefault();
         var target_data = $('table.dataTable tr').length;
         var item;
-{#        var value;#}
         let target_list = [];
         for (item = 1; item < target_data; item++) {
 
@@ -82,7 +77,7 @@
                 "price_formula": $('#id_price_formula').val(),
                 "parameters": $('#id_parameters').val(),
                 'accounting_targets':JSON.stringify(target_list),
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+{#                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
             },
             success:function(data) {
                 $("#new_income_message").html("<div class='alert alert-success'><a class='close' href='#' data-dismiss='alert'>×</a>{% trans 'Item added successfully!' %}</div>");

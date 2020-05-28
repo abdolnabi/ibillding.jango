@@ -8,6 +8,7 @@
   <div class="card-body">
       <!-- start table part -->
 <p>
+{#    url for new_income form#}
               <a class="btn btn-primary collapsed btn-block-add" href="{%  url 'building:new_income_page' %}">{% trans 'Add New Income' %}</a>
             <br/>
             </p>
@@ -24,6 +25,7 @@
     </tr>
   </thead>
   <tbody>
+{#  read incomes contain all income rows in budgets table#}
     {% if incomes %}
    {% for income in incomes %}
     <tr id="income_{{ income.id }}">

@@ -7,42 +7,46 @@
             <div class="c-card-body col-sm-7">
             <div class="form-group">
                     <label for="id_user_id">{% trans 'Select user' %}</label>
-                    <select class="form-control" id="id_user_id" name="user_id">
+                    <select class="form-control" id="id_user" name="user">
+{#                    <option name="{{ bill.user }}" value="{{ bill.user }}" disabled selected="selected">selected:{{ bill.user }}</option>#}
                          {% for user in users %}
                                     <option name="{{ user.id }}"
-                                            value="{{ user.id }}">{{ user.username }}</option>
+                                            value="{{ user.id }}"{% ifequal bill.user|stringformat:"s" user.username %}selected="select"{% endifequal %}>{{ user.username }}</option>
                                 {% endfor %}
                     </select>
                 </div>
         <div class="form-group">
                             <label for="id_class">{% trans 'Class' %}</label>
                             <select class="form-control" id="id_class" name="class">
-                                    <option name="income" value="income">INCOME</option>
-                                    <option name="expense" value="expense">EXPENSE</option>
+                                    <option name="{{ bill.bill_class }}" disabled value="{{ bill.bill_class }}" selected="selected">select:{{ bill.bill_class }}</option>
+                                    <option name="income" value="INCOME">INCOME</option>
+                                    <option name="expense" value="EXPENSE">EXPENSE</option>
                             </select>
                         </div>
                     <div class="form-group">
                             <label for="id_type">{% trans 'Type' %}</label>
                             <select class="form-control" id="id_type" name="type">
-                                    <option name="settlement_request" value="settlement_request">settlement_request</option>
-                                    <option name="advertisement" value="advertisement">advertisement</option>
-                                    <option name="request" value="request">request</option>
-                                    <option name="budget" value="budget">budget</option>
+                                    <option name="{{ bill.type }}" disabled value="{{ bill.type }}" selected="selected">select:{{ bill.type }}</option>
+                                    <option name="settlement_request" value="SETTLEMENT_REQUEST">settlement request</option>
+                                    <option name="advertisement" value="ADVERTISEMENT">advertisement</option>
+                                    <option name="request" value="REQUEST">request</option>
+                                    <option name="budget" value="BUDGET">budget</option>
                             </select>
                         </div>
             <div class="form-group">
                     <label for="id_due_at">{% trans 'Due at' %}</label>
-                    <input type="datetime" class="form-control" id="id_due_at" value="{{ income.due_at }}" name="due_at"
+                    <input type="datetime" class="form-control" id="id_due_at" value="{{ bill.due_at }}" name="due_at"
                            required>
                 </div>
                <div class="form-group">
                     <label for="id_price">{% trans 'Price' %}</label>
-                    <input type="text" class="form-control" id="id_price" value="{{ income.price }}" name="price"
+                    <input type="text" class="form-control" id="id_price" value="{{ bill.price }}" name="price"
                            required>
                 </div>
                     <div class="form-group">
                             <label for="id_currency">{% trans 'Currency' %}</label>
-                            <select class="form-control" id="id_currency" name="currency">
+                            <select class="form-control" id="id_currency"  name="currency">
+                                    <option name="{{ bill.currency }}" disabled selected="selected" value="{{ bill.currency }}">select:{{ bill.currency }}</option>
                                     <option name="IRR" value="IRR">IRR</option>
                                     <option name="USD" value="USD">USD</option>
                                   
@@ -51,10 +55,11 @@
                     <div class="form-group">
                             <label for="id_status">{% trans 'Status' %}</label>
                             <select class="form-control" id="id_status" name="status">
-                                    <option name="pending" value="pending">pending</option>
-                                    <option name="confirmed" value="confirmed">confirmed</option>
-                                    <option name="rejected" value="rejected">rejected</option>
-                                    <option name="expired" value="expired">expired</option>
+                                    <option name="{{ bill.status }}" disabled selected="selected" value="{{ bill.status }}">select:{{ bill.status }}</option>
+                                    <option name="pending" value="PENDING">pending</option>
+                                    <option name="confirmed" value="CONFIRMED">confirmed</option>
+                                    <option name="rejected" value="REJECTED">rejected</option>
+                                    <option name="expired" value="EXPIRED">expired</option>
                             </select>
                         </div>
                 <div class="form-group">
@@ -70,9 +75,3 @@
 
 
             </div>
-            <div class="c-card-footer">
-                <button class="btn btn-lg btn-primary" id="bill_btn" type="submit">{% trans 'Submit' %}</button>
-            </div>
-        </div>
-    </div>
-</div>

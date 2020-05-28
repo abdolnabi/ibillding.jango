@@ -1,9 +1,6 @@
 {% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
 {% load static i18n %}
 {% block HeadOfFile %}
-        <link href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
- <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
-     <script type="text/javascript" src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
 {% endblock HeadOfFile %}
 {% block bodycontent %}
     <div id="new_expense_message"></div>
@@ -46,19 +43,19 @@
                                 <th>{% trans 'َAction' %}</th>
                                 </thead>
                                 <tbody id="tbody" class="center">
+{#                                read accountig target that related with special budget id#}
                                 {% for item in accounting_budget_targets %}
                                 <tr id="accounting_target_{{ item.id }}">
                                     <form class="budget_target" id="budget_target">
                                     {% csrf_token %}
                                     <td><label for="id_target_type{{ item.id }}"></label>
                                         <select class="form-control first-select" id="id_target_type{{ item.id }}s" name="target_type{{ item.id }}s" >
-{#                                    {% for target in accounting_budget_targets %}#}
                                         {% if item.content_type|stringformat:"s" == "building | block" %}
-                                         <option value="block" {% if item.content_type|stringformat:"s" == "building | block" %}selected{% endif %}>{{ item.content_type }}</option>
+                                         <option value="block" {% if item.content_type|stringformat:"s" == "building | block" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
                                         {% elif item.content_type|stringformat:"s" == "building | residence" %}
-                                           <option value="residence" {% if item.content_type|stringformat:"s" == "building | residence" %}selected{% endif %}>{{ item.content_type }}</option>
+                                           <option value="residence" {% if item.content_type|stringformat:"s" == "building | residence" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
                                         {% elif item.content_type|stringformat:"s" == "building | unit" %}
-                                            <option value="unit" {% if item.content_type|stringformat:"s" == "building | unit" %}selected{% endif %}>{{ item.content_type }}</option>
+                                            <option value="unit" {% if item.content_type|stringformat:"s" == "building | unit" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
                                         {% endif %}
 
                                         <option value="residence" >residence</option>
@@ -67,19 +64,18 @@
                                     </select></td>
                                         <td><label for="id_target_name{{ item.id }}"></label>
                                         <select class="form-control second-select" id="id_target_name{{ item.id }}s" name="target_name{{ item.id }}s" >
-{#                                    {% for acc_target in budget_targets %}#}
                                         {% if item.content_type|stringformat:"s" == "building | residence" %}
                                             {% for residence in residences %}
-                                            <option value="{{ residence.id }}" {% if item.id == expense.accounting_target.id and item.object_id == residence.id %}selected{% endif %}>{{ residence.name }}</option>
+                                            <option value="{{ residence.id }}" {% if item.object_id == residence.id %}selected="selected"{% endif %}>{{ residence.name }}</option>
                                             {% endfor %}
                                        {% elif item.content_type|stringformat:"s" == "building | block" %}
                                             {% for block in blocks %}
-                                            <option value="{{ block.id }}" {% if item.id == expense.accounting_target.id and item.object_id == block.id %}selected{% endif %}>{{ block.name }}</option>
+                                            <option value="{{ block.id }}" {% if item.object_id == block.id %}selected="selected"{% endif %}>{{ block.name }}</option>
                                        {% endfor %}
 
                                         {% elif item.content_type|stringformat:"s" == "building | unit" %}
                                             {% for unit in units %}
-                                            <option value="{{ unit.id }}" {% if item.id == expense.accounting_target.id and item.object_id == unit.id %}selected{% endif %}>{{ unit.title }}</option>
+                                            <option value="{{ unit.id }}" {% if item.object_id == unit.id %}selected="selected"{% endif %}>{{ unit.title }}</option>
                                             {% endfor %}
                                            {% endif %}
 
@@ -117,7 +113,6 @@
             $('#tbody tr td checkbox').attr('disabled', true);
             $('#tbody tr td .c-switch-slider').attr('disabled', true);
             $('#tbody tr td button').attr('disabled', true);;
-{#            $('#tbody tr td').attr('type', 'button').disabled();#}
 
 
         </script>
@@ -133,7 +128,6 @@
             dataType: 'json',
             data: {
                 'id': id,
-{#                'budget':{{ budget_id }},#}
                 'budgets': {{ expense_id }},
                 'content_type': $('#id_target_type' + id+'s').val(),
                 'object_id': $('#id_target_name' + id+'s').val(),
@@ -148,7 +142,6 @@
             }
         });
     };
-        {#    }#}
     </script>
 
     <script type="text/javascript">

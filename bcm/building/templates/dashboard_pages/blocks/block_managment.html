@@ -67,7 +67,6 @@
                             <svg class="c-icon">
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>
                             </svg>
-                                {#                        </a>&nbsp;<a class="btn btn-info" title="{% trans 'edit' %}" href="{% url "building:edit_block_page" id=block.id %}">#}
                             </a>&nbsp;
                                 <a class="btn btn-info" title="{% trans 'edit' %}"
                                    href='{% url "building:edit_block_page" id=block.id %}'>
@@ -76,22 +75,17 @@
                             </svg>
 
                                 </a>
-                                {#                                <form id="delete_form">#}
                                 <button onclick="delete_item('{% url "building:block-detail" block.id %}',{{ block.id }})"
                                         class="btn btn-danger" title="{% trans 'delete' %}">
                             <svg class="c-icon">
                                 <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>
                             </svg>
                                 </button>
-                                {#                                </form>#}
+
                             </td>
                     </tr>
             {% endfor %}
-{#        {% else %}#}
-{#        <tr><td class="text-center" colspan="100%">#}
-{#            No Block ...#}
-{#        </td></tr>#}
-{#            {% endif %}#}
+
                     </tbody>
                 </table>
                 <hr/>

@@ -14,7 +14,7 @@
         <form class="form-horizontal" id='show_income'>
     {% endif %}
 
-{% csrf_token %}
+{#{% csrf_token %}#}
 {% include "../../../dashboard_pages/budget/income/form/income_form.html" %}
     <div class="c-card-footer">
                         <input class="btn btn-lg btn-primary" id="income_btn" value="{% trans 'Submit' %}" type="submit"></input>
@@ -46,19 +46,19 @@
                                 <th>{% trans 'َAction' %}</th>
                                 </thead>
                                 <tbody id="tbody" class="center">
+{#                                read all accounting_targets that related with special id#}
                                 {% for item in accounting_budget_targets %}
                                 <tr id="accounting_target_{{ item.id }}">
                                     <form class="budget_target" id="budget_target">
                                     {% csrf_token %}
                                     <td><label for="id_target_type{{ item.id }}"></label>
                                         <select class="form-control first-select" id="id_target_type{{ item.id }}s" name="target_type{{ item.id }}s" >
-{#                                    {% for target in accounting_budget_targets %}#}
                                         {% if item.content_type|stringformat:"s" == "building | block" %}
-                                         <option value="block" {% if item.content_type|stringformat:"s" == "building | block" %}selected{% endif %}>{{ item.content_type }}</option>
+                                         <option value="block" {% if item.content_type|stringformat:"s" == "building | block" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
                                         {% elif item.content_type|stringformat:"s" == "building | residence" %}
-                                           <option value="residence" {% if item.content_type|stringformat:"s" == "building | residence" %}selected{% endif %}>{{ item.content_type }}</option>
+                                           <option value="residence" {% if item.content_type|stringformat:"s" == "building | residence" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
                                         {% elif item.content_type|stringformat:"s" == "building | unit" %}
-                                            <option value="unit" {% if item.content_type|stringformat:"s" == "building | unit" %}selected{% endif %}>{{ item.content_type }}</option>
+                                            <option value="unit" {% if item.content_type|stringformat:"s" == "building | unit" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
                                         {% endif %}
 
                                         <option value="residence" >residence</option>
@@ -67,19 +67,18 @@
                                     </select></td>
                                         <td><label for="id_target_name{{ item.id }}"></label>
                                         <select class="form-control second-select" id="id_target_name{{ item.id }}s" name="target_name{{ item.id }}s" >
-{#                                    {% for acc_target in budget_targets %}#}
                                         {% if item.content_type|stringformat:"s" == "building | residence" %}
                                             {% for residence in residences %}
-                                            <option value="{{ residence.id }}" {% if item.id == income.accounting_target.id and item.object_id == residence.id %}selected{% endif %}>{{ residence.name }}</option>
+                                            <option value="{{ residence.id }}" {% if item.object_id == residence.id %}selected="selected"{% endif %}>{{ residence.name }}</option>
                                             {% endfor %}
                                        {% elif item.content_type|stringformat:"s" == "building | block" %}
                                             {% for block in blocks %}
-                                            <option value="{{ block.id }}" {% if item.id == income.accounting_target.id and item.object_id == block.id %}selected{% endif %}>{{ block.name }}</option>
+                                            <option value="{{ block.id }}" {% if item.object_id == block.id %}selected="selected"{% endif %}>{{ block.name }}</option>
                                        {% endfor %}
 
                                         {% elif item.content_type|stringformat:"s" == "building | unit" %}
                                             {% for unit in units %}
-                                            <option value="{{ unit.id }}" {% if item.id == income.accounting_target.id and item.object_id == unit.id %}selected{% endif %}>{{ unit.title }}</option>
+                                            <option value="{{ unit.id }}" {% if item.object_id == unit.id %}selected="selected"{% endif %}>{{ unit.title }}</option>
                                             {% endfor %}
                                            {% endif %}
 
@@ -137,7 +136,7 @@
                 'budgets': {{ income_id }},
                 'content_type': $('#id_target_type' + id+'s').val(),
                 'object_id': $('#id_target_name' + id+'s').val(),
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+{#                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
 
             },
             success:function(data) {
@@ -204,7 +203,6 @@
 
             var action = confirm("{% trans 'Are you sure you want to delete this accounting_target income?' %}");
             if (action != false) {
-{#                var id = $('#id_accounting_target_income' + id).val();#}
                 var income = $('#id_budget' + id).val();
                 $.ajax({
                     url: url,
@@ -235,10 +233,9 @@
             dataType: 'json',
             data:{
                 'budgets': {{ income.id }},
-{#                'accounting_target_id': $('#id_accounting_target'+counter).val(),#}
                 'content_type': $('#id_target_type' + count_number).val(),
                 'object_id': $('#id_target_name'+count_number).val(),
-                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+{#                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
 
             },
             success:function(data) {
@@ -272,7 +269,7 @@
                 "price": $('#id_price').val(),
                 "price_formula": $('#id_price_formula').val(),
                 "parameters": $('#id_parameters').val(),
-                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+{#                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()#}
 
                 },
                 success: function () {

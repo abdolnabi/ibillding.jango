@@ -25,7 +25,6 @@
     <meta name="author" content="">
     <meta name="keyword" content="BCM,Apartment,management,Dashboard">
     <meta name="msapplication-TileColor" content="#ffffff">
-{#    <meta name="msapplication-TileImage" content="{% static 'assets/favicon/ms-icon-144x144.png' %}">#}
     <meta name="theme-color" content="#ffffff">
     {% block HeadOfFile %}
 {% endblock HeadOfFile %}
@@ -35,8 +34,6 @@
 {% block cssFiles %} {% endblock cssFiles %}
 <link rel="stylesheet" href="{% static '@coreui/coreui/dist/css/coreui.min.css' %}">    <!-- Global site tag (gtag.js) - Google Analytics-->
     <!-- Icons-->
-    {#    <link href="{% static '@coreui/icons/css/free.min.css' %}" rel="stylesheet">#}
-    {#    <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">#}
     <link href="{% static 'flag-icon-css/css/flag-icon.min.css' %}" rel="stylesheet">
     <link href="{% static '@coreui/icons/css/free.min.css' %}" rel="stylesheet">
     <!-- Main styles for this application-->
@@ -273,8 +270,6 @@
             </svg>{% trans 'units' %}</a>
             <ul class="c-sidebar-nav-dropdown-items">
                 <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{%  url 'building:unit_manage_page' %}"><span class="c-sidebar-nav-icon"></span>{% trans 'All units' %}</a></li>
-{#                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{%  url 'building:new_unit_page' %}"><span class="c-sidebar-nav-icon"></span> Add New Unit</a></li>#}
-{#                <li class="c-sidebar-nav-item"><a class="c-sidebar-nav-link" href="{%  url 'building:new_unit_facility_page' %}"><span class="c-sidebar-nav-icon"></span> Add New Unit Facility</a></li>#}
             </ul>
         </li>
         <!-- Facility section   -->
@@ -700,7 +695,6 @@
     {% endblock footer %}
 </div>
 <!-- CoreUI and necessary plugins-->
-{#    <script src="{% static '@coreui/icons/js/svgxuse.min.js' %}"></script>#}
 <!-- Plugins and scripts required by this view-->
 <script type="text/javascript" src="{% static 'popper.js/dist/umd/popper.js' %}"></script>
 <script type="text/javascript" src="{% static '@coreui/coreui/dist/js/coreui.min.js' %}"></script>
@@ -708,11 +702,7 @@
 <script type="text/javascript" src="{% static 'pace-progress/pace.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
     <script type="text/javascript" src="{% static 'jquery/dist/jquery.min.js' %}"></script>
-{#    <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>#}
 <script type="text/javascript" src="{% static '@coreui/utils/dist/coreui-utils.js' %}"></script>
-
-
-{#             <script type="text/javascript" src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>#}
     <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
 {% block c-script %}{% endblock c-script %}

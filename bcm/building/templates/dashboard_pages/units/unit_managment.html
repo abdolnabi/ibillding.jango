@@ -29,20 +29,6 @@
 
                     <button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
                 </form>
-
-                {#   ADD new Block section  #}
-                {#                <p>#}
-                {#                    <button class="btn btn-primary collapsed btn-block-add" type="button" data-toggle="collapse"#}
-                {#                            data-target="#new_unit" aria-expanded="false"#}
-                {#                            aria-controls="new_unit">{% trans 'Add New Unit' %}</button>#}
-                {#                    <br/>#}
-                {#                </p>#}
-                {#                <div class="collapse" id="new_unit" style="">#}
-                {#                    <div class="card card-body">#}
-                {#                    {% include "../../dashboard_pages/units/form/unit_form.html" %}#}
-                {#                    </div>#}
-                {#                </div>#}
-                {##}
             <p>
               <a class="btn btn-primary collapsed btn-block-add" href="{%  url 'building:new_unit_page' %}">{% trans 'Add New Unit' %}</a>
             <br/>
@@ -63,6 +49,7 @@
                     </tr>
                     </thead>
                     <tbody>
+{#                    all units row in unit table is accessable by data variable#}
 {% if data %}
     {% for unit in data %}
         <tr id="unit_{{ unit.id }}">
@@ -136,8 +123,6 @@
         $.ajax({
             type:'POST',
             url: '{% url "building:unit_manage_page" %}',
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
             data:{
                 residence:$('#id_residence_search').val(),
                 area: $('#id_area_search').val(),

@@ -16,8 +16,8 @@
 {#                            <option value="{{ residence.manager_id }}">{{ residence.manager_id }}</option>#}
                                 {% for user in users %}
                                   {% if user.id == residence.manager_id %}
-                                      fff
-                                    <option name="{{ user.id }}" selected
+
+                                    <option name="{{ user.id }}" selected="selected"
                                             value="{{ residence.manager_id }}">{{ user.username }}</option>
                                 {% endif %}
                                     <option name="{{ user.id }}"
@@ -33,7 +33,7 @@
                                 {% for res in residences %}
                                 {% if res.id == residence.parent_residence_id %}
                                     <option name="{{ res.id }}"
-                                            value="{{ residence.parent_residence_id }}" selected>{{ res.name }}</option>
+                                            value="{{ residence.parent_residence_id }}" selected="selected">{{ res.name }}</option>
                                 {% endif %}
                                      <option name="{{ res.id }}" value="{{ res.id }}">{{ res.name }}</option>
                                 {% endfor %}
