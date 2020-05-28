@@ -2,11 +2,8 @@
 {% load static i18n %}
 {% block bodycontent %}
     <div id="new_unit_facility_message"></div>
-    {#    {{ request_type }}#}
     {% if request_type == 'edit' %}
         <form class="form-horizontal" id='edit_unit_facility'>
-        {#    {% elif request_type == 'new' %}#}
-        {#        <form class="form-horizontal" id='new_block'>#}
     {% else %}
         <form class="form-horizontal" id='show_unit_facility'>
     {% endif %}
@@ -28,15 +25,12 @@
     {% endif %}
     <script type="text/javascript">
 
-        {#    if (request_type == 'edit'){#}
         $(document).on('submit', '#edit_unit_facility', function (e) {
             e.preventDefault();
-            // or display message in form, etc...
             $.ajax({
                 type: 'PUT',
                 url: '{% url "building:facility-unit-detail" unit_facility.id %}',
                 dataType: 'json',
-                {#            contentType: 'application/json; charset=utf-8',#}
                 data: {
                     'unit':$('#id_unit').val(),
                     'facility':$('#id_facility').val(),
@@ -52,7 +46,6 @@
             });
 
         });
-        {#    }#}
     </script>
 
 {% endblock c-script %}

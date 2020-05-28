@@ -2,11 +2,9 @@
 {% load static i18n %}
 {% block bodycontent %}
     <div id="new_facility_message"></div>
-    {#    {{ request_type }}#}
     {% if request_type == 'edit' %}
         <form class="form-horizontal" id='edit_facility'>
-        {#    {% elif request_type == 'new' %}#}
-        {#        <form class="form-horizontal" id='new_block'>#}
+
     {% else %}
         <form class="form-horizontal" id='show_facility'>
     {% endif %}
@@ -17,6 +15,7 @@
 
 {% endblock bodycontent %}
 {% block c-script %}
+{#    disable items in show page#}
     {% if request_type == 'show' %}
         <script type="text/javascript">
             $('#show_facility input').attr('disabled', true);
@@ -28,15 +27,12 @@
     {% endif %}
     <script type="text/javascript">
 
-        {#    if (request_type == 'edit'){#}
         $(document).on('submit', '#edit_facility', function (e) {
             e.preventDefault();
-            // or display message in form, etc...
             $.ajax({
                 type: 'PUT',
                 url: '{% url "building:facility-detail" facility.id %}',
                 dataType: 'json',
-                {#            contentType: 'application/json; charset=utf-8',#}
                 data: {
                     'type': $('#id_type').val(),
                     'title': $('#id_title').val(),
@@ -53,7 +49,6 @@
             });
 
         });
-        {#    }#}
     </script>
 
 {% endblock c-script %}

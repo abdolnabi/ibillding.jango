@@ -16,12 +16,10 @@
 <script type="text/javascript">
     $(document).on('submit', '#new_block', function (e) {
         e.preventDefault();
-        // or display message in form, etc...
         $.ajax({
             method: 'POST',
             url: '{% url "building:block-list" %}',
             dataType: 'json',
-{#            contentType: 'application/json; charset=utf-8',#}
             data:{
                 name:$('#id_name').val(),
                 residence: $('#id_residence').val(),
@@ -39,11 +37,6 @@
 
     });
 
-    {#    }#}
     </script>
-    {#    <script type="text/javascript">#}
-    {#     $(document).on('submit','#add_new_block',function (e) {#}
-    {#    #}
-    {#         });#}
-    {#    </script>#}
+
 {% endblock c-script %}

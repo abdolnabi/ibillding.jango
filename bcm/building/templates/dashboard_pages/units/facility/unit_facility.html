@@ -38,7 +38,6 @@
     {% for unit_facility in data %}
         <tr id="unit_facility{{ unit_facility.id }}">
             <th scope="row">{{ unit_facility.id }}</th>
-{#            <td>{{ unit_facility.type }}</td>#}
                         <td>{{ unit_facility.second_title }}</td>
                         <td>{{ unit_facility.description }}</td>
                         <td>{{ unit_facility.facility }}</td>
@@ -91,9 +90,6 @@
         e.preventDefault();
         $.ajax({
             type:'POST',
-{#            url: '{% url "building:unit_facility_manage_page" %}',#}
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
             data:{
                 type:$('#id_type_search').val(),
                 title: $('#id_title_search').val(),

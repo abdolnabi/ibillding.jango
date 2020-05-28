@@ -2,11 +2,9 @@
 {% load static i18n %}
 {% block bodycontent %}
     <div id="new_block_message"></div>
-    {#    {{ request_type }}#}
     {% if request_type == 'edit' %}
         <form class="form-horizontal" id='edit_block'>
-        {#    {% elif request_type == 'new' %}#}
-        {#        <form class="form-horizontal" id='new_block'>#}
+
     {% else %}
         <form class="form-horizontal" id='show_block'>
     {% endif %}
@@ -30,15 +28,12 @@
 
     <script type="text/javascript">
 
-        {#    if (request_type == 'edit'){#}
         $(document).on('submit', '#edit_block', function (e) {
             e.preventDefault();
-            // or display message in form, etc...
             $.ajax({
                 type: 'PUT',
                 url: '{% url "building:block-detail" block_content.id %}',
                 dataType: 'json',
-                {#            contentType: 'application/json; charset=utf-8',#}
                 data: {
                     'id': $('#id').val(),
                     'residence': $('#id_residence').val(),
@@ -57,11 +52,6 @@
             });
 
         });
-        {#    }#}
     </script>
-    {#    <script type="text/javascript">#}
-    {#     $(document).on('submit','#add_new_block',function (e) {#}
-    {#    #}
-    {#         });#}
-    {#    </script>#}
+
 {% endblock c-script %}

@@ -37,7 +37,6 @@
     {% for phone_number in data %}
         <tr id="phone_number{{ phone_number.id }}">
             <th scope="row">{{ phone_number.id }}</th>
-{#            <td>{{ phone_number.type }}</td>#}
                         <td>{{ phone_number.phone }}</td>
                         <td>{{ phone_number.description }}</td>
             <td>
@@ -90,12 +89,9 @@
         e.preventDefault();
         $.ajax({
             type:'POST',
-{#            url: '{% url "building:phone_number_manage_page" %}',#}
-{#            dataType: 'json',#}
-{#            contentType: 'application/json; charset=utf-8',#}
+
             data:{
                 phone:$('#id_phone_search').val(),
-{#                title: $('#id_title_search').val(),#}
 {#                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()#}
 
             },

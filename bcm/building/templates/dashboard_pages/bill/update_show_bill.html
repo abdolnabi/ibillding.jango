@@ -1,9 +1,6 @@
 {% extends '../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
 {% load static i18n %}
 {% block HeadOfFile %}
-        <link href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
- <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>
-     <script type="text/javascript" src="{% static 'eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js' %}"></script>
 {% endblock HeadOfFile %}
 {% block bodycontent %}
     <div id="new_bill_message"></div>
@@ -46,13 +43,13 @@
                                 <th>{% trans 'َAction' %}</th>
                                 </thead>
                                 <tbody id="tbody" class="center">
+{#                                read all bills related by special id#}
                                 {% for item in accounting_bill_targets %}
                                 <tr id="accounting_target_{{ item.id }}">
                                     <form class="bill_target" id="bill_target">
                                     {% csrf_token %}
                                     <td><label for="id_target_type{{ item.id }}"></label>
                                         <select class="form-control first-select" id="id_target_type{{ item.id }}s" name="target_type{{ item.id }}s" >
-{#                                    {% for target in accounting_budget_targets %}#}
                                         {% if item.content_type|stringformat:"s" == "building | block" %}
                                          <option value="block" {% if item.content_type|stringformat:"s" == "building | block" %}selected="selected"{% endif %}>{{ item.content_type }}</option>
                                         {% elif item.content_type|stringformat:"s" == "building | residence" %}
@@ -67,7 +64,6 @@
                                     </select></td>
                                         <td><label for="id_target_name{{ item.id }}"></label>
                                         <select class="form-control second-select" id="id_target_name{{ item.id }}s" name="target_name{{ item.id }}s" >
-{#                                    {% for acc_target in budget_targets %}#}
                                         {% if item.content_type|stringformat:"s" == "building | residence" %}
                                             {% for residence in residences %}
                                             <option value="{{ residence.id }}" {% if item.object_id == residence.id %}selected="selected"{% endif %}>{{ residence.name }}</option>
@@ -102,7 +98,7 @@
 
 {% endblock bodycontent %}
 {% block c-script %}
-
+{#disable form fiels in show page#}
     {% if request_type == 'show' %}
         <script type="text/javascript">
             $('#show_bill input').attr('disabled', true);
@@ -117,7 +113,6 @@
             $('#tbody tr td checkbox').attr('disabled', true);
             $('#tbody tr td .c-switch-slider').attr('disabled', true);
             $('#tbody tr td button').attr('disabled', true);;
-{#            $('#tbody tr td').attr('type', 'button').disabled();#}
 
 
         </script>
@@ -125,7 +120,6 @@
 
         {##############   start accounting_target section ########################}
     <script type="text/javascript">
-{#    edit accounting_target in table row#}
     function edit_accounting_target_item(url,id) {
         $.ajax({
             type: 'PUT',
@@ -133,7 +127,6 @@
             dataType: 'json',
             data: {
                 'id': id,
-{#                'budget':{{ budget_id }},#}
                 'bills': {{ bill.id }},
                 'content_type': $('#id_target_type' + id+'s').val(),
                 'object_id': $('#id_target_name' + id+'s').val(),
@@ -148,7 +141,6 @@
             }
         });
     };
-        {#    }#}
     </script>
 
     <script type="text/javascript">
@@ -235,7 +227,6 @@
             dataType: 'json',
             data:{
                 'bills': {{ bill_id }},
-{#                'accounting_target_id': $('#id_accounting_target'+counter).val(),#}
                 'content_type': $('#id_target_type' + count_number).val(),
                 'object_id': $('#id_target_name'+count_number).val(),
                 csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
@@ -260,7 +251,6 @@
                 type: 'PUT',
                 url: '{% url "building:bill-detail" bill_id %}',
                 dataType: 'json',
-                {#            contentType: 'application/json; charset=utf-8',#}
                 data: {
                 'user': $('#id_user').val(),
                 'bill_class': $('#id_class').val(),

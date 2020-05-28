@@ -1,10 +1,6 @@
 {% extends '../../dashboard_base.html' %}{# in this Line, Parent of this Page will Define! #}
 {% load static i18n define_action %}
 {% block HeadOfFile %}
-{#        <link href="{% static 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">#}
-{# <script type="text/javascript" src="{% static 'moment/min/moment.min.js' %}"></script>#}
-
-
 {% endblock HeadOfFile %}
 {% block bodycontent %}
     <div id="new_expense_message"></div>
@@ -38,7 +34,6 @@
                             </table>
                         </div>
                     </div>
-{#                    <input type="hidden" name="facilities" id="id_facilities" value="{{ facilities }}"/>#}
                     <div class="c-card-footer">
                         <input class="btn btn-lg btn-primary" id="expense_btn" value="{% trans 'Submit' %}" type="submit"></input>
                     </div>
@@ -50,12 +45,12 @@
 
 {% endblock bodycontent %}
 {% block c-script %}
+{#    insert new expense#}
     <script type="text/javascript">
         $(document).on('submit', '#new_expense', function (e) {
                 e.preventDefault();
         var target_data = $('table.dataTable tr').length;
         var item;
-{#        var value;#}
         let target_list = [];
         for (item = 1; item < target_data; item++) {
 
@@ -121,7 +116,7 @@
 
         });
         });
-
+{#choose second field atomatically by click on first select input#}
     $('table.dataTable').on('change','.first-select',function(){
         var val_type = jQuery(this).val();
         if(val_type == "residence") {

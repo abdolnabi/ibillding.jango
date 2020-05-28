@@ -33,7 +33,6 @@
                             </table>
                         </div>
                     </div>
-{#                    <input type="hidden" name="facilities" id="id_facilities" value="{{ facilities }}"/>#}
                     <div class="c-card-footer">
                         <input class="btn btn-lg btn-primary" value="{% trans 'Submit' %}" type="submit"></input>
                     </div>
@@ -45,7 +44,6 @@
 
 {% endblock bodycontent %}
 {% block c-script %}
-    {#    <script src="https://maps.googleapis.com/maps/js?key=AIzaSyCYCDv3Xc3H2HVpNdvps3tYmky2HWxeT_E&callback=myMap"></script>#}
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="{% static 'js/residence/custom_js.js' %}"></script>
     <script type="text/javascript">
@@ -103,8 +101,6 @@
             var counter = $('table.dataTable tr').length;
             var newRow = jQuery("<tr>");
             var cols = "";
-            // var facilities = $('#id_facilities').val();
-            // cols +='<td><label for="id_parent_residences"></label><select class="form-control" id="id_parent_residences" name="parent_residences"><option>name 1</option> <option>name 2</option><option>name 3</option> </select>'
             cols += '<td><label for="id_facility' + counter + '"></label><select class="form-control" id="id_facility' + counter + '" name="facility' + counter + '" >' +
                 +'{% for facility in facilities %}'+
                     '<option value="{{ facility.id }}" >{{ facility.title }}</option>' +
@@ -114,7 +110,6 @@
             cols += '<td><textarea cols="30" rows="3" id="id_description' + counter + '" name="description' + counter + '" class="form-control" /></td>';
             cols += '<td><label for="id_price' + counter + '"></label><input class="form-control" type="text" id="id_price' + counter + '" name="price' + counter + '"></td>';
             cols += '<td><label for="id_requestable' + counter + '" class="c-switch c-switch-label c-switch-pill c-switch-primary"><input class="c-switch-input" id="id_requestable' + counter + '" name="requestable' + counter + '" type="checkbox" checked=""><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span></label></td>';
-            // cols += '<input type="hidden" name="counter" id="counter" value="'+ counter +'" />';
             cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
             newRow.append(cols);
             jQuery("table.dataTable").append(newRow);

@@ -89,7 +89,6 @@
             $('#tbody tr td checkbox').attr('disabled', true);
             $('#tbody tr td .c-switch-slider').attr('disabled', true);
             $('#tbody tr td button').attr('disabled', true);;
-{#            $('#tbody tr td').attr('type', 'button').disabled();#}
 
 
         </script>
@@ -140,7 +139,6 @@
             cols += '<td><textarea cols="30" rows="3" id="id_description'+counter+'" name="description'+counter+'" class="form-control" /></td>';
             cols += '<td><label for="id_price'+counter+'"></label><input class="form-control" type="text" id="id_price'+counter+'" name="price'+counter+'"></td>';
             cols += '<td><label for="id_requestable'+counter+'" class="c-switch c-switch-label c-switch-pill c-switch-primary"><input class="c-switch-input" id="id_requestable'+counter+'" name="requestable'+counter+'" type="checkbox" checked=""><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span></label></td>';
-{#            cols += '<input type="hidden" name="id" id="id" value="'+ {{ item.id }} +'" />';#}
             cols += '<td><button class="ibtnDel btn btn-danger cil-trash"></button></td>';
             cols += '<td><button class="btn_add_new_facility btn btn-primary cil-save"/></td>';
             newRow.append(cols+'</form>');
@@ -210,13 +208,10 @@
     <script type="text/javascript">
          $(document).on('submit', '#edit_residence', function (e) {
             e.preventDefault();
-
-            // or display message in form, etc...
             $.ajax({
                 type: 'PUT',
                 url: '{% url "building:residence-detail" residence_id %}',
                 dataType: 'json',
-                {#            contentType: 'application/json; charset=utf-8',#}
                 data: {
                     'id': {{ residence_id }},
                     'parent_residence': $('#id_parent_residence').val(),

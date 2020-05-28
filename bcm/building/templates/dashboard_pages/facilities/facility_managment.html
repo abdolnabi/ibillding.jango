@@ -27,20 +27,6 @@
                     <button class="btn btn-primary" type="submit">{% trans 'Filter' %}</button>
                 </form>
 
-                {#   ADD new Block section  #}
-                {#                <p>#}
-                {#                    <button class="btn btn-primary collapsed btn-block-add" type="button" data-toggle="collapse"#}
-                {#                            data-target="#new_facility" aria-expanded="false"#}
-                {#                            aria-controls="new_facility">{% trans 'Add New Facilitys' %}#}
-                {#                    </button>#}
-                {#                    <br/>#}
-                {#                </p>#}
-                {#                <div class="collapse" id="new_facility" style="">#}
-                {#                    <div class="card card-body">#}
-                {#                    {% include "../../dashboard_pages/facilities/form/facility_new_form.html" %}#}
-                {#                    </div>#}
-                {#                </div>#}
-                {##}
 <p>
               <a class="btn btn-primary collapsed btn-block-add" href="{%  url 'building:new_facility_page' %}">{% trans 'Add New Facility' %}</a>
             <br/>
@@ -58,25 +44,7 @@
                     </tr>
                     </thead>
                     <tbody>
-{#                    <tr>#}
-{#                        <th scope="row">1</th>#}
-{#                        <td>Yas</td>#}
-{#                        <td>pool</td>#}
-{#                        <td>great and big pool :)</td>#}
-{#                        <td><a class="btn btn-success" href="#" alt="show">#}
-{#                            <svg class="c-icon">#}
-{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-magnifying-glass' %}"></use>#}
-{#                            </svg>#}
-{#                        </a>&nbsp;<a class="btn btn-info" alt="edit" href="#">#}
-{#                            <svg class="c-icon">#}
-{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-description' %}"></use>#}
-{#                            </svg>#}
-{#                        </a>&nbsp;<a class="btn btn-danger" alt="delete" href="#">#}
-{#                            <svg class="c-icon">#}
-{#                                <use href="{% static '@coreui/icons/sprites/free.svg#cil-trash' %}"></use>#}
-{#                            </svg>#}
-{#                        </a></td>#}
-{#                    </tr>#}
+{#                    all facility rows in facility table will access by data#}
 {% if data %}
     {% for facility in data %}
         <tr id="facility_{{ facility.id }}">
