@@ -19,6 +19,7 @@ from building.models import (
     Budget,
     AccountingTarget,
     Bill,
+    Advertisement,
 )
 from core.serializers import CoreModelSerializer, ContentTypeField
 from core.services import content_type_converter
@@ -218,3 +219,9 @@ class BillSerializer(AccountingTargetSerializerMixin, CoreModelSerializer):
         model = Bill
         fields = ('id', 'user', 'bill_class', 'type', 'due_at', 'price', 'currency', 'description', 'status_description',
                   'status', 'accounting_targets',)
+
+
+class AdvertisementSerializer(CoreModelSerializer):
+    class Meta:
+        model = Advertisement
+        fields = ('id', 'type', 'content', 'bill', 'status', 'description')

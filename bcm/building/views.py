@@ -19,6 +19,7 @@ from building.models import (
     Budget,
     AccountingTarget,
     Bill,
+    Advertisement,
 )
 from building.serializers import (
     ResidenceSerializer,
@@ -34,6 +35,7 @@ from building.serializers import (
     BudgetSerializer,
     AccountingTargetSerializer,
     BillSerializer,
+    AdvertisementSerializer,
 )
 from users.models import User
 
@@ -593,3 +595,8 @@ class AccountingTargetViewSet(mixins.CreateModelMixin,
                               GenericViewSet):
     queryset = AccountingTarget.objects.all()
     serializer_class = AccountingTargetSerializer
+
+
+class AdvertisementViewSet(viewsets.ModelViewSet):
+    queryset = Advertisement.objects.all()
+    serializer_class = AdvertisementSerializer
