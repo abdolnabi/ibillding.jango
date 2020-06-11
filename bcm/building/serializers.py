@@ -224,4 +224,4 @@ class BillSerializer(AccountingTargetSerializerMixin, CoreModelSerializer):
 class AdvertisementSerializer(CoreModelSerializer):
     class Meta:
         model = Advertisement
-        fields = ('id', 'type', 'content', 'bill', 'status', 'description')
+        fields = ('id', 'type', 'image', 'link', 'bill', 'status', 'description')

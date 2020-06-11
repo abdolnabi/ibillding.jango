@@ -86,7 +86,7 @@ class BillAdmin(admin.ModelAdmin):
 
 
 class AdvertisementAdmin(admin.ModelAdmin):
-    list_display = ('type', 'status')
+    list_display = ('type', 'status', 'image', 'link')
 
 
 class PaymentGatewayAdmin(admin.ModelAdmin):

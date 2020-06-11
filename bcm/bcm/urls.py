@@ -16,8 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.i18n import i18n_patterns
+from rest_framework_swagger.views import get_swagger_view
 
-urlpatterns = i18n_patterns(
+from core.swagger_schema import SwaggerSchemaView
+
+schema_view = get_swagger_view(title='BCM Swagger API')
+
+urlpatterns = [
+    path('swagger/', SwaggerSchemaView.as_view()),
+]
+
+urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     path('', include('building.urls', namespace='building')),
     path('', include('users.urls', namespace='users')),
