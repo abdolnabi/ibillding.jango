@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'building.apps.BuildingConfig',
     'django_mysql',
     'rest_framework',
+    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
@@ -164,3 +165,7 @@ LOCALE_PATHS = (
 django_heroku.settings(locals())
 if DATABASES['default'].get('OPTIONS') and DATABASES['default'].get('OPTIONS').get('sslmode'):
     del DATABASES['default']['OPTIONS']['sslmode']
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}

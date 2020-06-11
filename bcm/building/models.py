@@ -573,9 +573,17 @@ class Advertisement(BaseModel):
         default=AdvertisementType.LOCAL,
     )
 
-    content = models.TextField(
-        verbose_name=_('content'),
-        help_text=_('content of advertisement'),
+    image = models.CharField(
+        verbose_name=_('image'),
+        help_text=_('image of advertisement'),
+        max_length=300,
+    )
+
+    link = models.CharField(
+        verbose_name=_('link'),
+        help_text=_('link of advertisement'),
+        max_length=300,
+        blank=True,
     )
 
     bill = models.ForeignKey(
@@ -594,8 +602,9 @@ class Advertisement(BaseModel):
     )
 
     description = models.TextField(
-        verbose_name=_('text'),
-        help_text=_('text of advertisement'),
+        verbose_name=_('description'),
+        help_text=_('description of advertisement'),
+        blank=True,
     )
 
 
