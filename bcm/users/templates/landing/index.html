@@ -1,0 +1,326 @@
+{% load static i18n define_action %}
+{% get_current_language_bidi as LANGUAGE_BIDI %}
+  {# Language will recognize with this condition! #}
+{% if LANGUAGE_BIDI %}
+    {% define "rtl" as dir %}
+{% else %}
+    {% define "ltr" as dir %}
+{% endif %}
+<!DOCTYPE html>
+<html dir="{{ dir }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بیل‌دینگ</title>
+    <link rel="stylesheet" href="{% static 'landing_assets/css/style.min.css' %}">
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header" class="header">
+        <div class="header-body">
+            <div class="header-container container">
+                <div class="row header-row">
+
+                    <div class="header-logo">
+                        <a href="/">
+                            <img alt="شرکت ریسمان" src="{% static 'landing_assets/img/logo.png' %}" class="logo">
+                        </a>
+                    </div>
+
+                    <nav class="headerMenu">
+                            <div class="openMobSide"> <i class="far fa-times-circle"></i> </div>
+                            <ul class="nav" id="mainNav">
+                                <li>
+                                    <a href="#section1">
+                                        خانه
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#section2">
+                                        خدمات
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#section3">
+                                        امکانات
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#section4">
+                                        بلاگ
+                                    </a>
+                                </li>
+                            </ul>
+                    </nav>
+
+                    <div class="cta_header">
+                        <a class="btn btn-border" href="{% url 'users:register' %}"> عضویت رایگان </a>
+                    </div>
+
+                    <div class="openMobSide"> <i class="fas fa-bars"></i> </div>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- hero section -->
+    <section class="section hero-section" id="section1">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+
+                    <h1>مدیریت هوشمند مجتمع‌های آپارتمانی</h1>
+                    <h3>
+                        بیل‌دینگ، اپلیکیشنی کاربردی و قدرتمند است که به شما امکان می‌دهد، مدیریت امور مجتمع‌‌ آپارتمانی خود را به سادگی به دست بگیرید.
+                    </h3>
+                    <a href="/" class="btn">دانلود رایگان</a>
+
+                </div>
+                <div class="col-lg-8 col-md-6 center img_col">
+                    <img src="{% static 'landing_assets/img/image-14.png' %}" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="services_row"  id="section2">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12 center titleRow"  data-aos="fade-down">
+                <h2> خدمات بیل‌دینگ</h2>
+                <h4> مدیریت هوشمند مجتمع‌های آپارتمانی </h4>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-12">
+                    <div class="feature-box" data-aos="flip-up" data-aos-delay="100">
+                        <div class="feature-box-icon">
+                            <i class="far fa-building"></i>
+                        </div>
+                        <div class="feature-box-info">
+                            <h4 class="title">برنامه مدیریت آپارتمان </h4>
+                            <p class="txt">
+                                کاغذ و خودکار یا فایل‌های طولانی اکسل را کنار بگذارید. با اپلیکیشن بیل‌دینگ دیگر قرار نیست برای مدیریت امور مجتمع‌‌ آپارتمانی خود، به دردسر بیوفتید. این اپلیکیشن به شما امکان می‌دهد تا تمام جزییات را در یک برنامه کاربردی و ساده به همراه داشته باشید.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="feature-box" data-aos="flip-up" data-aos-delay="400">
+                        <div class="feature-box-icon">
+                            <i class="far fa-handshake"></i>
+                        </div>
+                        <div class="feature-box-info">
+                            <h4 class="title"> جلسات آنلاین آپارتمان </h4>
+                            <p class="txt">
+                                یکی از دشواری‌های مدیریت مجتمع‌های آپارتمانی، به خصوص مجتمع‌های بزرگ و پر واحد، برگزاری جلسه‌های هماهنگی، رای‌گیری برای انتخاب مدیر و هیات مدیره و حتی تصمیم‌های کوچک درباره ساختمان است. <br />
+                                اپلیکیشن بیل‌دینگ به شما امکان می‌دهد تا جلسه‌های مجازی مدیریت آپارتمان را با حضور همه اعضا برگزار کنید.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="feature-box" data-aos="flip-up" data-aos-delay="600">
+                        <div class="feature-box-icon">
+                            <i class="far fa-credit-card"></i>
+                        </div>
+                        <div class="feature-box-info">
+                            <h4 class="title">مدیریت پرداخت شارژ آپارتمان</h4>
+                            <p class="txt">
+                                در اپلیکیشن بیل‌دینگ، مدیر ساختمان به سوابق پرداخت شارژ همه واحدها به طور جداگانه دسترسی دارد. علاوه بر این، هر کاربر می‌تواند به گزارش کامل سوابق پرداخت‌های خود دسترسی داشته باشد.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </section>
+
+
+
+
+    <section class="section_01 parallax">
+
+        <h2 class="title">
+            بیل‌دینگ
+        </h2>
+        <div class="txt">
+            گزارش‌های کاربردی از سوابق پرداخت شارژ آپارتمان به طور جداگانه برای هر واحد و به طور کلی
+        </div>
+
+
+    </section>
+
+
+    <section class="section_spec" id="section3">
+
+        <div class="center titleRow"  data-aos="fade-down">
+            <h2>امکانات بیل‌دینگ</h2>
+            <h4> در اپلیکیشن بیل‌دینگ، به یک‌ امکان منحصر به فرد دیگر هم دسترسی خواهید داشت </h4>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="spec__item">
+                        <i class="far fa-building"></i>
+                        <h4>عنوان امکانات</h4>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </section>
+
+ <section class="section_blog" id="section4">
+
+        <div class="titleRow center">
+            <h2>بلاگ</h2>
+        </div>
+
+        <div class="container">
+                <div class="row">
+                 {% for post in posts %}
+                    <div class="post blog-post col-lg-4" data-id="{{ post.id }}">
+                        <figure class="post__img">
+                        {% for p_image in image_post %}
+                            {% if p_image.id == post.featured_media %}
+                            <img src="{{ p_image.source_url }}" class="img-fluid" alt="">
+
+                            {% endif %}
+                        {% endfor %}
+                            </figure>
+                        <div class="post__body">
+                            <h3>{{ post.title.rendered}}</h3>
+                            <p>{{ post.excerpt.rendered|striptags | safe}}</p>
+                            <a href="{{post.link}}" class="btn btn-border">ادامه مطلب</a>
+                        </div>
+                    </div>
+
+                 {% endfor %}
+
+                </div>
+        </div>
+
+    </section>
+
+
+
+    <!-- footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col contact_row">
+                    <div class="add">دفتر مرکزی: تهران، تهرانپارس جنوبی، فلکه دوم، بالاتر از میدان سوم</div>
+                    <div>تلفن: 33445566 | فکس: 44557788</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col copyright_row">
+        
+                    <p>© تمام حقوق برای بیل‌دینگ محفوظ است.</p>
+               
+                    <ul class="social-icons">
+                        <li class="social-icons-github">
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </li>
+                        <li class="social-icons-instagram">
+                            <a href="#" target="_blank" title="instagram"><i class="fab fa-instagram"></i></a>
+                        </li>
+                        <li class="social-icons-facebook">
+                            <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                        </li>
+                        <li class="social-icons-twitter">
+                            <a href="#" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        </li>
+                    </ul>
+        
+        
+                </div>
+            </div>
+            </div>
+        </div>
+        </footer>
+
+    <script src="{% static 'landing_assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'landing_assets/js/aos.js' %}"></script>
+    <script src="{% static 'landing_assets/js/custom.js' %}"></script>
+</body>
+</html>
