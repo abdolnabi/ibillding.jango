@@ -45,11 +45,11 @@ jobs:
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2.1.1
       env:
-          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           ARGS: "-rltgoDzvO"
-          REMOTE_HOST: "ec2-3-17-62-80.us-east-2.compute.amazonaws.com"
-          REMOTE_USER: "admin"
-          TARGET: "/var/www/ibillding"
+          REMOTE_HOST: ec2-3-17-62-80.us-east-2.compute.amazonaws.com
+          REMOTE_USER: admin
+          TARGET: /var/www/ibillding
 
     # Set private key for SSH connection
     #- name: webfactory/ssh-agent
