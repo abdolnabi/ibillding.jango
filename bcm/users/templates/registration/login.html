@@ -1,22 +1,3 @@
-{#<!DOCTYPE html>#}
-{#<html lang="en">#}
-{#<head>#}
-{#    <meta charset="UTF-8">#}
-{#    <title>Title</title>#}
-{#</head>#}
-{#<body>#}
-{#    <h1>Log-in</h1>#}
-{#    <div class="login-form">#}
-{#        <form action="{% url 'users:login' %}" method="post">#}
-{#            {{ form.as_p }}#}
-{#            {% csrf_token %}#}
-{#            <input type="hidden" name="next" value="{{ next }}"/>#}
-{#            <p><input type="submit" value="Log-in"></p>#}
-{#        </form>#}
-{#    </div>#}
-{#</body>#}
-{#</html>#}
-
 {% extends 'base.html' %}{# in this Line, Parent of this Page will Define! #}
 {% load static i18n %}
 {% block title %}
