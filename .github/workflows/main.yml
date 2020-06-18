@@ -44,7 +44,8 @@ jobs:
       uses: easingthemes/ssh-deploy@v2.1.1
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-rltgoDzvO"
+          ARGS: "-rltgoDzvO --delete"
+          SOURCE: ""
           REMOTE_HOST: ec2-3-17-62-80.us-east-2.compute.amazonaws.com
           REMOTE_USER: admin
           TARGET: /var/www/ibillding
