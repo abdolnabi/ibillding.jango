@@ -33,8 +33,7 @@ jobs:
           whoami
           ls -al
           cd /var/www/ibillding
-          git pull origin dev
-
+          
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
