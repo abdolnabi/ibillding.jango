@@ -33,15 +33,13 @@ jobs:
           whoami
           ls -al
           cd /var/www/ibillding
-          
+
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
     - name: Install npm dependencies
       run: npm install
-    - name: Add SSH Key
-      run: ssh-add ~/.ssh/id_rsa
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2.1.1
       env:
