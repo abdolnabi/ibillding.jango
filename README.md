@@ -57,7 +57,6 @@ MYSQL> ALTER USER 'user'@'localhost' IDENTIFIED BY 'secret';
 4. Run
 
 ``` console
-root@terminal$ apt install gunicorn3
 root@terminal$ apt install libpq-dev
 root@terminal$ apt install default-libmysqlclient-dev
 root@terminal$ apt install python3-pip
