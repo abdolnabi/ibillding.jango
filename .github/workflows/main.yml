@@ -39,7 +39,7 @@ jobs:
     
     - name: Deploy to EC2
       run: |
-        git push ssh://admin@development.ibillding.com/var/www/ibillding dev
+        git push ssh://admin@ec2-3-17-62-80.us-east-2.compute.amazonaws.com/var/www/ibillding dev
     
     #- name: Run post deploy script
     #  run: |
