@@ -22,16 +22,22 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    # Runs a single command using the runners shell
-    - name: Run a one-line script
-      run: echo Hello, world!
+    build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ec2-3-17-62-80.us-east-2.compute.amazonaws.com
+        username: admin
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+          script: |
+            whoami
+            ls -al
 
-    # Runs a set of commands using the runners shell
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
-
+    # Set private key for SSH connection
     - name: webfactory/ssh-agent
       uses: webfactory/ssh-agent@v0.3.0
       with:
@@ -41,6 +47,6 @@ jobs:
       run: |
         git push ssh://admin@ec2-3-17-62-80.us-east-2.compute.amazonaws.com/var/www/ibillding dev
     
-    #- name: Run post deploy script
-    #  run: |
-    #    npm install
+    - name: Run post deploy script
+      run: |
+        npm install
