@@ -1,7 +1,5 @@
 <p align="center">
-
     <img src="https://img.shields.io/badge/Version-0.5.0--alpha.178-brightgreen.svg" alt="Version">
-
 </p>
 
 # iBillding
@@ -58,7 +56,7 @@ MYSQL> ALTER USER 'user'@'localhost' IDENTIFIED BY 'secret';
 
 4. Run
 
-``` bash
+``` console
 root@terminal$ apt install gunicorn3
 root@terminal$ apt install libpq-dev
 root@terminal$ apt install default-libmysqlclient-dev
