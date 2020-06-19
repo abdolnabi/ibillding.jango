@@ -82,5 +82,5 @@ root@terminal$ cp -rf node_modules bcm/staticfiles
 5. Then run the application with:
 
 ``` console
-root@terminal$ gunicorn3 bcm.wsgi:application --chdir bcm --bind 0.0.0.0:80 --workers=1
+root@terminal$ gunicorn3 bcm.wsgi:application --chdir bcm --bind 0.0.0.0:80 --workers=1 --daemon
 ```
