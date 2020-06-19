@@ -50,11 +50,10 @@ jobs:
         script: |
           whoami
           ls -al
-          sudo su
           sudo killall gunicorn
-          sudo cd /var/www/ibillding
+          cd /var/www/ibillding
           sudo pip3 install -r requirements.txt
           sudo cp -rf node_modules bcm/staticfiles
-          sudo cd /var/www
+          cd /var/www
           sudo chown -R admin:admin ibillding 
           sudo gunicorn bcm.wsgi:application --chdir bcm --bind 0.0.0.0:80 --workers=1 --daemon
