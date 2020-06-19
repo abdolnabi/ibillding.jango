@@ -54,13 +54,14 @@ For more info look into guideline of action packages like `easingthemes/ssh-depl
 
 1. Install Gunicorn, MySQL 5.7+, NPM
 
-2. Create a `user` with `secret` as password in MySQL. Then create a DB like `billding` .
+2. Create a `user` with `secret` as password in MySQL and `%` as Host (**NOTE** that to set host properlsy for security reasons  ). Then create a DB like `billding`.
 
 ``` sql
-MySQL> CREATE USER 'user'@'localhost' IDENTIFIED BY 'secret';
-mysql> CREATE DATABASE `billding` ;
-MySQL> GRANT ALL PRIVILEGES ON billding.* to user@localhost
-MYSQL> ALTER USER 'user'@'localhost' IDENTIFIED BY 'secret';
+MySQL> CREATE USER 'user'@'%' IDENTIFIED BY 'secret';
+MySQL> CREATE DATABASE `billding`;
+MySQL> GRANT ALL PRIVILEGES ON `billding`.* to 'user'@'localhost' IDENTIFIED BY 'secret';
+MYSQL> ALTER USER 'user'@'%' IDENTIFIED WITH mysql_native_password BY 'secret';
+MySQL> FLUSH PRIVILEGES;
 ```
 
 3. Copy `.env.example` to `.env` and set variables.
