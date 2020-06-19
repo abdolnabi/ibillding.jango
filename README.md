@@ -12,6 +12,7 @@
   + [Development](#development)
   + [Contributors](#contributors)
   + [Testing](#testing)
+  + [CI/CD](#cicd)
   + [Deployment](#deployment)
     - [Staging](#staging)
 
@@ -34,6 +35,16 @@ iBillding is a Building Charge Management system.
 ## Testing
 
 * No tests so far
+
+## CI/CD
+
+Application is using GitHub Actions for CI/CD. In order to config it for future use we have to set multiple secrets which are located in `main.yml` including password-less `SSH_PRIVATE_KEY` which should be generated using following command:
+
+```console
+ssh-keygen -m PEM -t rsa -b 4096
+```
+
+For more info look into guideline of action packages like `easingthemes/ssh-deploy` or `appleboy/ssh-action`.
 
 ## Deployment
 

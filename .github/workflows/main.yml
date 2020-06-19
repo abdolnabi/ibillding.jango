@@ -22,44 +22,34 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
-      with:
-        host: ec2-3-17-62-80.us-east-2.compute.amazonaws.com
-        username: admin
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
-        script: |
-          whoami
-          ls -al
-          cd /var/www/ibillding
-
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
+
     - name: Install npm dependencies
       run: npm install
+
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2.1.1
       env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-rltgoDzvO --delete"
+          ARGS: "-rltgoDzvO"
           SOURCE: ""
-          REMOTE_HOST: ec2-3-17-62-80.us-east-2.compute.amazonaws.com
-          REMOTE_USER: admin
-          TARGET: /var/www/ibillding
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          TARGET: ${{ secrets.SSH_TARGET_DIRECTORY }}
 
-    # Set private key for SSH connection
-    #- name: webfactory/ssh-agent
-    #  uses: webfactory/ssh-agent@v0.3.0
-    #  with:
-    #      ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-    
-    #- name: Deploy to EC2
-    #  run: |
-    #    git push ssh://admin@ec2-3-17-62-80.us-east-2.compute.amazonaws.com/var/www/ibillding dev
-    
-    #- name: Run post deploy script
-    #  run: |
-    #    npm install
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          whoami
+          ls -al
+          sudo killall gunicorn
+          cd /var/www/ibillding
+          gunicorn bcm.wsgi:application --chdir bcm --bind 0.0.0.0:80 --workers=1 --daemon
