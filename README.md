@@ -76,7 +76,7 @@ root@terminal$ pip3 install -r requirements.txt
 root@terminal$ python3 bcm/manage.py migrate --noinput
 root@terminal$ npm install
 root@terminal$ python3 bcm/manage.py collectstatic --noinput
-root@terminal$ cp -rf node_modules staticfiles
+root@terminal$ cp -rf node_modules bcm/staticfiles
 ```
 
 5. Then run the application with:
