@@ -38,7 +38,7 @@ iBillding is a Building Charge Management system.
 
 ## CI/CD
 
-Application is using GitHub Actions for CI/CD. In order to config it for future use we have to set multiple secrets which are located in `main.yml` including password-less `SSH_PRIVATE_KEY` which should be generated using following command:
+Application is using GitHub Actions for CI/CD. In order to config it for future use we have to set multiple secrets which are located in `staging.yml` including password-less `SSH_PRIVATE_KEY` which should be generated using following command:
 
 ```console
 ssh-keygen -m PEM -t rsa -b 4096
