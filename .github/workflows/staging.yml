@@ -55,5 +55,6 @@ jobs:
           sudo pip3 install -r requirements.txt
           sudo cp -rf node_modules bcm/staticfiles
           cd /var/www
-          sudo chown -R admin:admin ibillding 
+          sudo chown -R admin:admin ibillding
+          cd /var/www/ibillding
           sudo gunicorn bcm.wsgi:application --chdir bcm --bind 0.0.0.0:80 --workers=1 --daemon
